@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent">
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--        <androidx.constraintlayout.widget.Guideline-->
+<!--            android:id="@+id/guideline"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintGuide_percent="0.8"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline">
+
+
+        <ImageView
+            android:id="@+id/home_sort_select_img_arrow"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/arrow_down"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/home_sort_select_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/home_sort_select_text"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/home_sort_select_text_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:gravity="center_horizontal"
+                android:text="@string/home_sort_select_point"
+                android:textAlignment="center"
+                android:textColor="@color/uncliked_color" />
+
+            <TextView
+                android:id="@+id/home_sort_select_text_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:gravity="center_horizontal"
+                android:text="@string/home_sort_select_recommend"
+                android:textAlignment="center"
+                android:textColor="@color/uncliked_color" />
+
+            <TextView
+                android:id="@+id/home_sort_select_text_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:gravity="center_horizontal"
+                android:text="@string/home_sort_select_review"
+                android:textAlignment="center"
+                android:textColor="@color/uncliked_color" />
+
+            <TextView
+                android:id="@+id/home_sort_select_text_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:gravity="center_horizontal"
+                android:text="@string/home_sort_select_distance"
+                android:textAlignment="center"
+                android:textColor="@color/uncliked_color" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="right"
+            android:text="@string/home_sort_select_distance_text"
+            android:textAlignment="gravity"
+            android:textColor="@color/orange" />
+    </LinearLayout>
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</FrameLayout>

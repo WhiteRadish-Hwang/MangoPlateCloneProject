@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">mangoplate_mock_aos_radi</string>
+
+    <string name="main_bottom_nav_home_title">맞집찾기</string>
+    <string name="main_bottom_nav_discount_title">할인</string>
+    <string name="main_bottom_nav_news_title">소식</string>
+    <string name="main_bottom_nav_my_page_title">내정보</string>
+
+    <string name="home_toolbar_tv_loc_pointer_text">지금 보고있는 지역은</string>
+    <string name="home_toolbar_tv_loc_changed_text_ex">수유/도봉/강북</string>
+
+    <string name="home_vp_dummy_text1">도봉구 맛집 베스트 20곳</string>
+    <string name="home_vp_dummy_text2">샐러드 맛집 베스트 15곳</string>
+
+    <string name="home_sort_select_point">평점순</string>
+    <string name="home_sort_select_recommend">추천순</string>
+    <string name="home_sort_select_review">리뷰순</string>
+    <string name="home_sort_select_distance">거리순</string>
+    <string name="home_sort_select_distance_text">*거리순은 위치가 켜져있을 때만 가능</string>
+    <string name="home_sort_select_text">정렬</string>
+
+    <string name="edit_profile">수정</string>
+    <string name="follower">팔로워</string>
+    <string name="following">팔로잉</string>
+    <string name="event">이벤트</string>
+    <string name="bought_eat_deal">구매한 EAT딜</string>
+    <string name="eat_deal_alarm">EAT딜 입고알림</string>
+    <string name="time_line">타임라인</string>
+    <string name="review">리뷰</string>
+    <string name="visited">가봤어요</string>
+    <string name="photo">사진</string>
+    <string name="wanna_go">가고싶다</string>
+    <string name="my_list">마이리스트</string>
+    <string name="book_mark">북마크</string>
+    <string name="registered_restaurant">내가 등록한 식당</string>
+    <string name="setting">설정</string>
+</resources>
