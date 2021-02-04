@@ -39,9 +39,10 @@
 
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/my_page_img_profile"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
+                        android:padding="10dp"
                         android:layout_weight="1"
                         tools:srcCompat="@tools:sample/avatars" />
 
@@ -246,7 +247,7 @@
                         android:layout_toRightOf="@+id/my_page_img_deal_alarm"
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/black"
-                        android:text="@string/bought_eat_deal" />
+                        android:text="@string/eat_deal_alarm" />
 
                     <ImageView
                         android:id="@+id/my_page_img_arrow_right_second_in_third"

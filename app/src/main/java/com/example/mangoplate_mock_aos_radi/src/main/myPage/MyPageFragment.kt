@@ -3,8 +3,11 @@ package com.example.mangoplate_mock_aos_radi.src.main.myPage
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentMyPageBinding
 
@@ -24,5 +27,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                 else -> false
             }
         }
+
+        Glide.with(binding.myPageImgProfile).load(ApplicationClass.profileImageUrl).circleCrop().into(binding.myPageImgProfile)
+        binding.myPageTextUserName.text = user_id
+
     }
+
+
 }

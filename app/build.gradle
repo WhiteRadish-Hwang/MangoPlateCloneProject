@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId 'com.example.mangoplate_mock_aos_radi'
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -67,6 +67,12 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    dependencies {
+        implementation "com.kakao.sdk:v2-user:2.3.0" // 카카오 로그인
+        implementation "com.kakao.sdk:v2-talk:2.3.0" // 친구, 메시지(카카오톡)
+        implementation "com.kakao.sdk:v2-link:2.3.0" // 메시지(카카오링크)
+    }
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

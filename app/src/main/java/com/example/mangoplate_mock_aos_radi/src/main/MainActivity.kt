@@ -1,8 +1,10 @@
 package com.example.mangoplate_mock_aos_radi.src.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseActivity
 import com.example.mangoplate_mock_aos_radi.databinding.ActivityMainBinding
 import com.example.mangoplate_mock_aos_radi.src.main.add.AddFragment
@@ -11,6 +13,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kakao.sdk.common.util.Utility
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     var backStack = true
@@ -18,6 +21,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val keyHash = Utility.getKeyHash(this)
+        Log.d(ApplicationClass.TAG, "keyHash: $keyHash")
 
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commitAllowingStateLoss()
 

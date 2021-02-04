@@ -2,6 +2,7 @@ package com.example.mangoplate_mock_aos_radi.config
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.kakao.sdk.common.KakaoSdk
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,12 +30,18 @@ class ApplicationClass : Application() {
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
 
+
+        // 변수
         var sortPivotSelect = "평점순"
+        var user_id: String? = null
+        var profileImageUrl: String? = null
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
     override fun onCreate() {
         super.onCreate()
+        KakaoSdk.init(this, "e09a9818400185704ff8efecda465d5a")
+
         sSharedPreferences =
             applicationContext.getSharedPreferences("MANGO_PLATE_APP", MODE_PRIVATE)
         // 레트로핏 인스턴스 생성
