@@ -9,6 +9,7 @@
     <color name="icon_color">#666666</color>
     <color name="orange">#FF7F00</color>
     <color name="light_gray">#DFDFDF</color>
+    <color name="discount_rate_border_color">#0ebebc</color>
     <color name="transparent">#70000000</color>
 
     <color name="status_top_bar">#A4A2A4</color>
