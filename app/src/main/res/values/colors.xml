@@ -11,6 +11,8 @@
     <color name="light_gray">#DFDFDF</color>
     <color name="transparent">#70000000</color>
 
+    <color name="status_top_bar">#A4A2A4</color>
+
     <!-- 기본 -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

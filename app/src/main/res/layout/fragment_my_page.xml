@@ -586,6 +586,13 @@
                     tools:ignore="VectorDrawableCompat" />
             </RelativeLayout>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/my_page_btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/my_page_fifth_layout"
+                android:text="LOG OUT" />
+
 
         </RelativeLayout>
 

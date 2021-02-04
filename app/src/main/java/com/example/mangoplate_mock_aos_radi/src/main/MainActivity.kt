@@ -1,6 +1,9 @@
 package com.example.mangoplate_mock_aos_radi.src.main
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.mangoplate_mock_aos_radi.R
@@ -14,6 +17,9 @@ import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kakao.sdk.common.util.Utility
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     var backStack = true
@@ -21,9 +27,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val keyHash = Utility.getKeyHash(this)
-        Log.d(ApplicationClass.TAG, "keyHash: $keyHash")
 
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commitAllowingStateLoss()
 
@@ -64,6 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 false
             })
     }
+
 
     override fun onBackPressed() {
         if (backStack) { //상세정보창 프래그먼트를 킨 상태면 뒤로가기했을 때 해당 프래그먼트를 삭제해줌

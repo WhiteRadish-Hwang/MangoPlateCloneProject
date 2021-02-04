@@ -47,7 +47,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         }
 
         // 뷰페이저로 구현한 이미지 슬라이더, 어답터
-        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter
 
         binding.homeLayoutSortSelect.setOnClickListener {
@@ -112,13 +112,13 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     fun initData(){
         val checkedLoc = binding.homeToolbarTvLocChangedText.text.toString()
 
-        for (i in 0..29) {
+        for (i in 0..10) {
             val item1 = HomeRecyclerItems(idx = i+1, title = "쉐프마인드", location = checkedLoc, grade = "4.3", viewPoint = 11111, reviewCount = 11, image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
             itemList.add(item1)
         }
     }
 
-    private inner class ScreenSlidePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
+    private inner class ImageSlidePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = NUM_PAGES
 
         override fun createFragment(position: Int): Fragment {
@@ -129,5 +129,6 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             }
         }
     }
+
 }
 

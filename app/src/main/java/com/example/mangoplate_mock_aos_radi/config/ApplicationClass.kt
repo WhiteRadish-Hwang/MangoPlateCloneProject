@@ -1,7 +1,11 @@
 package com.example.mangoplate_mock_aos_radi.config
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.kakao.sdk.common.KakaoSdk
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,27 +27,40 @@ class ApplicationClass : Application() {
         val TAG = "로그"
         // 만들어져있는 SharedPreferences 를 사용해야합니다. 재생성하지 않도록 유념해주세요
         lateinit var sSharedPreferences: SharedPreferences
-
+        val MANGO_PLATE_APP = "MANGO_PLATE_APP"
         // Token Header 키 값
         val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
 
+        lateinit var instance: ApplicationClass
+        private set
 
         // 변수
+        val KAKAO_ID = "kakao_id"
+        val KAKAO_IMG = "kakao_img"
+        val KAKAO_LOGIN = "kakao_login"
+        val FB_ID = "fb_id"
+        val FB_LOGIN = "fb_login"
         var sortPivotSelect = "평점순"
         var user_id: String? = null
         var profileImageUrl: String? = null
+        var isKakaoLogin: Boolean = false
+        var isFacebookLogin: Boolean = false
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
     override fun onCreate() {
         super.onCreate()
+        instance = this
+
         KakaoSdk.init(this, "e09a9818400185704ff8efecda465d5a")
 
-        sSharedPreferences =
-            applicationContext.getSharedPreferences("MANGO_PLATE_APP", MODE_PRIVATE)
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        sSharedPreferences = applicationContext.getSharedPreferences(MANGO_PLATE_APP, MODE_PRIVATE)
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
     }
@@ -67,4 +84,6 @@ class ApplicationClass : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+
 }

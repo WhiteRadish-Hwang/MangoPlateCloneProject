@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/home_recycler_main_img"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
+        android:scaleType="fitXY"
         android:layout_alignParentTop="true"
         app:srcCompat="@drawable/home_vp_img2" />
 
@@ -55,8 +56,9 @@
 
                 <ImageView
                     android:id="@+id/home_recycler_img_view_point"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
                     app:srcCompat="@drawable/mango_view_point"
                     app:tint="@color/blackForText" />
 
@@ -69,8 +71,9 @@
 
                 <ImageView
                     android:id="@+id/home_recycler_img_review_count"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
                     app:srcCompat="@drawable/mango_review_count"
                     app:tint="@color/blackForText" />
 
@@ -78,6 +81,7 @@
                     android:id="@+id/home_recycler_text_review_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="11"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -91,7 +95,9 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="TextView" />
+            android:textColor="@color/cliked_color"
+            android:textSize="20sp"
+            android:text="4.3" />
     </RelativeLayout>
 
 </RelativeLayout>
