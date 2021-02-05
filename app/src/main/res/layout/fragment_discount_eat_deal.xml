@@ -7,12 +7,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <RelativeLayout
+        android:id="@+id/eat_deal_layout_top_fixed"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/eat_deal_layout_select_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/discount_eat_deal_text_select_loc_border">
+
+            <TextView
+                android:id="@+id/eat_deal_text_select_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="@string/eat_deal_text_select_loc"
+                android:textColor="@color/cliked_color" />
+
+            <ImageView
+                android:id="@+id/eat_deal_img_select_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/eat_deal_text_select_loc"
+                app:srcCompat="@drawable/tryangle_arrow_down"
+                app:tint="@color/cliked_color"
+                tools:ignore="VectorDrawableCompat" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/eat_deal_layout_my_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/discount_eat_deal_text_my_position_border">
+
+            <ImageView
+                android:id="@+id/eat_deal_img_my_position"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                app:srcCompat="@drawable/gps"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/eat_deal_text_my_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/eat_deal_img_my_position"
+                android:text="@string/eat_deal_text_my_position"
+                android:textColor="@color/blackForText" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eat_deal_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/eat_deal_layout_top_fixed" />
 </androidx.constraintlayout.widget.ConstraintLayout>
