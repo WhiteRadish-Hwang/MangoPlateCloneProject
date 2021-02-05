@@ -1,8 +1,11 @@
 package com.example.mangoplate_mock_aos_radi.config
 
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.instance
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sSharedPreferences
+import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.EatDealRecyclerAdapter
 
 object SharedPreferenced {
     fun putSettingItem(key: String, value: String?) {
@@ -16,4 +19,5 @@ object SharedPreferenced {
         Log.d(ApplicationClass.TAG, "Get $key from ${ApplicationClass.MANGO_PLATE_APP}")
         return instance.getSharedPreferences(ApplicationClass.MANGO_PLATE_APP, 0).getString(key, null)
     }
+
 }
