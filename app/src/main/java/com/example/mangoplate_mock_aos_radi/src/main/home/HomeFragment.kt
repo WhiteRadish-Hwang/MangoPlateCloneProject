@@ -10,13 +10,18 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.restaurantListSize
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.topListSize
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
+import kotlin.properties.Delegates
 
 class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView{
     val NUM_PAGES = 3
@@ -25,9 +30,26 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     val itemList = ArrayList<HomeRecyclerItems>()
     private lateinit var homeRecyclerAdapter: HomeRecyclerAdapter
 
+    var isSuccessful: Boolean = false
+    //topList 변수 선언
+    var topArrayList = ArrayList<TopListResultData>()
+    var topListId by Delegates.notNull<Int>()
+    lateinit var topListImgUrl: String
+    lateinit var topListName: String
+    //restaurant 변수 선언
+    var restaurantArrayList = ArrayList<RestaurantResultData>()
+    var restaurantId by Delegates.notNull<Int>()
+    var distance by Delegates.notNull<Int>()
+    var restaurantView by Delegates.notNull<Int>()
+    var reviewCount by Delegates.notNull<Int>()
+    lateinit var restaurantName: String
+    lateinit var areaName: String
+    lateinit var star: String
+    lateinit var firstImageUrl: String
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecyclerAdapter()
+        HomeService(this).tryGetRestaurants(page = 1, limit = 10, areaName = "성북", distance = 10, sort = 1)
+
         setSortPivotSelect()
         binding.homeTextSortSelect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
@@ -49,9 +71,10 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         }
 
         // 뷰페이저로 구현한 이미지 슬라이더, 어답터
-        val pagerAdapter = ImageSlidePagerAdapter(this)
-        binding.homeVp.adapter = pagerAdapter
-
+//        if (isSuccessful) {
+//            val pagerAdapter = ImageSlidePagerAdapter(this)
+//            binding.homeVp.adapter = pagerAdapter
+//        }
         binding.homeLayoutSortSelect.setOnClickListener {
             val homeSortSelectFragment = HomeSortSelectFragment {
                 when (it) {
@@ -102,13 +125,12 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     }
 
     private inner class ImageSlidePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int = NUM_PAGES
+        override fun getItemCount(): Int = topListSize
 
         override fun createFragment(position: Int): Fragment {
             return when(position) {
-                0 -> HomeImageSlideFragment(R.drawable.home_vp_img1, getString(R.string.home_vp_dummy_text2))
-                1 -> HomeImageSlideFragment(R.drawable.home_vp_img2, null)
-                else -> HomeImageSlideFragment(R.drawable.home_vp_img3, getString(R.string.home_vp_dummy_text1))
+                0 -> HomeImageSlideFragment(topArrayList[position].topListImgUrl, topArrayList[position].topListName)
+                else -> HomeImageSlideFragment(topArrayList[topListSize-1].topListImgUrl, topArrayList[topListSize-1].topListName)
             }
         }
     }
@@ -116,6 +138,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     fun setRecyclerAdapter(){
         homeRecyclerAdapter = HomeRecyclerAdapter(context, itemList)
         initData()
+
         binding.homeMainRecycler.apply {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
@@ -124,21 +147,49 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     }
 
     fun initData(){
-        HomeService(this).tryGetRestaurants(page = 1, limit = 10, areaName = "성북", distance = 10, sort = 1)
-
-        val checkedLoc = binding.homeToolbarTvLocChangedText.text.toString()
-
-        for (i in 0..10) {
-            val item1 = HomeRecyclerItems(idx = i+1, title = "쉐프마인드", location = checkedLoc, grade = "4.3", viewPoint = 11111, reviewCount = 11, image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
-            itemList.add(item1)
+        Log.d(TAG, "initData: ")
+        for (i in 0 until restaurantListSize) {
+            val item = HomeRecyclerItems(idx = restaurantArrayList[i].restaurantId,
+                    title = restaurantArrayList[i].restaurantName,
+                    location = restaurantArrayList[i].areaName,
+                    grade = restaurantArrayList[i].star,
+                    viewPoint = restaurantArrayList[i].restaurantView,
+                    reviewCount = restaurantArrayList[i].reviewCount,
+                    image = restaurantArrayList[i].firstImageUrl)
+            itemList.add(item)
         }
     }
 
-    override fun onGetRestaurantSuccess(response: RestaurantsResponse) {
+    override fun onGetRestaurantSuccess(response: RestaurantsResponse, topList: ArrayList<TopListResultData>, restaurantList: ArrayList<RestaurantResultData>) {
 //        dismissLoadingDialog()
-        for (restaurant in response.result) {
-            Log.d(TAG, "onGetRestaurantSuccess: $restaurant")
+        Log.d(TAG, "onGetRestaurantSuccess: $topList")
+        Log.d(TAG, "onGetRestaurantSuccess: $restaurantList")
+        topListSize = topList.size
+        restaurantListSize = restaurantList.size
+        isSuccessful = response.isSuccess
+
+        for (idx in 0 until topList.size){
+            topArrayList.add(topList[idx])
+//            topListId = topList[idx].topListId
+//            topListImgUrl = topList[idx].topListImgUrl
+//            topListName = topList[idx].topListName
         }
+
+        for (idx in 0 until restaurantList.size){
+            restaurantArrayList.add(restaurantList[idx])
+//            restaurantId = restaurantList[idx].restaurantId
+//            distance = restaurantList[idx].distance
+//            restaurantView = restaurantList[idx].restaurantView
+//            reviewCount = restaurantList[idx].reviewCount
+//            restaurantName = restaurantList[idx].restaurantName
+//            areaName = restaurantList[idx].areaName
+//            star = restaurantList[idx].star
+//            firstImageUrl = restaurantList[idx].firstImageUrl
+        }
+
+        val pagerAdapter = ImageSlidePagerAdapter(this)
+        binding.homeVp.adapter = pagerAdapter
+        setRecyclerAdapter()
     }
 
     override fun onGetRestaurantFailure(message: String) {

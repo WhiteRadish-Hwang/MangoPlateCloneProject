@@ -13,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 class ApplicationClass : Application() {
     val API_URL = "https://test.sungjun.site"
@@ -50,6 +51,9 @@ class ApplicationClass : Application() {
         var profileImageUrl: String? = null
         var isKakaoLogin: Boolean = false
         var isFacebookLogin: Boolean = false
+        var restaurantListSize by Delegates.notNull<Int>()
+        var topListSize by Delegates.notNull<Int>()
+
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
@@ -85,7 +89,7 @@ class ApplicationClass : Application() {
         sRetrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
