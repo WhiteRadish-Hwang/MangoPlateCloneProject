@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,7 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         val totalTextCommnetCount: TextView = itemView.findViewById(R.id.total_text_comment)
         val totalTextDateAgo: TextView = itemView.findViewById(R.id.total_text_date_ago)
         val totalInnerRecycler: RecyclerView = itemView.findViewById(R.id.total_recycler_img)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TotalViewHolder {
@@ -50,16 +52,33 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         holder.totalTextMainContent.text = items.mainContentText
 
         // 버튼 클릭 시 1씩 증가하게 변화를 줘야함
+        if (items.likeCount == null || items.commentCount == null){
+            holder.totalTextLikeCount.text = ""
+            holder.totalTextCommnetCount.text = ""
+        }
         holder.totalTextLikeCount.text = "좋아요 ${items.likeCount}개"
         holder.totalTextCommnetCount.text = "댓글 ${items.commentCount}개"
 
         holder.totalTextDateAgo.text = items.dateTimeAgo
 
+//        // 홀릭 탭에서 사용할 예정
+//       val isExpendable: Boolean = items.expendable
+//        holder.totalLayoutExpandable.visibility = if (isExpendable) View.VISIBLE else View.GONE
+//        holder.totalLayoutProfile.visibility = if (!isExpendable) View.VISIBLE else View.GONE
+//        holder.totalLayoutMainContent.visibility = if (!isExpendable) View.VISIBLE else View.GONE
+//        holder.totalLayoutFooter.visibility = if (!isExpendable) View.VISIBLE else View.GONE
+//
+//        holder.itemView.setOnClickListener {
+//            if (position == 0) {
+//                items.expendable = true
+//            }
+//        }
+
         setItemsRecycler(holder.totalInnerRecycler, items.innerImageItems)
     }
 
     //inner 리사이클러뷰 어답터 장착
-    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<TotalRecyclerInnerImageItems>){
+    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<TotalRecyclerInnerImageItems>?){
         val itemsAdapter = TotalRecyclerInnerImageAdapter(context, item)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = itemsAdapter

@@ -9,14 +9,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
 
-class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home){
+class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView{
     val NUM_PAGES = 3
     var backStack = true
     var fragmentBack: Fragment? = null
@@ -99,25 +101,6 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         }
     }
 
-    fun setRecyclerAdapter(){
-        homeRecyclerAdapter = HomeRecyclerAdapter(context, itemList)
-        initData()
-        binding.homeMainRecycler.apply {
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = homeRecyclerAdapter
-        }
-    }
-
-    fun initData(){
-        val checkedLoc = binding.homeToolbarTvLocChangedText.text.toString()
-
-        for (i in 0..10) {
-            val item1 = HomeRecyclerItems(idx = i+1, title = "쉐프마인드", location = checkedLoc, grade = "4.3", viewPoint = 11111, reviewCount = 11, image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
-            itemList.add(item1)
-        }
-    }
-
     private inner class ImageSlidePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = NUM_PAGES
 
@@ -129,6 +112,39 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             }
         }
     }
+
+    fun setRecyclerAdapter(){
+        homeRecyclerAdapter = HomeRecyclerAdapter(context, itemList)
+        initData()
+        binding.homeMainRecycler.apply {
+            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = homeRecyclerAdapter
+        }
+    }
+
+    fun initData(){
+        HomeService(this).tryGetRestaurants(page = 1, limit = 10, areaName = "성북", distance = 10, sort = 1)
+
+        val checkedLoc = binding.homeToolbarTvLocChangedText.text.toString()
+
+        for (i in 0..10) {
+            val item1 = HomeRecyclerItems(idx = i+1, title = "쉐프마인드", location = checkedLoc, grade = "4.3", viewPoint = 11111, reviewCount = 11, image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
+            itemList.add(item1)
+        }
+    }
+
+    override fun onGetRestaurantSuccess(response: RestaurantsResponse) {
+//        dismissLoadingDialog()
+        for (restaurant in response.result) {
+            Log.d(TAG, "onGetRestaurantSuccess: $restaurant")
+        }
+    }
+
+    override fun onGetRestaurantFailure(message: String) {
+
+    }
+
 
 }
 

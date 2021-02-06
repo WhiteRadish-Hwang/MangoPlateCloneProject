@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
+import com.google.gson.GsonBuilder
 import com.kakao.sdk.common.KakaoSdk
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
-    val API_URL = "https://members.softsquared.com/"
+    val API_URL = "https://test.sungjun.site"
+    private val gson = GsonBuilder().setLenient().create()
 
     // 테스트 서버 주소
     // val API_URL = "http://dev-api.test.com/"
@@ -70,10 +72,12 @@ class ApplicationClass : Application() {
     private fun initRetrofitInstance() {
         val client: OkHttpClient = OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .writeTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .retryOnConnectionFailure(true)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // 자동 헤더 전송
+//            .addNetworkInterceptor(XAccessTokenInterceptor()) // 자동 헤더 전송
             .build()
 
         // sRetrofit 이라는 전역변수에 API url, 인터셉터, Gson을 넣어주고 빌드해주는 코드
@@ -81,7 +85,7 @@ class ApplicationClass : Application() {
         sRetrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

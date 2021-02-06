@@ -10,10 +10,11 @@
 
 
     <RelativeLayout
+        android:id="@+id/total_layout_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
 
         <ImageView
             android:id="@+id/total_img_profile"
@@ -36,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="17sp"
-                android:text="userName" />
+                android:text="userName"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:id="@+id/total_layout_count"
@@ -176,6 +177,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/total_layout_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
@@ -209,8 +211,8 @@
             android:id="@+id/total_layout_bottom_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/total_layout_bottom_wanna_go"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/total_layout_bottom_wanna_go">
 
             <ImageView
                 android:id="@+id/total_img_bottom_like"
@@ -264,5 +266,19 @@
             app:srcCompat="@drawable/mango_three_dot" />
 
     </RelativeLayout>
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/total_layout_expendable"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:visibility="gone"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/total_text_expandable_content"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="TextView" />-->
+<!--    </LinearLayout>-->
 
 </androidx.appcompat.widget.LinearLayoutCompat>

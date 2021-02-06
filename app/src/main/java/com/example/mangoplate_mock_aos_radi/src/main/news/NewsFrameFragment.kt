@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsBinding
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsFrameBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -41,7 +40,7 @@ class NewsFrameFragment : BaseFragment<FragmentNewsFrameBinding>(FragmentNewsFra
             return when(position) {
                 0 -> TotalFragment()
                 1 -> FollowingFragment()
-                else -> HollicFragment()
+                else -> HolicFragment()
             }
         }
     }

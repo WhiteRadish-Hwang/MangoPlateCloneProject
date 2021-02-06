@@ -13,7 +13,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyc
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
-class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerInnerImageItems>): RecyclerView.Adapter<TotalRecyclerInnerImageAdapter.TotalInnerViewHolder>() {
+class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerInnerImageItems>?): RecyclerView.Adapter<TotalRecyclerInnerImageAdapter.TotalInnerViewHolder>() {
     inner class TotalInnerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val total_img_recycler_inner_image: ImageView = itemView.findViewById(R.id.total_img_recycler_inner_image)
     }
@@ -25,11 +25,14 @@ class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayL
 
 
     override fun onBindViewHolder(holder: TotalInnerViewHolder, position: Int) {
-        val items = itemList[position]
+        val items = itemList?.get(position)
 
-        Glide.with(holder.total_img_recycler_inner_image).load(items.innerImage).placeholder(null).into(holder.total_img_recycler_inner_image)
+        Glide.with(holder.total_img_recycler_inner_image).load(items?.innerImage).placeholder(null).into(holder.total_img_recycler_inner_image)
 
     }
 
-    override fun getItemCount(): Int = itemList.size
+    override fun getItemCount(): Int {
+        return if (!itemList.isNullOrEmpty()) itemList.size
+        else 0
+    }
 }
