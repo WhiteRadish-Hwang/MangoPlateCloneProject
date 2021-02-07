@@ -51,34 +51,22 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/home_sort_select_text_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:background="@drawable/home_sort_select_text_border"
                 android:gravity="center_horizontal"
                 android:text="@string/home_sort_select_point"
                 android:textAlignment="center"
-                android:textColor="@color/uncliked_color" />
+                android:textColor="@color/cliked_color"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/home_sort_select_text_recommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/home_sort_select_text_border_unclicked"
-                android:gravity="center_horizontal"
-                android:text="@string/home_sort_select_recommend"
-                android:textAlignment="center"
-                android:textColor="@color/uncliked_color" />
-
-            <TextView
-                android:id="@+id/home_sort_select_text_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_sort_select_text_border_unclicked"
@@ -87,10 +75,22 @@
                 android:textAlignment="center"
                 android:textColor="@color/uncliked_color" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/home_sort_select_text_review"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/home_sort_select_text_border_unclicked"
+                android:gravity="center_horizontal"
+                android:text="@string/home_sort_select_review"
+                android:textAlignment="center"
+                android:textColor="@color/uncliked_color"/>
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/home_sort_select_text_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
@@ -98,7 +98,55 @@
                 android:gravity="center_horizontal"
                 android:text="@string/home_sort_select_distance"
                 android:textAlignment="center"
-                android:textColor="@color/uncliked_color" />
+                android:textColor="@color/uncliked_color"/>
+<!--            <TextView-->
+<!--                android:id="@+id/home_sort_select_text_point"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/home_sort_select_text_border"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="@string/home_sort_select_point"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/cliked_color" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/home_sort_select_text_recommend"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/home_sort_select_text_border_unclicked"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="@string/home_sort_select_recommend"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/uncliked_color" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/home_sort_select_text_review"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/home_sort_select_text_border_unclicked"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="@string/home_sort_select_review"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/uncliked_color" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/home_sort_select_text_distance"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/home_sort_select_text_border_unclicked"-->
+<!--                android:gravity="center_horizontal"-->
+<!--                android:text="@string/home_sort_select_distance"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/uncliked_color" />-->
         </LinearLayout>
 
         <TextView

@@ -38,22 +38,22 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
         binding.homeSortSelectTextPoint.setOnClickListener {
             itemClick(0)
             setTextDesign(binding.homeSortSelectTextPoint)
-            dialog?.dismiss()
+//            dialog?.dismiss()
         }
         binding.homeSortSelectTextRecommend.setOnClickListener {
             itemClick(1)
             setTextDesign(binding.homeSortSelectTextRecommend)
-            dialog?.dismiss()
+//            dialog?.dismiss()
         }
         binding.homeSortSelectTextReview.setOnClickListener {
             itemClick(2)
             setTextDesign(binding.homeSortSelectTextReview)
-            dialog?.dismiss()
+//            dialog?.dismiss()
         }
         binding.homeSortSelectTextDistance.setOnClickListener {
             itemClick(3)
             setTextDesign(binding.homeSortSelectTextDistance)
-            dialog?.dismiss()
+//            dialog?.dismiss()
         }
 
 

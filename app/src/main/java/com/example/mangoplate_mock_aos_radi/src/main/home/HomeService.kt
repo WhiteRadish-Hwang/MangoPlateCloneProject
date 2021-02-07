@@ -17,7 +17,10 @@ class HomeService (val view: HomeFragmentView) {
                           limit: Int,
                           areaName: String,
                           distance: Int,
-                          sort: Int
+                          sort: Int,
+                          userId: Int,
+                          userLatitude: Float,
+                          userLongitude:Float
 //                          restaurantPriceFilter1: Int? = 0,
 //                          restaurantPriceFilter2: Int? = 0,
 //                          restaurantPriceFilter3: Int? = 0,
@@ -33,7 +36,7 @@ class HomeService (val view: HomeFragmentView) {
     ){
 
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort).enqueue(object : Callback<RestaurantsResponse> {
+        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort, userId, userLatitude, userLongitude).enqueue(object : Callback<RestaurantsResponse> {
             override fun onResponse(call: Call<RestaurantsResponse>, response: Response<RestaurantsResponse>) {
                 when (response.code()) {
                     200 -> {
@@ -62,7 +65,7 @@ class HomeService (val view: HomeFragmentView) {
                                 val restaurantItemObject = listItem.asJsonObject
                                 val  restaurantId = restaurantItemObject.get("restaurantId").asInt
                                 val  restaurantName = restaurantItemObject.get("restaurantName").asString
-                                val  distance = restaurantItemObject.get("distance").asInt
+                                val  distanceFromUser = restaurantItemObject.get("distanceFromUser").asInt
                                 val  areaName = restaurantItemObject.get("areaName").asString
                                 val  restaurantView = restaurantItemObject.get("restaurantView").asInt
                                 val  reviewCount = restaurantItemObject.get("reviewCount").asInt
@@ -72,7 +75,7 @@ class HomeService (val view: HomeFragmentView) {
                                 val restaurantListItem = RestaurantResultData(
                                         restaurantId = restaurantId,
                                         restaurantName = restaurantName,
-                                        distance = distance,
+                                        distanceFromUser = distanceFromUser,
                                         areaName = areaName,
                                         restaurantView = restaurantView,
                                         reviewCount = reviewCount,

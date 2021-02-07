@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 data class RestaurantResultData (val  restaurantId: Int,
                                  val  restaurantName: String,
-                                 val  distance: Int,
+                                 val  distanceFromUser: Int,
                                  val  areaName: String,
                                  val  restaurantView: Int,
                                  val  reviewCount: Int,

@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 
 class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRecyclerItems>): RecyclerView.Adapter<HomeRecyclerAdapter.ItemViewHolder>() {
+
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val foodImg: ImageView = itemView.findViewById(R.id.home_recycler_main_img)
         val title: TextView = itemView.findViewById(R.id.home_recycler_text_title)
@@ -38,4 +41,5 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         holder.viewPoint.text = items.viewPoint.toString()
         holder.reviewCount.text = items.reviewCount.toString()
     }
+
 }

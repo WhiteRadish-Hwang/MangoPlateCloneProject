@@ -12,7 +12,10 @@ interface HomeRetrofitInterface {
                        @Query("limit") limit: Int,
                        @Query("areaName") areaName: String,
                        @Query("distance") distance: Int,
-                       @Query("sort") sort: Int
+                       @Query("sort") sort: Int,
+                       @Query("userId") userId: Int,
+                       @Query("userLatitude") userLatitude: Float,
+                       @Query("userLongitude") userLongitude: Float
 //                       @Query("restaurantPriceFilter") restaurantPriceFilter1: Int? = 0,
 //                       @Query("restaurantPriceFilter") restaurantPriceFilter2: Int? = 0,
 //                       @Query("restaurantPriceFilter") restaurantPriceFilter3: Int? = 0,
