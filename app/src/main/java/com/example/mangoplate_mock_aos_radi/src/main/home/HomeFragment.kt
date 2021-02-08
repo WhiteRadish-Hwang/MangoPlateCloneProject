@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.core.widget.NestedScrollView
@@ -32,9 +33,11 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     lateinit var homeRecyclerAdapter: HomeRecyclerAdapter
     lateinit var gridLayoutManager: GridLayoutManager
 
+
     var pageNum: Int = 0
     var limit = 4
     var isEnd = false
+    var itemIndex = 1
 
     var isLoading = false
     var isSuccessful: Boolean = false
@@ -68,8 +71,8 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             when (it.itemId){
                 R.id.menu_home_toolbar_search -> {
                     showCustomToast("Clicked Search Item")
-                    binding.homeLayoutSearchFrame.visibility = View.VISIBLE
-                    (activity as MainActivity).replaceFragment(HomeSearchFragment())
+                    binding.homeLayoutFrame.visibility = View.VISIBLE
+                    (activity as MainActivity).addFragment(HomeSearchFragment())
 //                    (activity as MainActivity).supportFragmentManager.beginTransaction()
 //                            .replace(R.id.home_layout_search_frame,HomeFragment()).addToBackStack("search").commit()
                     true
@@ -147,6 +150,46 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
 
         })
 
+        Thread {
+            Thread.sleep(1500)
+            Handler(Looper.getMainLooper()).post(){
+                showLoadingDialog(context!!)
+            }
+            // 메인 리사이클러 아이템클릭 리스터
+            homeRecyclerAdapter.let {
+                homeRecyclerAdapter.setMyItemClickListener(object :
+                    HomeRecyclerAdapter.MyItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        showCustomToast("position = $position")
+
+                        restaurantArrayList[position]
+
+//                MainActivity.backStack = true
+//                MainActivity.fragmentBack = HomeRestaurantDetailsFragment()
+//                binding.homeLayoutFrame.visibility = View.VISIBLE
+//                (activity as MainActivity).supportFragmentManager.beginTransaction()
+//                    .replace(R.id.home_layout_frame,HomeRestaurantDetailsFragment().apply {
+//                        arguments = Bundle().apply {
+//                            putInt("position", position)
+//                        }
+//                    }).setCustomAnimations(R.anim.enter_fragment,0, 0, R.anim.exit_fragment)
+//                    .addToBackStack("fragment").commit()
+
+                        (activity as MainActivity).addFragment(HomeRestaurantDetailsFragment().apply {
+                            arguments = Bundle().apply {
+                                putInt("position", position)
+                            }
+                        })
+
+                    }
+
+                })
+            }
+            Handler(Looper.getMainLooper()).post(){
+                dismissLoadingDialog()
+            }
+        }.start()
+
     }
 
     private fun excuteHomeService(){
@@ -159,8 +202,8 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         itemList.clear()
         pageNum = 0
         limit = 4
+        homeRecyclerAdapter.clearItemList()
         HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = sort, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
-        homeRecyclerAdapter.notifyDataSetChanged()
     }
 
     fun setSortPivotSelect(){
@@ -201,7 +244,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         var end = start + limit - 1
         if (end < restaurantListSize) {
             for (i in start..end) {
-                val item = HomeRecyclerItems(idx = restaurantArrayList[i].restaurantId,
+                val item = HomeRecyclerItems(idx = itemIndex++,
                         title = restaurantArrayList[i].restaurantName,
                         location = restaurantArrayList[i].areaName,
                         grade = restaurantArrayList[i].star,

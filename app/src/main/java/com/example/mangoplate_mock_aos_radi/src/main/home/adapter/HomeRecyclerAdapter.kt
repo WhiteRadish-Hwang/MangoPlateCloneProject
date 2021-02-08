@@ -14,8 +14,23 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 
 class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRecyclerItems>): RecyclerView.Adapter<HomeRecyclerAdapter.ItemViewHolder>() {
+    interface MyItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    private lateinit var mItemClickListener: MyItemClickListener
+
+    fun setMyItemClickListener(itemClickListener: MyItemClickListener){
+        mItemClickListener = itemClickListener
+    }
 
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+        }
+
+
         val foodImg: ImageView = itemView.findViewById(R.id.home_recycler_main_img)
         val title: TextView = itemView.findViewById(R.id.home_recycler_text_title)
         val location: TextView = itemView.findViewById(R.id.home_recycler_text_loc)
@@ -40,6 +55,11 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         holder.grade.text = items.grade
         holder.viewPoint.text = items.viewPoint.toString()
         holder.reviewCount.text = items.reviewCount.toString()
+    }
+
+    fun clearItemList() {
+        itemList.clear()
+        notifyDataSetChanged()
     }
 
 }

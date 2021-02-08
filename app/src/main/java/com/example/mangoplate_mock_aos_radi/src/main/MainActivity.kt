@@ -30,9 +30,10 @@ import java.security.NoSuchAlgorithmException
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-    var backStack = true
-    var fragmentBack: Fragment? = null
-
+    companion object {
+        var backStack = true
+        var fragmentBack: Fragment? = null
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -114,12 +115,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    fun addFragment(fragment: Fragment) {
         val fmbt = supportFragmentManager.beginTransaction()
         backStack = true
         fragmentBack = fragment
         fmbt.setCustomAnimations(R.anim.enter_fragment,0, 0, R.anim.exit_fragment)
         fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fmbt = supportFragmentManager.beginTransaction()
+        fmbt.replace(R.id.main_layout_frame, fragment).commitAllowingStateLoss()
     }
 
     override fun onBackPressed() {

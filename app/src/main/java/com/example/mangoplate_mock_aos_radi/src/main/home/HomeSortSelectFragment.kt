@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeSortSelectBinding
@@ -38,9 +39,7 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "position1: $position")
-        position = isSelectedCheck(position)
-        Log.d(TAG, "position2: $position")
+        inputCheckData(position)
 
         when (position) {
             0 -> {
@@ -99,36 +98,14 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
         )
 
         for (v in sortTextViewArray) {
+            Log.d(TAG, "setTextDesign: ${view == v}")
             if (view == v) {
-                Log.d(TAG, "setTextDesign: view $view v $v")
-                view.setBackgroundResource(R.drawable.home_sort_select_text_border)
-                view.setTextColor(R.color.cliked_color)
+                v.setBackgroundResource(R.drawable.home_sort_select_text_border)
+                v.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
             } else {
                 v.setBackgroundResource(R.drawable.home_sort_select_text_border_unclicked)
-                v.setTextColor(R.color.uncliked_color)
+                v.setTextColor(ContextCompat.getColor(context!!, R.color.uncliked_color))
             }
-        }
-    }
-
-    fun isSelectedCheck(position: Int): Int {
-        when (position) {
-            0 -> {
-                inputCheckData(position)
-                return position
-            }
-            1 -> {
-                inputCheckData(position)
-                return position
-            }
-            2 -> {
-                inputCheckData(position)
-                return position
-            }
-            else -> {
-                inputCheckData(position)
-                return position
-            }
-
         }
     }
 

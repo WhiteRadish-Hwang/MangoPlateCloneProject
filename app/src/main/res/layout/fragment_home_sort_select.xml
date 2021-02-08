@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/home_sort_select_text_border_unclicked"
                 android:gravity="center_horizontal"
-                android:text="@string/home_sort_select_review"
+                android:text="@string/home_sort_select_recommend"
                 android:textAlignment="center"
                 android:textColor="@color/uncliked_color" />
 
