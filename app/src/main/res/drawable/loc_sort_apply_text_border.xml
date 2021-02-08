@@ -7,12 +7,13 @@
         android:top="0dp">
         <shape android:shape="rectangle">
             <stroke android:width="2dp"
-                android:color="@color/uncliked_color"/>
+                android:color="@color/cliked_color"/>
+            <solid android:color="@color/cliked_color"/>
             <corners
-                android:topLeftRadius="30dp"
-                android:topRightRadius="30dp"
-                android:bottomRightRadius="30dp"
-                android:bottomLeftRadius="30dp"/>
+                android:topLeftRadius="40dp"
+                android:topRightRadius="40dp"
+                android:bottomRightRadius="40dp"
+                android:bottomLeftRadius="40dp"/>
             <size
                 android:height="20dp"/>
             <padding

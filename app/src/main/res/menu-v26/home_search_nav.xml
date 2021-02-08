@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_home_search_nav_recommend"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/home_search_recommend_word" />
+
+    <item
+        android:id="@+id/menu_home_search_nav_recent"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:checkable="true"
+        android:title="@string/home_search_recent_word" />
+
+    <item
+        android:id="@+id/menu_home_search_nav_look_for_friend"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="@string/home_search_look_for_friend_word" />
+
+</menu>

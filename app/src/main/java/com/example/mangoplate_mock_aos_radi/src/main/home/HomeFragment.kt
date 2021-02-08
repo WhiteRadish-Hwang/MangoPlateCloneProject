@@ -1,24 +1,20 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home
 
+import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.Gravity
 import android.view.View
-import android.view.animation.TranslateAnimation
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.restaurantListSize
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.topListSize
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
@@ -27,6 +23,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItem
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.home.search.HomeSearchFragment
+import com.example.mangoplate_mock_aos_radi.src.main.location.LocationSelectFragment
 import kotlin.properties.Delegates
 
 class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView{
@@ -50,35 +48,30 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     var restaurantArrayList = ArrayList<RestaurantResultData>()
     var reviewCount by Delegates.notNull<Int>()
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        showCustomToast("onCreate")
         // 홈서비스 실행
         excuteHomeService()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         // 메인 리사이클러뷰 정렬기준 선택
         setSortPivotSelect()
         binding.homeTextSortSelect.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-
-        val anim = TranslateAnimation(binding.homeLayoutSearch.width.toFloat(), 0f, 0f, 0f)
-        val anim2 = TranslateAnimation(0f, binding.homeLayoutSearch.width.toFloat(), 0f, 0f)
-
-        binding.textView5.setOnClickListener {
-            anim2.duration = 2000
-            anim2.fillAfter = true
-            binding.homeLayoutSearch.animation = anim
-            binding.homeLayoutSearch.visibility = View.GONE
-        }
 
         binding.homeToolbar.inflateMenu(R.menu.menu_home_toolbar)
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId){
                 R.id.menu_home_toolbar_search -> {
-                    anim.duration = 2000
-                    anim.fillAfter = true
-                    binding.homeLayoutSearch.animation = anim
-                    binding.homeLayoutSearch.visibility = View.VISIBLE
-
                     showCustomToast("Clicked Search Item")
+                    binding.homeLayoutSearchFrame.visibility = View.VISIBLE
+                    (activity as MainActivity).replaceFragment(HomeSearchFragment())
+//                    (activity as MainActivity).supportFragmentManager.beginTransaction()
+//                            .replace(R.id.home_layout_search_frame,HomeFragment()).addToBackStack("search").commit()
                     true
                 }
                 R.id.menu_home_toolbar_map -> {
@@ -90,35 +83,38 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             }
         }
 
+        binding.homeToolbarTvLocChangedText.setOnClickListener {
+            val locSelectFragment = LocationSelectFragment()
+            locSelectFragment.show((activity as MainActivity).supportFragmentManager, "LocSel")
+        }
+
+        binding.homeVp.setOnTouchListener { v, event ->
+            v.dispatchTouchEvent(event)
+            return@setOnTouchListener false
+        }
+
+
         binding.homeLayoutSortSelect.setOnClickListener {
             val homeSortSelectFragment = HomeSortSelectFragment {
                 when (it) {
                     0 -> {
                         sortPivotSelect = "평점순"
-                        pageNum = 0
-                        limit = 4
-                        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = it, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                        clearFilter(restaurantArrayList, it + 1)
                     }
                     1 -> {
                         sortPivotSelect = "추천순"
-                        pageNum = 0
-                        limit = 4
-                        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = it, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                        clearFilter(restaurantArrayList, it + 1)
                     }
                     2 -> {
                         sortPivotSelect = "리뷰순"
-                        pageNum = 0
-                        limit = 4
-                        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = it, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                        clearFilter(restaurantArrayList, it + 1)
                     }
                     3 -> {
                         sortPivotSelect = "거리순"
-                        pageNum = 0
-                        limit = 4
-                        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = it, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                        clearFilter(restaurantArrayList, it + 1)
                     }
                 }
-                Log.d(ApplicationClass.TAG, "onViewCreated: $sortPivotSelect")
+                Log.d(TAG, "onViewCreated: $sortPivotSelect")
                 setSortPivotSelect()
             }
             homeSortSelectFragment.show((activity as MainActivity).supportFragmentManager, "BottomSheetDialog")
@@ -129,6 +125,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         var callBackAt = serviceCount * (limit * 100)
         binding.homeNestedScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
             override fun onScrollChange(v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+                Log.d(TAG, "onScrollChange: height: ${v?.height} scrollY: $scrollY, callBackAt: $callBackAt")
                 v?.let {
                     if (scrollY > callBackAt && !isEnd) {
                         val visibleItemCount = binding.homeMainRecycler.childCount
@@ -155,6 +152,15 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 10, sort = 1, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+    }
+
+    fun<T> clearFilter(itemList: ArrayList<T>, sort: Int) {
+        topArrayList.clear()
+        itemList.clear()
+        pageNum = 0
+        limit = 4
+        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = sort, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+        homeRecyclerAdapter.notifyDataSetChanged()
     }
 
     fun setSortPivotSelect(){
@@ -188,17 +194,12 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         }
     }
 
-    var idx = 1
     fun setDataAndRecyclerAdapter() {
         isLoading = true
         binding.homeProgressbarBelowRecycler.visibility = View.VISIBLE
         val start = (pageNum * limit)
-        var end = (pageNum * limit) + limit - 1
-        Log.d(TAG, "setDataAndRecyclerAdapter: pageNum:$pageNum, limit: $limit")
-        Log.d(TAG, "setDataAndRecyclerAdapter: size: $restaurantListSize")
-        Log.d(TAG, "setDataAndRecyclerAdapter: end >= restaurantListSize = ${end >= restaurantListSize}, isEnd: = $isEnd")
+        var end = start + limit - 1
         if (end < restaurantListSize) {
-            Log.d(TAG, "setDataAndRecyclerAdapter: start:$start, end: $end")
             for (i in start..end) {
                 val item = HomeRecyclerItems(idx = restaurantArrayList[i].restaurantId,
                         title = restaurantArrayList[i].restaurantName,
@@ -213,7 +214,6 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         } else if (end >= restaurantListSize && !isEnd) {
             isEnd = true
             end = restaurantListSize-1
-            Log.d(TAG, "setDataAndRecyclerAdapter: start:$start, end: $end")
             for (i in start..end) {
                 val item = HomeRecyclerItems(idx = restaurantArrayList[i].restaurantId,
                         title = restaurantArrayList[i].restaurantName,
@@ -227,13 +227,10 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             }
         }
 
-        Handler().post{
-            Log.d(TAG, "initData: ${idx++}")
+        Handler().postDelayed({
             if (this::homeRecyclerAdapter.isInitialized) {
-                Log.d(TAG, "initData: if")
                 homeRecyclerAdapter.notifyDataSetChanged()
             } else {
-                Log.d(TAG, "initData: else")
                 homeRecyclerAdapter = HomeRecyclerAdapter(context, itemList)
                 binding.homeMainRecycler.apply {
                     gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
@@ -244,7 +241,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
             }
             isLoading = false
             binding.homeProgressbarBelowRecycler.visibility = View.GONE
-        }
+        }, 300)
 
     }
 

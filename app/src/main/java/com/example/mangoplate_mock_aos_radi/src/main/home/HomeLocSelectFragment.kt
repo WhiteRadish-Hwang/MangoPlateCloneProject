@@ -13,18 +13,10 @@ import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeSortSelectBi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 @SuppressLint("ResourceAsColor")
-class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFragment() {
+class HomeLocSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFragment() {
     var _binding: FragmentHomeSortSelectBinding? = null
     val binding get() = _binding!!
-    val checkList = arrayListOf<Boolean>(isSelectedPoint, isSelectedRecommend, isSelectedReview, isSelectedDistance)
 
-    companion object {
-        var isSelectedPoint: Boolean = true
-        var isSelectedRecommend: Boolean = false
-        var isSelectedReview: Boolean = false
-        var isSelectedDistance: Boolean = false
-        var position: Int = 0
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,48 +30,29 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "position1: $position")
-        position = isSelectedCheck(position)
-        Log.d(TAG, "position2: $position")
-
-        when (position) {
-            0 -> {
-                setTextDesign(binding.homeSortSelectTextPoint)
-            }
-            1 -> {
-                setTextDesign(binding.homeSortSelectTextRecommend)
-            }
-            2 -> {
-                setTextDesign(binding.homeSortSelectTextReview)
-            }
-            3 -> {
-                setTextDesign(binding.homeSortSelectTextDistance)
-            }
-        }
-
 
         binding.homeSortSelectImgArrow.setOnClickListener {
             dialog?.dismiss()
         }
 
         binding.homeSortSelectTextPoint.setOnClickListener {
-            position = 0
-            itemClick(position)
+            itemClick(0)
+            setTextDesign(binding.homeSortSelectTextPoint)
             dialog?.dismiss()
         }
         binding.homeSortSelectTextRecommend.setOnClickListener {
-            position = 1
-            itemClick(position)
+            itemClick(1)
+            setTextDesign(binding.homeSortSelectTextRecommend)
             dialog?.dismiss()
         }
         binding.homeSortSelectTextReview.setOnClickListener {
-            position = 2
-            itemClick(position)
+            itemClick(2)
+            setTextDesign(binding.homeSortSelectTextReview)
             dialog?.dismiss()
         }
         binding.homeSortSelectTextDistance.setOnClickListener {
-            position = 3
-            itemClick(position)
+            itemClick(3)
+            setTextDesign(binding.homeSortSelectTextDistance)
             dialog?.dismiss()
         }
 
@@ -110,32 +83,4 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
         }
     }
 
-    fun isSelectedCheck(position: Int): Int {
-        when (position) {
-            0 -> {
-                inputCheckData(position)
-                return position
-            }
-            1 -> {
-                inputCheckData(position)
-                return position
-            }
-            2 -> {
-                inputCheckData(position)
-                return position
-            }
-            else -> {
-                inputCheckData(position)
-                return position
-            }
-
-        }
-    }
-
-    fun inputCheckData(position: Int) {
-        for (i in 0 until checkList.size) {
-            if (i == position) checkList[i] = true
-            else checkList[i] = false
-        }
-    }
 }

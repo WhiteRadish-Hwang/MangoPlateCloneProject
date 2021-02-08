@@ -17,6 +17,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,6 +73,9 @@ dependencies {
 
     //페이스북 sdk
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    //멀티덱스
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
 
     dependencies {
         implementation "com.kakao.sdk:v2-user:2.3.0" // 카카오 로그인
