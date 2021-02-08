@@ -43,7 +43,7 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         //추후 게시글의 유저 이미지로 서버에서 받아서 변경
         Glide.with(holder.totalImgProfile).load(ApplicationClass.profileImageUrl).circleCrop().placeholder(R.drawable.profile).into(holder.totalImgProfile)
         //추후 게시글의 유저 아이디로 서버에서 받아서 변경
-        holder.totalTextUserName.text = ApplicationClass.user_id
+        holder.totalTextUserName.text = ApplicationClass.user_name
         //추후 서버에서 받아 유저 리뷰, 팔로워 개수 받아서 변경
         holder.totalTextReviewCount.text = items.reviewCount.toString()
         holder.totalTextFollowerCount.text = items.followerCount.toString()

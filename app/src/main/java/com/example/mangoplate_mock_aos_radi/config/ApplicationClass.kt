@@ -48,6 +48,8 @@ class ApplicationClass : Application() {
         val FB_ID = "fb_id"
         val FB_LOGIN = "fb_login"
         var sortPivotSelect = "평점순"
+
+        var user_name: String? = null
         var user_id: String? = null
         var profileImageUrl: String? = null
         var isKakaoLogin: Boolean = false
@@ -58,6 +60,8 @@ class ApplicationClass : Application() {
         var recentLocList = ArrayList<LocSelectRecyclerItems>()
 
         var isOnFragment: Boolean = false
+
+        val getUserInfo = "/users/:${user_id}"
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.

@@ -33,7 +33,8 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     lateinit var homeRecyclerAdapter: HomeRecyclerAdapter
     lateinit var gridLayoutManager: GridLayoutManager
 
-
+    var callBackAt by Delegates.notNull<Int>()
+    var serviceCount = 1
     var pageNum: Int = 0
     var limit = 4
     var isEnd = false
@@ -124,8 +125,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         }
 
         //무한스크롤 리스너
-        var serviceCount = 1
-        var callBackAt = serviceCount * (limit * 100)
+        callBackAt = serviceCount * (limit * 100)
         binding.homeNestedScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
             override fun onScrollChange(v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
                 Log.d(TAG, "onScrollChange: height: ${v?.height} scrollY: $scrollY, callBackAt: $callBackAt")
@@ -202,6 +202,9 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
         itemList.clear()
         pageNum = 0
         limit = 4
+        itemIndex = 1
+        serviceCount = 1
+        callBackAt = serviceCount * (limit * 100)
         homeRecyclerAdapter.clearItemList()
         HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = sort, userId = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
@@ -313,7 +316,7 @@ class HomeFragment  : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bin
     }
 
     override fun onGetRestaurantFailure(message: String) {
-
+        showCustomToast("오류 : $message")
     }
 
 

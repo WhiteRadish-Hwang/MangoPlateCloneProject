@@ -45,7 +45,7 @@ class HollicRecyclerAdapter(val context: Context?, val itemList: ArrayList<Holli
         //추후 게시글의 유저 이미지로 서버에서 받아서 변경
         Glide.with(holder.HolicImgProfile).load(ApplicationClass.profileImageUrl).circleCrop().placeholder(R.drawable.profile).into(holder.HolicImgProfile)
         //추후 게시글의 유저 아이디로 서버에서 받아서 변경
-        holder.HolicTextUserName.text = ApplicationClass.user_id
+        holder.HolicTextUserName.text = ApplicationClass.user_name
         //추후 서버에서 받아 유저 리뷰, 팔로워 개수 받아서 변경
         holder.HolicTextReviewCount.text = items.reviewCount.toString()
         holder.HolicTextFollowerCount.text = items.followerCount.toString()

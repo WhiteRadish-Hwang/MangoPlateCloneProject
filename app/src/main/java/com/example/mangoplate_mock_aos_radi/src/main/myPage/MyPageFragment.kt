@@ -17,18 +17,22 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.is
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_name
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentMyPageBinding
 import com.example.mangoplate_mock_aos_radi.src.login.LoginActivity
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResponse
+import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResultData
 import com.facebook.login.LoginManager
 import com.kakao.sdk.user.UserApiClient
 
-class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
+class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page), MypageFragmentView{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        excuteGetMyInfo()
 
         binding.myPageToolbar.inflateMenu(R.menu.menu_my_page_toolbar)
         binding.myPageToolbar.setOnMenuItemClickListener {
@@ -43,17 +47,18 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
         }
 
         Glide.with(binding.myPageImgProfile).load(ApplicationClass.profileImageUrl).circleCrop().into(binding.myPageImgProfile)
-        binding.myPageTextUserName.text = user_id
+        binding.myPageTextUserName.text = user_name
 
         binding.myPageBtnLogout.setOnClickListener {
             user_id = null
+            user_name = null
             profileImageUrl = null
             if (isKakaoLogin) {
                 UserApiClient.instance.me { user, error ->
                     user?.let { UserApiClient.instance.logout {
                         isKakaoLogin = false
                         SharedPreferenced.putSettingItem(KAKAO_LOGIN, isKakaoLogin.toString())
-                        SharedPreferenced.putSettingItem(KAKAO_ID, user_id)
+                        SharedPreferenced.putSettingItem(KAKAO_ID, user_name)
                         SharedPreferenced.putSettingItem(KAKAO_IMG, profileImageUrl)
 
                         val intentLogout = Intent(context, LoginActivity::class.java)
@@ -64,13 +69,39 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             } else if (isFacebookLogin) {
                 isFacebookLogin = false
                 SharedPreferenced.putSettingItem(FB_LOGIN, isFacebookLogin.toString())
-                SharedPreferenced.putSettingItem(FB_ID, user_id)
+                SharedPreferenced.putSettingItem(FB_ID, user_name)
                 SharedPreferenced.putSettingItem(FB_ID, profileImageUrl)
                 LoginManager.getInstance().logOut()
                 (activity as MainActivity).finish()
             }
         }
 
+    }
+
+    fun excuteGetMyInfo() {
+        Log.d(TAG, "excuteGetMyInfo: userId: $user_id")
+        showLoadingDialog(context!!)
+        user_id?.let {userId -> MyPageService(this).tryGetMyInfo(userId) }
+    }
+
+    override fun onGetMyInfoSuccess(response: MyInfoResponse, infoList: ArrayList<MyInfoResultData>) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onGetMyInfoSuccess: result = ${infoList}")
+        Log.d(TAG, "onGetMyInfoSuccess: result = ${response.isSuccess}")
+        Log.d(TAG, "onGetMyInfoSuccess: result = ${response.code}")
+        Log.d(TAG, "onGetMyInfoSuccess: result = ${response.message}")
+
+        if (!infoList.isNullOrEmpty()) {
+            user_id = infoList[0].userId.toString()
+            user_name = infoList[0].userName
+            profileImageUrl = infoList[0].userProfileImgUrl
+        }
+        response.message?.let { showCustomToast(it) }
+    }
+
+    override fun onGetMyInfoFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
     }
 
 

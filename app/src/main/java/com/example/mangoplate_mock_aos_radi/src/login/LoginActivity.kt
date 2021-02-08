@@ -4,19 +4,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_ID
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_LOGIN
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_ID
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_IMG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isFacebookLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_name
 import com.example.mangoplate_mock_aos_radi.config.BaseActivity
 import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.ActivityLoginBinding
+import com.example.mangoplate_mock_aos_radi.src.login.model.FacebookLoginResponse
+import com.example.mangoplate_mock_aos_radi.src.login.model.KakaoLoginResponse
+import com.example.mangoplate_mock_aos_radi.src.login.model.PostFacebookLoginRequest
+import com.example.mangoplate_mock_aos_radi.src.login.model.PostKakaoLoginRequest
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -29,8 +31,11 @@ import org.json.JSONObject
 import java.net.URL
 
 
-class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), LoginActivityView {
     val callbackManager = CallbackManager.Factory.create();
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = Intent(this, MainActivity::class.java)
@@ -40,15 +45,15 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
         isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
 
-        //자동로그인
-        if (isKakaoLogin){
-            user_id = SharedPreferenced.getSettingItem(KAKAO_ID)
-            profileImageUrl = SharedPreferenced.getSettingItem(KAKAO_IMG)
-            startActivity(intent)
-        } else if (isFacebookLogin) {
-            user_id = SharedPreferenced.getSettingItem(FB_ID)
-            startActivity(intent)
-        }
+//        //자동로그인
+//        if (isKakaoLogin){
+//            user_id = SharedPreferenced.getSettingItem(KAKAO_ID)
+//            profileImageUrl = SharedPreferenced.getSettingItem(KAKAO_IMG)
+//            startActivity(intent)
+//        } else if (isFacebookLogin) {
+//            user_id = SharedPreferenced.getSettingItem(FB_ID)
+//            startActivity(intent)
+//        }
 
         //페이스북 로그인
         val accessTokenTracker = object : AccessTokenTracker() {
@@ -76,7 +81,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                         override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
                             val name = `object`?.getString("name")
-                            user_id = name
+                            user_name = name
                             val id = `object`?.getString("id")
                             val url = URL("https://graph.facebook.com/$id/picture")
 //                            val profile = Profile.getCurrentProfile()
@@ -87,8 +92,15 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                     })
                     request.executeAsync()
+                    showLoadingDialog(this@LoginActivity)
+                    val currentAccessToken = AccessToken.getCurrentAccessToken().token.toString()
+                    val postFbRequest = PostFacebookLoginRequest(facebookToken = currentAccessToken)
+                    Log.d(TAG, "onCreate: currentAccessToken: $currentAccessToken, postFbRequest: $postFbRequest")
+                    LoginService(this@LoginActivity).tryPostFacebookLogin(postFbRequest)
+
                     isFacebookLogin = true
                     SharedPreferenced.putSettingItem(FB_LOGIN, isFacebookLogin.toString())
+
                     startActivity(intent)
                     finish()
                 }
@@ -107,16 +119,27 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
             if (LoginClient.instance.isKakaoTalkLoginAvailable(this)){
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoTalk $token $error")
+                    val kakaoToken: String = token?.accessToken.toString()
+                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken)
+                    showLoadingDialog(this)
+                    Log.d(TAG, "onCreate: kakaoToken: $kakaoToken, postRequest: $postRequest")
+                    LoginService(this).tryPostKakaoLogin(postRequest)
+
                     updateKakaoLogin()
                 }
             } else {
                 LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoAccount $token $error")
+                    val kakaoToken: String = token?.accessToken.toString()
+                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken)
+                    showLoadingDialog(this)
+                    Log.d(TAG, "onCreate: kakaoToken: $kakaoToken, postRequest: $postRequest")
+                    LoginService(this).tryPostKakaoLogin(postRequest)
+
                     updateKakaoLogin()
                 }
             }
         }
-
 
     }
 
@@ -128,15 +151,16 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     private fun updateKakaoLogin() {
         UserApiClient.instance.me { user, error ->
-            user?.let { Log.d(TAG, "updateKakaoLoginUi: id = ${user.id}")
-                Log.d(TAG, "updateKakaoLoginUi: id = ${user.kakaoAccount?.profile?.nickname}")
-                user_id = user.kakaoAccount?.profile?.nickname.toString()
-                profileImageUrl = user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
+            user?.let {
+//                Log.d(TAG, "updateKakaoLoginUi: id = ${user.id}")
+//                Log.d(TAG, "updateKakaoLoginUi: id = ${user.kakaoAccount?.profile?.nickname}")
+//                user_name = user.kakaoAccount?.profile?.nickname.toString()
+//                profileImageUrl = user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
                 isKakaoLogin = true
 
-                SharedPreferenced.putSettingItem(KAKAO_LOGIN, isKakaoLogin.toString())
-                SharedPreferenced.putSettingItem(KAKAO_ID, user_id)
-                SharedPreferenced.putSettingItem(KAKAO_IMG, profileImageUrl)
+//                SharedPreferenced.putSettingItem(KAKAO_LOGIN, isKakaoLogin.toString())
+//                SharedPreferenced.putSettingItem(KAKAO_ID, user_id)
+//                SharedPreferenced.putSettingItem(KAKAO_IMG, profileImageUrl)
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -146,6 +170,37 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
             }
         }
 
+    }
+
+    override fun onPostKakaoLoginSuccess(response: KakaoLoginResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.kakaoId}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.userId}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.isSuccess}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.code}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.message}")
+        user_id = response.userId.toString()
+        response.message?.let { showCustomToast(it) }
+    }
+
+    override fun onPostKakaoLoginFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPostFacebookLoginSuccess(response: FacebookLoginResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.userId}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.facebookId}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.isSuccess}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.code}")
+        Log.d(TAG, "onPostSignUpSuccess: result = ${response.message}")
+        response.message?.let { showCustomToast(it) }
+    }
+
+    override fun onPostFacebookLoginFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
     }
 
 
