@@ -43,10 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        val customLayout = TouchTestLayout(this)
-//        addContentView(customLayout, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
-
+        supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commitAllowingStateLoss()
 //        binding.mainVp.adapter = MainTabPagerAdapter(supportFragmentManager)
 
 //        TabLayoutMediator(binding.mainLayoutTab, binding.mainVp) {tab, position ->
