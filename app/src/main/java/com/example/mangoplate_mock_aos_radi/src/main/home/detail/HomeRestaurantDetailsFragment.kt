@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home
+package com.example.mangoplate_mock_aos_radi.src.main.home.detail
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,6 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeRestaurantDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFrameFragment
-import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 

@@ -18,7 +18,6 @@ class HomeService (val view: HomeFragmentView) {
                           areaName: String,
                           distance: Int,
                           sort: Int,
-                          userId: Int,
                           userLatitude: Float,
                           userLongitude:Float
 //                          restaurantPriceFilter1: Int? = 0,
@@ -36,7 +35,7 @@ class HomeService (val view: HomeFragmentView) {
     ){
 
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort, userId, userLatitude, userLongitude).enqueue(object : Callback<RestaurantsResponse> {
+        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort, userLatitude, userLongitude).enqueue(object : Callback<RestaurantsResponse> {
             override fun onResponse(call: Call<RestaurantsResponse>, response: Response<RestaurantsResponse>) {
                 when (response.code()) {
                     200 -> {

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_main_bottom_nav_home"
-        android:icon="@drawable/home_text"
+        android:icon="@drawable/home"
         app:showAsAction="always"
         android:enabled="true"
         android:checkable="true"
@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_main_bottom_nav_discount"
-        android:icon="@drawable/discount_text"
+        android:icon="@drawable/discount"
         app:showAsAction="always"
         android:enabled="true"
         android:title="@string/main_bottom_nav_discount_title" />
@@ -27,7 +27,7 @@
 
     <item
         android:id="@+id/menu_main_bottom_nav_news"
-        android:icon="@drawable/news_text"
+        android:icon="@drawable/news"
         app:showAsAction="always"
         android:enabled="true"
         android:checkable="true"
@@ -35,7 +35,7 @@
 
     <item
         android:id="@+id/menu_main_bottom_nav_my_page"
-        android:icon="@drawable/mypage_text"
+        android:icon="@drawable/mypage"
         app:showAsAction="always"
         android:enabled="true"
         android:title="@string/main_bottom_nav_my_page_title" />

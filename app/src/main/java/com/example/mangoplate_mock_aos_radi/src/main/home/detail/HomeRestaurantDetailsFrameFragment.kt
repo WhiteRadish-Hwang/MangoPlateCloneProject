@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home
+package com.example.mangoplate_mock_aos_radi.src.main.home.detail
 
 import android.os.Bundle
 import android.view.View

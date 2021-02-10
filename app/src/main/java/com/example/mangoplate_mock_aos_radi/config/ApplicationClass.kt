@@ -33,7 +33,7 @@ class ApplicationClass : Application() {
         lateinit var sSharedPreferences: SharedPreferences
         val MANGO_PLATE_APP = "MANGO_PLATE_APP"
         // Token Header 키 값
-        val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
+        var X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
@@ -56,6 +56,8 @@ class ApplicationClass : Application() {
         var isFacebookLogin: Boolean = false
         var restaurantListSize by Delegates.notNull<Int>()
         var topListSize by Delegates.notNull<Int>()
+        var isLogin: Boolean = false
+        var isGetMyInfo: Boolean = false
 
         var recentLocList = ArrayList<LocSelectRecyclerItems>()
 
@@ -89,7 +91,7 @@ class ApplicationClass : Application() {
             .retryOnConnectionFailure(true)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//            .addNetworkInterceptor(XAccessTokenInterceptor()) // 자동 헤더 전송
+            .addNetworkInterceptor(XAccessTokenInterceptor()) // 자동 헤더 전송
             .build()
 
         // sRetrofit 이라는 전역변수에 API url, 인터셉터, Gson을 넣어주고 빌드해주는 코드

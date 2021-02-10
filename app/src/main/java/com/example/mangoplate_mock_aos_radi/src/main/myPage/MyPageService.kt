@@ -12,17 +12,16 @@ import retrofit2.Response
 class MyPageService (val view: MypageFragmentView) {
 
 
-    fun tryGetMyInfo(userId: String){
-
+    fun tryGetMyInfo(){
         val myPageRetrofitInterface = ApplicationClass.sRetrofit.create(MyPageRetrofitInterface::class.java)
-        myPageRetrofitInterface.getUserInfos(userId).enqueue(object : Callback<MyInfoResponse> {
+        myPageRetrofitInterface.getUserInfos().enqueue(object : Callback<MyInfoResponse> {
             override fun onResponse(call: Call<MyInfoResponse>, response: Response<MyInfoResponse>) {
                 when (response.code()) {
                     200 -> {
                         response.body()?.let {myInfo ->
                             val myInfoArrayList = ArrayList<MyInfoResultData>()
 
-                            Log.d(TAG, "onResponse: ${response.body()}")
+                            Log.d(TAG, "tryGetMyInfo: ${response.headers()}")
                             Log.d(TAG, "tryGetMyInfo: ${myInfo.result}")
                             myInfo.result.forEach { listItem ->
                                 val myInfoItemObject = listItem.asJsonObject

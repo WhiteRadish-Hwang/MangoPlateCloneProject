@@ -5,6 +5,5 @@ import com.google.gson.annotations.SerializedName
 import java.math.BigInteger
 
 data class FacebookLoginResponse (
-    @SerializedName("userId") val userId: Int,
-    @SerializedName("facebookId") val facebookId: BigInteger
+        @SerializedName("jwt") val jwt: String
 ):BaseResponse()

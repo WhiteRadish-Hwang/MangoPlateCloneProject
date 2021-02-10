@@ -7,8 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountBinding
-import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
-import com.example.mangoplate_mock_aos_radi.src.main.home.HomeImageSlideFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DiscountFragment : BaseFragment<FragmentDiscountBinding>(FragmentDiscountBinding::bind, R.layout.fragment_discount){

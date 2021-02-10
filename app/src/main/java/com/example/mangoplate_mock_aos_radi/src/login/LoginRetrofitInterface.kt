@@ -1,12 +1,11 @@
 package com.example.mangoplate_mock_aos_radi.src.login
 
-import com.example.mangoplate_mock_aos_radi.src.login.model.FacebookLoginResponse
-import com.example.mangoplate_mock_aos_radi.src.login.model.KakaoLoginResponse
-import com.example.mangoplate_mock_aos_radi.src.login.model.PostFacebookLoginRequest
-import com.example.mangoplate_mock_aos_radi.src.login.model.PostKakaoLoginRequest
+import com.example.mangoplate_mock_aos_radi.src.login.model.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface LoginRetrofitInterface {
     @POST("/kakao-login")
