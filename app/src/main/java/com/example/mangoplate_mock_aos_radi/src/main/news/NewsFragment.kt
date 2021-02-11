@@ -18,7 +18,6 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
         fmbt.replace(R.id.news_layout_frame, NewsFrameFragment()).commit()
 
 
-
     }
 
 }

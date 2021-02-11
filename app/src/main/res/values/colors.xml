@@ -13,6 +13,8 @@
     <color name="discount_rate_border_color">#0ebebc</color>
     <color name="transparent">#70000000</color>
 
+    <color name="news_sort_background_color">#fff4da</color>
+
     <color name="home_search_edit_underline">#00000000</color>
     <color name="discount_eat_deal_layout_select_loc_transparent">#01FFFFFF</color>
 

@@ -30,10 +30,12 @@
 
         <ImageView
             android:id="@+id/home_sort_select_img_arrow"
-            android:layout_width="50dp"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/arrow_down"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/bottomsheet_arrow_down"
             tools:ignore="VectorDrawableCompat" />
 
         <TextView

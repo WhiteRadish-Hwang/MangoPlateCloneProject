@@ -7,4 +7,7 @@ data class TotalRecyclerItems (var innerImageItems: ArrayList<TotalRecyclerInner
                                var likeCount: Int?,
                                var restaurantInfo: String?,
                                var dateTimeAgo: String?,
+//                               var filter_great: Int?,
+//                               var filter_good: Int?,
+//                               var filter_bad: Int?,
                                var mainContentText: String?)

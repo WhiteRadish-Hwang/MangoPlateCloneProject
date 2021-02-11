@@ -173,11 +173,13 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                     LoginService(this).tryPostKakaoLogin(postRequest)
 
                     Thread {
-                        Thread.sleep(1500)
+                        Thread.sleep(2000)
                         try {
                             Handler(Looper.getMainLooper()).post() {
+                                if (isLogin) {
+                                    isLogin = false
                                     updateKakaoLogin()
-
+                                }
                                 if (isLoginDone) throw Exception()
                             }
                         } catch (e: Exception){

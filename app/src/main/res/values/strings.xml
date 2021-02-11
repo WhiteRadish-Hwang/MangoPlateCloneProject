@@ -21,6 +21,10 @@
     <string name="home_search_look_for_friend_word">친구 찾기</string>
     <string name="home_search_edit_hint">키워드로 검색해보세요.</string>
 
+    <string name="news_text_great">맛있다!</string>
+    <string name="news_text_good">괜찮다</string>
+    <string name="news_text_bad">별로</string>
+
     <string name="location_select_list_recent">최근지역</string>
     <string name="location_select_list_about_me">내 주변</string>
     <string name="location_select_list_gangnam">서울-강남</string>

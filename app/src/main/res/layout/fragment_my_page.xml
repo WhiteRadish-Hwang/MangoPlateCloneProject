@@ -11,9 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+
 
             <LinearLayout
                 android:id="@+id/my_page_first_layout"
@@ -144,13 +148,12 @@
 
                 <ImageView
                     android:id="@+id/my_page_img_event"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
-                    app:srcCompat="@drawable/mango_event"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/mp_event" />
 
                 <TextView
                     android:id="@+id/my_page_text_event"
@@ -194,12 +197,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_bounght_deal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_bought_eat_deal"/>
 
                     <TextView
                         android:id="@+id/my_page_text_bounght_deal"
@@ -232,12 +234,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_deal_alarm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_eat_deal_alarm" />
 
                     <TextView
                         android:id="@+id/my_page_text_deal_alarm"
@@ -283,12 +284,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_time_line"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_time_line" />
 
                     <TextView
                         android:id="@+id/my_page_text_time_line"
@@ -297,7 +297,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_toRightOf="@+id/my_page_img_time_line"
-                        android:text="@string/bought_eat_deal"
+                        android:text="@string/time_line"
                         android:textColor="@color/black" />
 
                     <ImageView
@@ -402,12 +402,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_wanna_go"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_wanna_go" />
 
                     <TextView
                         android:id="@+id/my_page_text_wanna_go"
@@ -439,12 +438,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_my_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_my_list" />
 
                     <TextView
                         android:id="@+id/my_page_text_my_list"
@@ -480,8 +478,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_bookmark" />
 
                     <TextView
                         android:id="@+id/my_page_text_book_mark"
@@ -513,12 +510,11 @@
 
                     <ImageView
                         android:id="@+id/my_page_img_registered_restaurant"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        app:srcCompat="@drawable/mango_event"
-                        app:tint="@color/black" />
+                        app:srcCompat="@drawable/mp_registered_restaurant" />
 
                     <TextView
                         android:id="@+id/my_page_text_registered_restaurant"
@@ -556,13 +552,12 @@
 
                 <ImageView
                     android:id="@+id/my_page_img_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="15dp"
-                    app:srcCompat="@drawable/mango_event"
-                    app:tint="@color/black" />
+                    app:srcCompat="@drawable/mp_setting" />
 
                 <TextView
                     android:id="@+id/my_page_text_setting"
@@ -593,6 +588,18 @@
                 android:layout_below="@id/my_page_fifth_layout"
                 android:text="LOG OUT" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/my_page_img_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    app:srcCompat="@drawable/alarm" />
+            </RelativeLayout>
 
         </RelativeLayout>
 

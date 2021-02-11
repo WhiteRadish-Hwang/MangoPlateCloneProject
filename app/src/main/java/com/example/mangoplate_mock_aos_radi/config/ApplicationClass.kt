@@ -59,6 +59,14 @@ class ApplicationClass : Application() {
         var isLogin: Boolean = false
         var isGetMyInfo: Boolean = false
 
+        //news filter 변수
+        var isGreat: Boolean = true
+        var isGood: Boolean = true
+        var isBad: Boolean = true
+        var fGreat = 0
+        var fGood = 0
+        var fBad = 0
+
         var recentLocList = ArrayList<LocSelectRecyclerItems>()
 
         var isOnFragment: Boolean = false

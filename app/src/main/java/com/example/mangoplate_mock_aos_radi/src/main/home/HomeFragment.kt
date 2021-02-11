@@ -44,7 +44,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     var callBackAt by Delegates.notNull<Int>()
     var serviceCount = 1
     var pageNum: Int = 0
-    var limit = 4
+    var limit = 10
     var isEnd = false
     var itemIndex = 1
 
@@ -128,6 +128,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             homeSortSelectFragment.show((activity as MainActivity).supportFragmentManager, "BottomSheetDialog")
         }
 
+
+
         //무한스크롤 리스너
         callBackAt = serviceCount * (limit * 70)
         binding.homeNestedScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
@@ -155,10 +157,11 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         })
 
         Thread {
-            Thread.sleep(1500)
+            Thread.sleep(5000)
             Handler(Looper.getMainLooper()).post(){
 //                showLoadingDialog(context!!)
             }
+
             // 메인 리사이클러 아이템클릭 리스터
             homeRecyclerAdapter.let {
                 homeRecyclerAdapter.setMyItemClickListener(object :
@@ -171,17 +174,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                                 putInt("position", position)
                             }
                         })
-//                MainActivity.backStack = true
-//                MainActivity.fragmentBack = HomeRestaurantDetailsFragment()
-//                binding.homeLayoutFrame.visibility = View.VISIBLE
-//                (activity as MainActivity).supportFragmentManager.beginTransaction()
-//                    .replace(R.id.home_layout_frame,HomeRestaurantDetailsFragment().apply {
-//                        arguments = Bundle().apply {
-//                            putInt("position", position)
-//                        }
-//                    }).setCustomAnimations(R.anim.enter_fragment,0, 0, R.anim.exit_fragment)
-//                    .addToBackStack("fragment").commit()
-
                     }
 
                 })
@@ -202,7 +194,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         topArrayList.clear()
         itemList.clear()
         pageNum = 0
-        limit = 4
+        limit = 10
         itemIndex = 1
         serviceCount = 1
         callBackAt = serviceCount * (limit * 70)
@@ -262,7 +254,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             isEnd = true
             end = restaurantListSize-1
             for (i in start..end) {
-                val item = HomeRecyclerItems(idx = restaurantArrayList[i].restaurantId,
+                val item = HomeRecyclerItems(idx = itemIndex++,
                         title = restaurantArrayList[i].restaurantName,
                         location = restaurantArrayList[i].areaName,
                         grade = restaurantArrayList[i].star,
@@ -281,7 +273,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                 homeRecyclerAdapter = HomeRecyclerAdapter(context, itemList)
                 binding.homeMainRecycler.apply {
                     gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-                    layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+                    layoutManager = gridLayoutManager
+
                     setHasFixedSize(true)
                     adapter = homeRecyclerAdapter
                 }
@@ -305,11 +298,12 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
         for (idx in 0 until restaurantList.size){
             restaurantArrayList.add(restaurantList[idx])
+            Log.d(TAG, "restaurantArrayList: ${restaurantArrayList[idx]} \n")
         }
 
         restaurantListSize = restaurantArrayList.size
         Log.d(TAG, "restaurantListSize: $restaurantListSize")
-        Log.d(TAG, "restaurantArrayList: $restaurantArrayList")
+
 
         val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter
