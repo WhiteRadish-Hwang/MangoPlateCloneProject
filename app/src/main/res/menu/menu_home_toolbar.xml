@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_home_toolbar_search"
         android:icon="@drawable/mango_home_search"
-        app:showAsAction="always"
+        android:iconTint="@color/black"
+        android:iconTintMode="multiply"
+        app:showAsAction="ifRoom"
         android:enabled="true"
         android:checkable="true"
-        android:title="@string/main_bottom_nav_home_title" />
+        android:title="@string/main_bottom_nav_home_title"
+        tools:targetApi="o" />
 
     <item
         android:id="@+id/menu_home_toolbar_map"
         android:icon="@drawable/mango_home_map"
-        app:showAsAction="always"
+        android:iconTint="@color/black"
+        app:showAsAction="ifRoom"
         android:enabled="true"
-        android:title="@string/main_bottom_nav_discount_title" />
+        android:checkable="true"
+        android:title="@string/main_bottom_nav_discount_title"
+        tools:targetApi="o" />
 
 </menu>

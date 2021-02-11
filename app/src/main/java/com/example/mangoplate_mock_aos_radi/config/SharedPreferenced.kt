@@ -16,7 +16,6 @@ object SharedPreferenced {
     }
 
     fun getSettingItem(key: String): String? {
-        Log.d(ApplicationClass.TAG, "Get key is null? ${key.isNullOrBlank()}")
         Log.d(ApplicationClass.TAG, "Get $key from ${ApplicationClass.MANGO_PLATE_APP}")
         Log.d(ApplicationClass.TAG, "Return ${sSharedPreferences.getString(key, null)}")
         return sSharedPreferences.getString(key, null)

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_home_toolbar_search"
-        android:icon="@drawable/mango_home_search"
+        android:icon="@drawable/camera"
         app:showAsAction="always"
         android:enabled="true"
         android:checkable="true"
@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_home_toolbar_map"
-        android:icon="@drawable/mango_home_map"
+        android:icon="@drawable/shared"
         app:showAsAction="always"
         android:enabled="true"
         android:title="공유" />

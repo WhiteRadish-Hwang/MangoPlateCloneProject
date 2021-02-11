@@ -48,8 +48,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         super.onCreate(savedInstanceState)
         val intent = Intent(this, MainActivity::class.java)
 
-        val keyHash = Utility.getKeyHash(this)
-        Log.d(ApplicationClass.TAG, "keyHash: $keyHash")
+//        val keyHash = Utility.getKeyHash(this)
         isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
         isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
 
@@ -72,14 +71,12 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         }
         // If the access token is available already assign it.
         // If the access token is available already assign it.
-        val accessToken = AccessToken.getCurrentAccessToken()
-
 
 //        binding.loginBtnFacebook.setReadPermissions("user_status")
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
-                    val request: GraphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                    val request: GraphRequest = GraphRequest.newMeRequest(getCurrentAccessToken(),
                     object : GraphRequest.GraphJSONArrayCallback,
                         GraphRequest.GraphJSONObjectCallback {
                         override fun onCompleted(objects: JSONArray?, response: GraphResponse?) {
@@ -88,27 +85,25 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                         override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
                             val name = `object`?.getString("name")
-                            user_name = name
+//                            user_name = name
                             val id = `object`?.getString("id")
                             val url = URL("https://graph.facebook.com/$id/picture")
 //                            val profile = Profile.getCurrentProfile()
 //                            val img = profile.getProfilePictureUri(200, 200).toString()
-                            profileImageUrl = url.toString()
-                            Log.d(TAG, "onCompleted: $name $url")
+//                            profileImageUrl = url.toString()
                         }
 
                     })
+
                     request.executeAsync()
-                    val profile = Profile.getCurrentProfile()
-                    Log.d(TAG, "profile = $profile")
-                    Log.d(TAG, "token: $accessToken, tokenTracker: $accessTokenTracker")
+
                     val currentAccessToken = getCurrentAccessToken().token.toString()
                     val postFbRequest = PostFacebookLoginRequest(facebookToken = currentAccessToken)
                     Log.d(TAG, "onCreate: currentAccessToken: $currentAccessToken, postFbRequest: $postFbRequest")
                     LoginService(this@LoginActivity).tryPostFacebookLogin(postFbRequest)
 
                     Thread {
-                        Thread.sleep(2000)
+                        Thread.sleep(1500)
                         try {
                             Handler(Looper.getMainLooper()).post() {
                                 if (isLogin) {
@@ -117,6 +112,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                                     SharedPreferenced.putSettingItem(FB_LOGIN, isFacebookLogin.toString())
 
                                     isLoginDone = true
+                                    Log.d(TAG, "isFacebookLogin: $isFacebookLogin")
                                     startActivity(intent)
                                     finish()
                                 }
@@ -149,7 +145,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                     LoginService(this).tryPostKakaoLogin(postRequest)
 
                     Thread {
-                        Thread.sleep(2000)
+                        Thread.sleep(1500)
                         try {
                             Handler(Looper.getMainLooper()).post() {
                                 if (isLogin) {
@@ -173,7 +169,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                     LoginService(this).tryPostKakaoLogin(postRequest)
 
                     Thread {
-                        Thread.sleep(2000)
+                        Thread.sleep(1500)
                         try {
                             Handler(Looper.getMainLooper()).post() {
                                 if (isLogin) {
@@ -220,6 +216,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
             error?.let {
 

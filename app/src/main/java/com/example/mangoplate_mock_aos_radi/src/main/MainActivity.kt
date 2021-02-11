@@ -1,22 +1,28 @@
 package com.example.mangoplate_mock_aos_radi.src.main
 
+import android.animation.Animator
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
+import android.view.ViewAnimationUtils
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MotionEventCompat
+import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_LOGIN
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_LOGIN
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isFacebookLogin
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.BaseActivity
+import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.ActivityMainBinding
 import com.example.mangoplate_mock_aos_radi.src.main.add.AddFragment
 import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountFragment
@@ -24,7 +30,9 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.concurrent.timer
+import kotlin.concurrent.timerTask
+import kotlin.math.log
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -45,9 +53,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 //
 //    private val pagerAdapter: MainViewPagerAdapter by lazy { MainViewPagerAdapter(this, fragments) }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
+        isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
+
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commitAllowingStateLoss()
 //        binding.mainVp.adapter = MainTabPagerAdapter(supportFragmentManager)
 
@@ -77,16 +89,81 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.mainLayoutFrame.bringToFront()
 
         binding.mainFbtn.setOnClickListener {
+            val cx = binding.mainLayoutFrame.width / 2
+            val cy2 = binding.mainLayoutFrame.height - binding.mainFbtn.height / 2
+            val cy = binding.mainLayoutFrame.height
+            var duration = 2
+            // get the final radius for the clipping circle
+            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+
+
             if (!isOpen) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    isOpen = !isOpen
+
+                    binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn))
+
+                    val revealAnimator: Animator = ViewAnimationUtils
+                        .createCircularReveal(binding.mainLayoutFrame, cx, cy2, 0f, finalRadius)
+//                    binding.mainLayoutFrame.visibility = View.VISIBLE
+                    addFragment(AddFragment())
+                    revealAnimator.duration = 200
+                    revealAnimator.start()
+
+//                revealAnimator.addListener(object : Animator.AnimatorListener {
+//                    override fun onAnimationRepeat(animation: Animator?) {
+//
+//                    }
+//
+//                    override fun onAnimationEnd(animation: Animator?) {
+//                        binding.mainLayoutFrame.visibility = View.VISIBLE
+//                    }
+//
+//                    override fun onAnimationCancel(animation: Animator?) {
+//
+//                    }
+//
+//                    override fun onAnimationStart(animation: Animator?) {
+//
+//                    }
+//
+//                })
+
+//                revealAnimator.setDuration(300)
+
+
+//                binding.mainFbtn.setBackgroundColor(R.color.white)
+//                addFragment(AddFragment())
+                }
+            } else {
                 isOpen = !isOpen
-                binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn))
-                binding.mainFbtn.setBackgroundColor(R.color.white)
-                addFragment(AddFragment())
-                } else {
-                isOpen = !isOpen
+                Log.d(ApplicationClass.TAG, "onCreate: isOpen")
+
+                val revealAnimator: Animator = ViewAnimationUtils
+                    .createCircularReveal(binding.mainLayoutFrame, cx, cy2, finalRadius, 0f)
+                revealAnimator.duration = 200
+                revealAnimator.start()
+
                 binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn_after))
-                binding.mainFbtn.setBackgroundColor(R.color.cliked_color)
-                onBackPressed()
+
+                val handler = Handler {
+                    when (it.what) {
+                        0 -> {
+                            onBackPressed()
+//                            binding.mainLayoutFrame.visibility = View.GONE
+                            true
+                        }
+                        else -> {true}
+                    }
+                }
+
+
+                timer(period = 100) {
+                    duration--
+                    if (duration == 0) handler.obtainMessage(0).sendToTarget()
+                }
+//                binding.mainFbtn.setBackgroundColor(R.color.cliked_color)
+//
             }
         }
 
@@ -107,12 +184,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                             .commitAllowingStateLoss()
                         return@OnNavigationItemSelectedListener true
                     }
-                    R.id.menu_main_bottom_nav_add -> {
-//                        supportFragmentManager.beginTransaction()
-//                            .replace(R.id.main_frame, AddFragment())
-//                            .commitAllowingStateLoss()
-                        return@OnNavigationItemSelectedListener true
-                    }
+//                    R.id.menu_main_bottom_nav_add -> {
+////                        supportFragmentManager.beginTransaction()
+////                            .replace(R.id.main_frame, AddFragment())
+////                            .commitAllowingStateLoss()
+//                        return@OnNavigationItemSelectedListener true
+//                    }
                     R.id.menu_main_bottom_nav_news -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frame, NewsFragment())
@@ -193,7 +270,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         Log.d(ApplicationClass.TAG, "addFragment: $fragment")
 
         if (isOpen){
-            fmbt.setCustomAnimations(R.anim.enter_add_fragment,0, 0, R.anim.exit_add_fragment)
             fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
         } else {
             fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)

@@ -71,7 +71,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
+    
     //페이스북 sdk
     implementation 'com.facebook.android:facebook-core:[4,5)'
     implementation 'com.facebook.android:facebook-login:[4,5)'

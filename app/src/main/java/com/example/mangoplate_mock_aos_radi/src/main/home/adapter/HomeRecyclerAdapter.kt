@@ -51,8 +51,8 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
         holder.title.text = "${items.idx}. ${items.title}"
-        holder.location.text = items.location
-        holder.grade.text = items.grade
+        holder.location.text = items.areaName
+        holder.grade.text = items.star
         holder.viewPoint.text = items.viewPoint.toString()
         holder.reviewCount.text = items.reviewCount.toString()
     }

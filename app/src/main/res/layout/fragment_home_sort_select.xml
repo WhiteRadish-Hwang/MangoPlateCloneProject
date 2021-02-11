@@ -30,11 +30,11 @@
 
         <ImageView
             android:id="@+id/home_sort_select_img_arrow"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="22dp"
+            android:layout_height="11dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
             app:srcCompat="@drawable/bottomsheet_arrow_down"
             tools:ignore="VectorDrawableCompat" />
 
@@ -158,6 +158,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
             android:gravity="right"
+            android:textSize="10sp"
             android:text="@string/home_sort_select_distance_text"
             android:textAlignment="gravity"
             android:textColor="@color/orange" />

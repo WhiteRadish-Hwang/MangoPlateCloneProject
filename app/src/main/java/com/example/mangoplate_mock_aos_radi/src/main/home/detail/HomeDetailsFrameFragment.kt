@@ -10,7 +10,7 @@ import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeRestaurantDe
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsFrameBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class HomeRestaurantDetailsFrameFragment : BaseFragment<FragmentHomeRestaurantDetailsFrameBinding>(FragmentHomeRestaurantDetailsFrameBinding::bind, R.layout.fragment_home_restaurant_details_frame){
+class HomeDetailsFrameFragment : BaseFragment<FragmentHomeRestaurantDetailsFrameBinding>(FragmentHomeRestaurantDetailsFrameBinding::bind, R.layout.fragment_home_restaurant_details_frame){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

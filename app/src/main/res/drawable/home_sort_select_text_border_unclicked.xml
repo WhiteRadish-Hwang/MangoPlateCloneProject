@@ -3,21 +3,22 @@
     <item
         android:start="0dp"
         android:end="0dp"
-        android:bottom="0dp"
-        android:top="0dp">
+        android:bottom="5dp"
+        android:top="5dp">
         <shape android:shape="rectangle">
-            <stroke android:width="2dp"
-                android:color="@color/uncliked_color"/>
+            <stroke android:width="0.5dp"
+                android:color="@color/white"/>
             <corners
                 android:topLeftRadius="30dp"
                 android:topRightRadius="30dp"
                 android:bottomRightRadius="30dp"
                 android:bottomLeftRadius="30dp"/>
-            <size
-                android:height="20dp"/>
+
             <padding
                 android:top="10dp"
-                android:bottom="10dp"/>
+                android:bottom="10dp"
+                android:right="10dp"
+                android:left="10dp"/>
         </shape>
     </item>
 

@@ -21,9 +21,7 @@
         android:id="@+id/menu_main_bottom_nav_add"
         android:icon="@drawable/mango_add"
         app:showAsAction="always"
-        android:enabled="true"
-        android:checkable="true"
-        android:title="add" />
+        android:title="" />
 
     <item
         android:id="@+id/menu_main_bottom_nav_news"

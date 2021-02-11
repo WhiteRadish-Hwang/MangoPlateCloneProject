@@ -6,15 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LAYOUT_DIRECTION_RTL
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
@@ -26,7 +21,8 @@ import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeRestaurantDetailsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment.Companion.homeDetailsKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
@@ -157,7 +153,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         })
 
         Thread {
-            Thread.sleep(5000)
+            Thread.sleep(1500)
             Handler(Looper.getMainLooper()).post(){
 //                showLoadingDialog(context!!)
             }
@@ -169,9 +165,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                     override fun onItemClick(position: Int) {
                         showCustomToast("position = $position")
                         //아직 포지션에 따른 데이터 전달 구현안함
-                        (activity as MainActivity).addFragment(HomeRestaurantDetailsFragment().apply {
+
+                        (activity as MainActivity).addFragment(HomeDetailsFragment().apply {
                             arguments = Bundle().apply {
-                                putInt("position", position)
+                                putInt(homeDetailsKey, restaurantArrayList[position].restaurantId)
                             }
                         })
                     }
@@ -241,12 +238,14 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         if (end < restaurantListSize) {
             for (i in start..end) {
                 val item = HomeRecyclerItems(idx = itemIndex++,
-                        title = restaurantArrayList[i].restaurantName,
-                        location = restaurantArrayList[i].areaName,
-                        grade = restaurantArrayList[i].star,
-                        viewPoint = restaurantArrayList[i].restaurantView,
-                        reviewCount = restaurantArrayList[i].reviewCount,
-                        image = restaurantArrayList[i].firstImageUrl)
+                    title = restaurantArrayList[i].restaurantName,
+                    areaName = restaurantArrayList[i].areaName,
+                    star = restaurantArrayList[i].star,
+                    viewPoint = restaurantArrayList[i].restaurantView,
+                    reviewCount = restaurantArrayList[i].reviewCount,
+                    image = restaurantArrayList[i].firstImageUrl,
+                    distanceFromUser = restaurantArrayList[i].distanceFromUser,
+                    restaurantId = restaurantArrayList[i].restaurantId)
                 itemList.add(item)
                 Log.d(TAG, "initData: $item")
             }
@@ -255,12 +254,14 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             end = restaurantListSize-1
             for (i in start..end) {
                 val item = HomeRecyclerItems(idx = itemIndex++,
-                        title = restaurantArrayList[i].restaurantName,
-                        location = restaurantArrayList[i].areaName,
-                        grade = restaurantArrayList[i].star,
-                        viewPoint = restaurantArrayList[i].restaurantView,
-                        reviewCount = restaurantArrayList[i].reviewCount,
-                        image = restaurantArrayList[i].firstImageUrl)
+                    title = restaurantArrayList[i].restaurantName,
+                    areaName = restaurantArrayList[i].areaName,
+                    star = restaurantArrayList[i].star,
+                    viewPoint = restaurantArrayList[i].restaurantView,
+                    reviewCount = restaurantArrayList[i].reviewCount,
+                    image = restaurantArrayList[i].firstImageUrl,
+                    distanceFromUser = restaurantArrayList[i].distanceFromUser,
+                    restaurantId = restaurantArrayList[i].restaurantId)
                 itemList.add(item)
                 Log.d(TAG, "initDataEnd: $item")
             }
@@ -307,6 +308,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
         val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter
+
         setDataAndRecyclerAdapter()
     }
 

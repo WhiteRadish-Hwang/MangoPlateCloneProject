@@ -35,6 +35,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
         if (!isGetMyInfo) excuteGetMyInfo()
 
+        user_name?.let {
+            Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
+            binding.myPageTextUserName.text = user_name
+        }
+
         binding.myPageToolbar.inflateMenu(R.menu.menu_my_page_toolbar)
         binding.myPageToolbar.setOnMenuItemClickListener {
             when (it.itemId){
@@ -53,6 +58,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             user_id = null
             user_name = null
             profileImageUrl = null
+            Log.d(TAG, "isKakaoLogin: $isKakaoLogin, isFacebookLogin: $isFacebookLogin")
             if (isKakaoLogin) {
                 UserApiClient.instance.me { user, error ->
                     user?.let { UserApiClient.instance.logout {
@@ -66,12 +72,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
                         (activity as MainActivity).finish()
                     } }
                 }
-            } else if (isFacebookLogin) {
+            } else {
                 isFacebookLogin = false
                 SharedPreferenced.putSettingItem(FB_LOGIN, isFacebookLogin.toString())
                 SharedPreferenced.putSettingItem(FB_ID, user_name)
                 SharedPreferenced.putSettingItem(FB_ID, profileImageUrl)
                 LoginManager.getInstance().logOut()
+
+                val intentLogout = Intent(context, LoginActivity::class.java)
+                startActivity(intentLogout)
                 (activity as MainActivity).finish()
             }
         }
