@@ -1,9 +1,11 @@
 package com.example.mangoplate_mock_aos_radi.src.main
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MotionEventCompat
 import androidx.fragment.app.Fragment
@@ -31,6 +33,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         var fragmentBack: Fragment? = null
     }
 
+    var isOpen: Boolean = false
+
 //    private val homeFragment by lazy { HomeFragment() }
 //    private val discountFragment by lazy { DiscountFragment() }
 //    private val addFragment by lazy { AddFragment() }
@@ -41,6 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 //
 //    private val pagerAdapter: MainViewPagerAdapter by lazy { MainViewPagerAdapter(this, fragments) }
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.beginTransaction().replace(R.id.main_frame, HomeFragment()).commitAllowingStateLoss()
@@ -69,6 +74,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 //                }
 //            }
 //        }.attach()
+        binding.mainLayoutFrame.bringToFront()
+
+        binding.mainFbtn.setOnClickListener {
+            if (!isOpen) {
+                isOpen = !isOpen
+                binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn))
+                binding.mainFbtn.setBackgroundColor(R.color.white)
+                addFragment(AddFragment())
+                } else {
+                isOpen = !isOpen
+                binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn_after))
+                binding.mainFbtn.setBackgroundColor(R.color.cliked_color)
+                onBackPressed()
+            }
+        }
 
         binding.mainBtmNav.setOnNavigationItemSelectedListener(
             BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -88,9 +108,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.menu_main_bottom_nav_add -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frame, AddFragment())
-                            .commitAllowingStateLoss()
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.main_frame, AddFragment())
+//                            .commitAllowingStateLoss()
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.menu_main_bottom_nav_news -> {
@@ -171,8 +191,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         fragmentBack = fragment
         Log.d(ApplicationClass.TAG, "addFragment: backstck= $backStack")
         Log.d(ApplicationClass.TAG, "addFragment: $fragment")
-        fmbt.setCustomAnimations(R.anim.enter_fragment,0, 0, R.anim.exit_fragment)
-        fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
+
+        if (isOpen){
+            fmbt.setCustomAnimations(R.anim.enter_add_fragment,0, 0, R.anim.exit_add_fragment)
+            fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
+        } else {
+            fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)
+            fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
+        }
     }
 
     override fun onBackPressed() {

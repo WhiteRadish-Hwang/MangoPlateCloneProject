@@ -180,7 +180,10 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                                     isLogin = false
                                     updateKakaoLogin()
                                 }
-                                if (isLoginDone) throw Exception()
+                                if (isLoginDone) {
+                                    isLoginDone = !isLoginDone
+                                    throw Exception()
+                                }
                             }
                         } catch (e: Exception){
                         }
