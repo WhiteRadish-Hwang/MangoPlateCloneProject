@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fBad
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fGood
@@ -16,13 +17,23 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.is
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGreat
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsFrameBinding
+import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.properties.Delegates
 
 class NewsFrameFragment : BaseFragment<FragmentNewsFrameBinding>(FragmentNewsFrameBinding::bind, R.layout.fragment_news_frame){
+    companion object {
+        const val reviewListKey = "reviewListKey"
+    }
+
+    var f_reviewList = ArrayList<TotalReviewResultData>()
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // TotalReview로 전달해줄 아이템 받기
+        f_reviewList = arguments?.getSerializable(reviewListKey) as ArrayList<TotalReviewResultData>
 
         binding.newsVp.adapter = DiscountTabPagerAdapter(this)
 
@@ -92,7 +103,14 @@ class NewsFrameFragment : BaseFragment<FragmentNewsFrameBinding>(FragmentNewsFra
 
         override fun createFragment(position: Int): Fragment {
             return when(position) {
-                0 -> TotalFragment()
+                0 -> {
+                    TotalFragment().apply {
+                        arguments = Bundle().apply {
+                            putSerializable(reviewListKey, f_reviewList)
+                        }
+                        Log.d(TAG, "arguments: $arguments")
+                    }
+                }
                 1 -> FollowingFragment()
                 else -> HolicFragment()
             }

@@ -130,7 +130,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         callBackAt = serviceCount * (limit * 70)
         binding.homeNestedScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
             override fun onScrollChange(v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
-//                Log.d(TAG, "onScrollChange: height: ${v?.height} scrollY: $scrollY, callBackAt: $callBackAt")
+                Log.d(TAG, "onScrollChange: height: ${v?.height} scrollY: $scrollY, callBackAt: $callBackAt, isEnd: $isEnd")
                 v?.let {
                     if (scrollY > callBackAt && !isEnd) {
                         val visibleItemCount = binding.homeMainRecycler.childCount
@@ -150,41 +150,13 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
             }
 
+
         })
-
-        Thread {
-            Thread.sleep(1500)
-            Handler(Looper.getMainLooper()).post(){
-//                showLoadingDialog(context!!)
-            }
-
-            // 메인 리사이클러 아이템클릭 리스터
-            homeRecyclerAdapter.let {
-                homeRecyclerAdapter.setMyItemClickListener(object :
-                    HomeRecyclerAdapter.MyItemClickListener {
-                    override fun onItemClick(position: Int) {
-                        showCustomToast("position = $position")
-                        //아직 포지션에 따른 데이터 전달 구현안함
-
-                        (activity as MainActivity).addFragment(HomeDetailsFragment().apply {
-                            arguments = Bundle().apply {
-                                putInt(homeDetailsKey, restaurantArrayList[position].restaurantId)
-                            }
-                        })
-                    }
-
-                })
-            }
-            Handler(Looper.getMainLooper()).post(){
-//                dismissLoadingDialog()
-            }
-        }.start()
-
     }
 
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
-        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 10, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 1000, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
 
     fun<T> clearFilter(itemList: ArrayList<T>, sort: Int) {
@@ -195,8 +167,9 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         itemIndex = 1
         serviceCount = 1
         callBackAt = serviceCount * (limit * 70)
+        isEnd = false
         homeRecyclerAdapter.clearItemList()
-        HomeService(this).tryGetRestaurants(page = pageNum, limit = limit, areaName = "성북", distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
 
     fun setSortPivotSelect(){
@@ -275,6 +248,23 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                 binding.homeMainRecycler.apply {
                     gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
                     layoutManager = gridLayoutManager
+
+                    // 메인 리사이클러 아이템클릭 리스터
+                    homeRecyclerAdapter.let {
+                        it.setMyItemClickListener(object :
+                            HomeRecyclerAdapter.MyItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                showCustomToast("position = $position")
+                                //아직 포지션에 따른 데이터 전달 구현안함
+
+                                (activity as MainActivity).addFragment(HomeDetailsFragment().apply {
+                                    arguments = Bundle().apply {
+                                        putInt(homeDetailsKey, restaurantArrayList[position].restaurantId)
+                                    }
+                                })
+                            }
+                        })
+                    }
 
                     setHasFixedSize(true)
                     adapter = homeRecyclerAdapter

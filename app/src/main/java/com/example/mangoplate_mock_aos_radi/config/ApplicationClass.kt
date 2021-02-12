@@ -58,6 +58,7 @@ class ApplicationClass : Application() {
         var topListSize by Delegates.notNull<Int>()
         var isLogin: Boolean = false
         var isGetMyInfo: Boolean = false
+        var isGetNewsReviewItem: Boolean = false
 
         //news filter 변수
         var isGreat: Boolean = true

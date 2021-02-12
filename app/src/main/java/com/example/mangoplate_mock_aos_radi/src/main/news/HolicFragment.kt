@@ -31,7 +31,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
     }
 
     fun setRecyclerAdapter(){
-        initData()
+//        initData()
         innerInitData()
         binding.hollicRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -52,19 +52,19 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
         }
     }
 
-    private fun initData() {
-//        val item = TotalRecyclerItems(innerImageItems = null, reviewCount = null, likeCount = null,
-//            followerCount = null, commentCount = null,
-//            restaurantInfo = "",dateTimeAgo = "", expendable = false,
-//            mainContentText = "놀라운 식사를 할 수 있게 서비스! 이 모든 것은 프티 우수한 에피타이저가 나오 네. 이 푸아그라 롤리팝, 레드 와인과 버섯, 랍스터 연예, 물론 치즈, 초콜릿 디저트 크레페 수세 및 모두 뛰어난, 필히 소금에 절인 브리오슈! 주방장은 우수한 그녀는 딸과 함께 걸어가실만할 의 너트 알레르기 와 완전히 다른 네 가지의 에피타이저가 나오고 있는 쁘띠 너트 및 하지 않았다. 미슐랭 스타 레스토랑에서 먹을 수 있는 여러 경험이 강력 추천합니다.")
-
-        for (i in 0..5) {
-            val item1 = TotalRecyclerItems(innerImageItems = innerItemList, reviewCount = 0, likeCount = 0, followerCount = 0, commentCount = 0, restaurantInfo = "@ 공화춘 - 경북 김천시",dateTimeAgo = "20시간 전",
-                mainContentText = "놀라운 식사를 할 수 있게 서비스! 이 모든 것은 프티 우수한 에피타이저가 나오 네. 이 푸아그라 롤리팝, 레드 와인과 버섯, 랍스터 연예, 물론 치즈, 초콜릿 디저트 크레페 수세 및 모두 뛰어난, 필히 소금에 절인 브리오슈! 주방장은 우수한 그녀는 딸과 함께 걸어가실만할 의 너트 알레르기 와 완전히 다른 네 가지의 에피타이저가 나오고 있는 쁘띠 너트 및 하지 않았다. 미슐랭 스타 레스토랑에서 먹을 수 있는 여러 경험이 강력 추천합니다."
-            )
-//            ,filter_great = fGreat, filter_good = fGood, filter_bad = fBad
-            itemList.add(item1)
-        }
-    }
+//    private fun initData() {
+////        val item = TotalRecyclerItems(innerImageItems = null, reviewCount = null, likeCount = null,
+////            followerCount = null, commentCount = null,
+////            restaurantInfo = "",dateTimeAgo = "", expendable = false,
+////            mainContentText = "놀라운 식사를 할 수 있게 서비스! 이 모든 것은 프티 우수한 에피타이저가 나오 네. 이 푸아그라 롤리팝, 레드 와인과 버섯, 랍스터 연예, 물론 치즈, 초콜릿 디저트 크레페 수세 및 모두 뛰어난, 필히 소금에 절인 브리오슈! 주방장은 우수한 그녀는 딸과 함께 걸어가실만할 의 너트 알레르기 와 완전히 다른 네 가지의 에피타이저가 나오고 있는 쁘띠 너트 및 하지 않았다. 미슐랭 스타 레스토랑에서 먹을 수 있는 여러 경험이 강력 추천합니다.")
+//
+//        for (i in 0..5) {
+//            val item1 = TotalRecyclerItems(innerImageItems = innerItemList, reviewCount = 0, likeCount = 0, followerCount = 0, commentCount = 0, restaurantInfo = "@ 공화춘 - 경북 김천시",dateTimeAgo = "20시간 전",
+//                mainContentText = "놀라운 식사를 할 수 있게 서비스! 이 모든 것은 프티 우수한 에피타이저가 나오 네. 이 푸아그라 롤리팝, 레드 와인과 버섯, 랍스터 연예, 물론 치즈, 초콜릿 디저트 크레페 수세 및 모두 뛰어난, 필히 소금에 절인 브리오슈! 주방장은 우수한 그녀는 딸과 함께 걸어가실만할 의 너트 알레르기 와 완전히 다른 네 가지의 에피타이저가 나오고 있는 쁘띠 너트 및 하지 않았다. 미슐랭 스타 레스토랑에서 먹을 수 있는 여러 경험이 강력 추천합니다."
+//            )
+////            ,filter_great = fGreat, filter_good = fGood, filter_bad = fBad
+//            itemList.add(item1)
+//        }
+//    }
 
 }

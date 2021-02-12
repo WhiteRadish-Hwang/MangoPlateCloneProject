@@ -1,12 +1,16 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news.adapter
 
 import android.content.Context
+import android.graphics.Paint
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.text.toSpannable
+import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,17 +21,21 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInn
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerItems>): RecyclerView.Adapter<TotalRecyclerAdapter.TotalViewHolder>() {
+
     inner class TotalViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val totalImgProfile: ImageView = itemView.findViewById(R.id.total_img_profile)
         val totalTextUserName: TextView = itemView.findViewById(R.id.total_text_user_name)
-        val totalTextReviewCount: TextView = itemView.findViewById(R.id.total_text_review_count)
-        val totalTextFollowerCount: TextView = itemView.findViewById(R.id.total_text_follower_count)
-        val totalTextRetaurantInfo: TextView = itemView.findViewById(R.id.total_text_restaurant_name_loc)
+        val totalTextUserReviewCount: TextView = itemView.findViewById(R.id.total_text_user_review_count)
+        val totalTextUserFollowerCount: TextView = itemView.findViewById(R.id.total_text_user_follower_count)
+        val totalTextRetaurantName: TextView = itemView.findViewById(R.id.total_text_restaurant_name)
+        val totalTextRetaurantLoc: TextView = itemView.findViewById(R.id.total_text_restaurant_loc)
         val totalTextMainContent: TextView = itemView.findViewById(R.id.total_text_main)
         val totalTextLikeCount: TextView = itemView.findViewById(R.id.total_text_like_count)
         val totalTextCommnetCount: TextView = itemView.findViewById(R.id.total_text_comment)
-        val totalTextDateAgo: TextView = itemView.findViewById(R.id.total_text_date_ago)
+        val totalTextUpdateAt: TextView = itemView.findViewById(R.id.total_text_updateAt)
         val totalInnerRecycler: RecyclerView = itemView.findViewById(R.id.total_recycler_img)
+        val totalImgExpression: ImageView = itemView.findViewById(R.id.total_img_expression)
+        val totalTextExpression: TextView = itemView.findViewById(R.id.total_text_expression)
 
     }
 
@@ -36,45 +44,55 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         return TotalViewHolder(view)
     }
 
-
     override fun onBindViewHolder(holder: TotalViewHolder, position: Int) {
         val items = itemList[position]
 
-        //추후 게시글의 유저 이미지로 서버에서 받아서 변경
-        Glide.with(holder.totalImgProfile).load(ApplicationClass.profileImageUrl).circleCrop().placeholder(R.drawable.profile).into(holder.totalImgProfile)
-        //추후 게시글의 유저 아이디로 서버에서 받아서 변경
-        holder.totalTextUserName.text = ApplicationClass.user_name
-        //추후 서버에서 받아 유저 리뷰, 팔로워 개수 받아서 변경
-        holder.totalTextReviewCount.text = items.reviewCount.toString()
-        holder.totalTextFollowerCount.text = items.followerCount.toString()
+        Glide.with(holder.totalImgProfile).load(items.userProfileImgUrl).circleCrop().placeholder(R.drawable.profile).into(holder.totalImgProfile)
+        holder.totalTextUserName.text = items.userName
+        holder.totalTextUserReviewCount.text = items.userReviewCount.toString()
+        holder.totalTextUserFollowerCount.text = items.userFollowerCount.toString()
 
-        holder.totalTextRetaurantInfo.text = items.restaurantInfo
-        holder.totalTextMainContent.text = items.mainContentText
+        holder.totalTextRetaurantName.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        holder.totalTextRetaurantLoc.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        holder.totalTextRetaurantName.text = items.restaurantName
+        holder.totalTextRetaurantLoc.text = items.restaurantLocation
+        holder.totalTextMainContent.text = items.reviewContents
 
         // 버튼 클릭 시 1씩 증가하게 변화를 줘야함
-        if (items.likeCount == null || items.commentCount == null){
-            holder.totalTextLikeCount.text = ""
-            holder.totalTextCommnetCount.text = ""
+        holder.totalTextLikeCount.text = items.reviewLikeCount.toString()
+        holder.totalTextCommnetCount.text = items.reviewReplyCount.toString()
+
+        holder.totalTextLikeCount.text = items.reviewLikeCount
+        holder.totalTextCommnetCount.text = items.reviewReplyCount
+        holder.totalTextUpdateAt.text = items.updatedAt
+
+        when (items.reviewExpression) {
+            -1 -> {
+                holder.totalImgExpression.setImageResource(R.drawable.bad_remove)
+                holder.totalTextExpression.text = items.expression_bad
+            }
+            1 -> {
+                holder.totalImgExpression.setImageResource(R.drawable.good_remove)
+                holder.totalTextExpression.text = items.expression_good
+            }
+            2 -> {
+                holder.totalImgExpression.setImageResource(R.drawable.great_remove)
+                holder.totalTextExpression.text = items.expression_delicious
+            }
         }
-        holder.totalTextLikeCount.text = "좋아요 ${items.likeCount}개"
-        holder.totalTextCommnetCount.text = "댓글 ${items.commentCount}개"
 
-        holder.totalTextDateAgo.text = items.dateTimeAgo
-
-//        // 홀릭 탭에서 사용할 예정
-//       val isExpendable: Boolean = items.expendable
-//        holder.totalLayoutExpandable.visibility = if (isExpendable) View.VISIBLE else View.GONE
-//        holder.totalLayoutProfile.visibility = if (!isExpendable) View.VISIBLE else View.GONE
-//        holder.totalLayoutMainContent.visibility = if (!isExpendable) View.VISIBLE else View.GONE
-//        holder.totalLayoutFooter.visibility = if (!isExpendable) View.VISIBLE else View.GONE
+//        if (items.isHolic == 1) {
 //
-//        holder.itemView.setOnClickListener {
-//            if (position == 0) {
-//                items.expendable = true
-//            }
+//        }
+//
+//        if (items.restaurantLikeStatus == 1){
+//
+//        }
+//        if (items.reviewLikeStatus == 1){
+//
 //        }
 
-        setItemsRecycler(holder.totalInnerRecycler, items.innerImageItems)
+        setItemsRecycler(holder.totalInnerRecycler, items.reviewImgList)
     }
 
     //inner 리사이클러뷰 어답터 장착

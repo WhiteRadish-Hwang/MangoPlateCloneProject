@@ -19,23 +19,26 @@ class HomeService (val view: HomeFragmentView) {
                           distance: Int,
                           sort: Int,
                           userLatitude: Float,
-                          userLongitude:Float
-//                          restaurantPriceFilter1: Int? = 0,
-//                          restaurantPriceFilter2: Int? = 0,
-//                          restaurantPriceFilter3: Int? = 0,
-//                          restaurantPriceFilter4: Int? = 0,
-//                          restaurantFilter1: Int? = 0,
-//                          restaurantFilter2: Int? = 0,
-//                          restaurantFilter3: Int? = 0,
-//                          restaurantFilter4: Int? = 0,
-//                          restaurantFilter5: Int? = 0,
-//                          restaurantFilter6: Int? = 0,
-//                          restaurantFilter7: Int? = 0,
-//                          restaurantFilter8: Int? = 0
+                          userLongitude:Float,
+                          restaurantPriceFilter1: Int? = 1,
+                          restaurantPriceFilter2: Int? = 2,
+                          restaurantPriceFilter3: Int? = 3,
+                          restaurantPriceFilter4: Int? = 4,
+                          restaurantFilter1: Int? = 1,
+                          restaurantFilter2: Int? = 2,
+                          restaurantFilter3: Int? = 3,
+                          restaurantFilter4: Int? = 4,
+                          restaurantFilter5: Int? = 5,
+                          restaurantFilter6: Int? = 6,
+                          restaurantFilter7: Int? = 7,
+                          restaurantFilter8: Int? = 8
     ){
 
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
-        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort, userLatitude, userLongitude).enqueue(object : Callback<RestaurantsResponse> {
+        homeRetrofitInterface.getRestaurants(page, limit, areaName, distance, sort, userLatitude, userLongitude,
+            restaurantPriceFilter1, restaurantPriceFilter2, restaurantPriceFilter3, restaurantPriceFilter4,
+            restaurantFilter1, restaurantFilter2, restaurantFilter3, restaurantFilter4, restaurantFilter5,
+            restaurantFilter6, restaurantFilter7, restaurantFilter8).enqueue(object : Callback<RestaurantsResponse> {
             override fun onResponse(call: Call<RestaurantsResponse>, response: Response<RestaurantsResponse>) {
                 when (response.code()) {
                     200 -> {
@@ -68,6 +71,8 @@ class HomeService (val view: HomeFragmentView) {
                                 val  areaName = restaurantItemObject.get("areaName").asString
                                 val  restaurantView = restaurantItemObject.get("restaurantView").asInt
                                 val  reviewCount = restaurantItemObject.get("reviewCount").asInt
+                                val  isLike = restaurantItemObject.get("isLike").asInt
+                                val  visited = restaurantItemObject.get("visited").asInt
                                 val  star = restaurantItemObject.get("star").asString
                                 val  firstImageUrl = restaurantItemObject.get("firstImageUrl").asString
 
@@ -78,6 +83,8 @@ class HomeService (val view: HomeFragmentView) {
                                         areaName = areaName,
                                         restaurantView = restaurantView,
                                         reviewCount = reviewCount,
+                                        isLike = isLike,
+                                        visited = visited,
                                         star = star,
                                         firstImageUrl = firstImageUrl)
 

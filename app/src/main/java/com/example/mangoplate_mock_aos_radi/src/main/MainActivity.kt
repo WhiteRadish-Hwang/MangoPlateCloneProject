@@ -86,7 +86,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 //                }
 //            }
 //        }.attach()
-        binding.mainLayoutFrame.bringToFront()
 
         binding.mainFbtn.setOnClickListener {
             val cx = binding.mainLayoutFrame.width / 2
@@ -266,20 +265,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         val fmbt = supportFragmentManager.beginTransaction()
         backStack = true
         fragmentBack = fragment
-        Log.d(ApplicationClass.TAG, "addFragment: backstck= $backStack")
+        Log.d(ApplicationClass.TAG, "addFragment: isOpen= $isOpen")
         Log.d(ApplicationClass.TAG, "addFragment: $fragment")
 
         if (isOpen){
             fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
         } else {
+            binding.mainFbtn.visibility = View.GONE
             fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)
-            fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
+            fmbt.add(R.id.main_layout_sub_frame, fragment).addToBackStack("fragment").commit()
         }
     }
 
     override fun onBackPressed() {
         Log.d(ApplicationClass.TAG, "onBackPressed: backstck= $backStack")
         if (backStack) { //상세정보창 프래그먼트를 킨 상태면 뒤로가기했을 때 해당 프래그먼트를 삭제해줌
+            binding.mainFbtn.visibility = View.VISIBLE
             fragmentBack?.let { supportFragmentManager.popBackStack() }
             backStack = false
         } else {

@@ -10,7 +10,21 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TA
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeRestaurantDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.areaNameKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.nearRestaurantArrayListKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantBreakTimeKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantClosedDateKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantLocationKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantOpeningTimeKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantPriceKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewBadItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGoodItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGreatItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import kotlin.properties.Delegates
@@ -30,6 +44,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     val menuImgArrayList = ArrayList<String>()
     val keyWordArrayList = ArrayList<String>()
     val reviewArrayList = ArrayList<ReviewResultData>()
+    val nearRestaurantArrayList = ArrayList<NearRestaurantResultData>()
 
     // 상세정보 변수
     lateinit var restaurantName: String
@@ -46,6 +61,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     lateinit var restaurantRestTime: String
     lateinit var restaurantPrice: String
     lateinit var restaurantMenu: String
+    lateinit var areaName: String
 
     // 리뷰카운트 변수
     var deliciousCount by Delegates.notNull<Int>()
@@ -81,8 +97,36 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
         }
 
 
+
+    }
+
+    fun setArgumentsToFrame() {
         val fmbt = (activity as MainActivity).supportFragmentManager.beginTransaction()
-        fmbt.replace(R.id.details_layout_frame, HomeDetailsFrameFragment()).commit()
+        fmbt.replace(R.id.details_layout_frame, HomeDetailsFrameFragment().apply {
+            arguments = Bundle().apply {
+                // 키워드
+                putStringArrayList(keywordItemKey, keyWordArrayList)
+                // 식당 리뷰
+                putSerializable(reviewResultArrayListKey, reviewArrayList)
+                // 식당 리뷰 카운트
+                putInt(reviewTitleItemKey, reviewCount)
+                putInt(reviewGreatItemKey, deliciousCount)
+                putInt(reviewGoodItemKey, okayCount)
+                putInt(reviewBadItemKey, badCount)
+                // 식당 운영 정보
+                putString(restaurantOpeningTimeKey, restaurantTime)
+                putString(restaurantBreakTimeKey, restaurantRestTime)
+                putString(restaurantClosedDateKey, restaurantHoliday)
+                putString(restaurantPriceKey, restaurantPrice)
+                // 식당 주소
+                putString(restaurantLocationKey, restaurantLocation)
+                // 근처 식당
+                putSerializable(nearRestaurantArrayListKey, nearRestaurantArrayList)
+                // 지역 이름
+                putString(areaNameKey, areaName)
+            }
+            Log.d(TAG, "arguments: $arguments")
+        }).commit()
     }
 
     fun viewHoldingData() {
@@ -150,7 +194,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
         for (i in 0 until menuImgList.size) menuImgArrayList.add(menuImgList[i].restaurantMenuImgUrl)
 
         // 키워드
-        for (i in 0 until menuImgList.size) keyWordArrayList.add(keyWordList[i].restaurantKeyWord)
+        for (i in 0 until keyWordList.size) keyWordArrayList.add(keyWordList[i].restaurantKeyWord)
 
         // 맛깔나는 리뷰 카운트 --->>> reviewCount 중복이라 안 받음
         for (i in 0 until reviewCountList.size) {
@@ -159,10 +203,21 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
             badCount = reviewCountList[i].badCount
         }
 
-//        // 리뷰
-//        for (i in 0 until reviewList.size) {
-//
-//        }
+        // 리뷰
+        for (reviewData in reviewList) reviewArrayList.add(reviewData)
+
+        // 근처 식당
+        for (nearRestaurantData in nearRestaurantList) nearRestaurantArrayList.add(nearRestaurantData)
+
+        // 지역 이름
+        for (areaResultData in areaResultList) areaName = areaResultData.areaName
+
+
+
+
+
+        // Frame에 Arguments 설정
+        setArgumentsToFrame()
 
         // 이너 리사이클러뷰 어답터
         setRecyclerAdapter()

@@ -1,34 +1,111 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news
 
 import android.os.Bundle
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
+import androidx.core.text.toSpannable
+import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fBad
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fGood
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fGreat
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsTotalBinding
+import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFrameFragment.Companion.reviewListKey
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.HollicRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.HollicRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
+import kotlin.properties.Delegates
 
 class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total){
     val itemList = ArrayList<TotalRecyclerItems>()
     val innerItemList = ArrayList<TotalRecyclerInnerImageItems>()
 
+    var total_reviewList = ArrayList<TotalReviewResultData>()
+    lateinit var total_reviewObject : TotalRecyclerItems
+
+    var total_reviewId by Delegates.notNull<Int>()
+    var total_userId by Delegates.notNull<Int>()
+    lateinit var total_userName: String
+    var total_isHolic by Delegates.notNull<Int>()
+    lateinit var total_userProfileImgUrl: String
+    var total_userReviewCount by Delegates.notNull<Int>()
+    var total_userFollowerCount by Delegates.notNull<Int>()
+    var total_reviewExpression by Delegates.notNull<Int>()
+    lateinit var total_reviewContents: String
+    lateinit var total_restaurantName: String
+    lateinit var total_restaurantLocation: String
+    var total_reviewLikeCount by Delegates.notNull<Int>()
+    var total_reviewReplyCount by Delegates.notNull<Int>()
+    lateinit var total_updatedAt: String
+    lateinit var total_reviewImgList: ArrayList<String>
+    var total_restaurantLikeStatus by Delegates.notNull<Int>()
+    var total_reviewLikeStatus by Delegates.notNull<Int>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG, "arguments in Total Fragment: $arguments")
+        getNewsTotalReviewItems()
+    }
+
+    fun getNewsTotalReviewItems() {
+        total_reviewList = arguments?.getSerializable(reviewListKey) as ArrayList<TotalReviewResultData>
+
+        total_reviewList.forEach {reviewResultData ->
+            total_reviewId = reviewResultData.reviewId
+            total_userId = reviewResultData.userId
+            total_userName = reviewResultData.userName
+            total_isHolic = reviewResultData.isHolic
+            total_userProfileImgUrl = reviewResultData.userProfileImgUrl
+            total_userReviewCount = reviewResultData.userReviewCount
+            total_userFollowerCount = reviewResultData.userFollowerCount
+            total_reviewExpression = reviewResultData.reviewExpression
+            total_reviewContents = reviewResultData.reviewContents
+            total_restaurantName = reviewResultData.restaurantName
+            total_restaurantLocation = reviewResultData.restaurantLocation
+            total_reviewLikeCount = reviewResultData.reviewLikeCount
+            total_reviewReplyCount = reviewResultData.reviewReplyCount
+            total_updatedAt = reviewResultData.updatedAt
+            total_restaurantLikeStatus = reviewResultData.restaurantLikeStatus
+            total_reviewLikeStatus = reviewResultData.reviewLikeStatus
+            total_reviewImgList = reviewResultData.reviewImgList
+
+            innerInitData()
+
+            val likeCountText = String.format(getString(R.string.news_total_review_like_count, total_reviewLikeCount))
+            val replyCountText = String.format(getString(R.string.news_total_review_reply_count, total_reviewReplyCount))
+
+            val expression_delicious = getString(R.string.news_text_great)
+            val expression_good = getString(R.string.news_text_good)
+            val expression_bad = getString(R.string.news_text_bad)
+
+            val ul_restaurantName = String.format(getString(R.string.news_total_review_restaurant_name_val, total_restaurantName))
+            val ul_restaurantLoc = String.format(getString(R.string.news_total_review_restaurant_loc_val, total_restaurantLocation))
+
+            total_reviewObject = TotalRecyclerItems(reviewImgList = innerItemList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
+                userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
+                reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
+                reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,
+                expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
+
+            itemList.add(total_reviewObject)
+
+            innerItemList.clear()
+        }
+
         setRecyclerAdapter()
     }
 
     fun setRecyclerAdapter(){
-        initData()
-        innerInitData()
+//        initData()
+//        innerInitData()
         binding.totalRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
@@ -37,25 +114,22 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     }
 
     private fun innerInitData() {
-        val innerItem1 = TotalRecyclerInnerImageItems(innerImage = "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Zm9vZHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60")
-        val innerItem2 = TotalRecyclerInnerImageItems(innerImage = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Nnx8Zm9vZHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60")
-        val innerItem3 = TotalRecyclerInnerImageItems(innerImage = "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fGZvb2R8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60")
-        val innerItem4 = TotalRecyclerInnerImageItems(innerImage = "https://images.unsplash.com/photo-1481931098730-318b6f776db0?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTR8fGZvb2R8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60")
-        val innerItem5 = TotalRecyclerInnerImageItems(innerImage = "https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTh8fGZvb2R8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=60")
-        val items = arrayListOf<TotalRecyclerInnerImageItems>(innerItem1, innerItem2, innerItem3, innerItem4, innerItem5)
-        for (i in items) {
-            innerItemList.add(i)
+        lateinit var innerItem : TotalRecyclerInnerImageItems
+        total_reviewImgList.forEach {
+            innerItem = TotalRecyclerInnerImageItems(innerImage = it)
+            innerItemList.add(innerItem)
         }
     }
 
-    private fun initData() {
-        for (i in 0..5) {
-            val item1 = TotalRecyclerItems(innerImageItems = innerItemList, reviewCount = 0, likeCount = 0, followerCount = 0, commentCount = 0, restaurantInfo = "@ 공화춘 - 경북 김천시",dateTimeAgo = "20시간 전",
-                mainContentText = "놀라운 식사를 할 수 있게 서비스! 이 모든 것은 프티 우수한 에피타이저가 나오 네. 이 푸아그라 롤리팝, 레드 와인과 버섯, 랍스터 연예, 물론 치즈, 초콜릿 디저트 크레페 수세 및 모두 뛰어난, 필히 소금에 절인 브리오슈! 주방장은 우수한 그녀는 딸과 함께 걸어가실만할 의 너트 알레르기 와 완전히 다른 네 가지의 에피타이저가 나오고 있는 쁘띠 너트 및 하지 않았다. 미슐랭 스타 레스토랑에서 먹을 수 있는 여러 경험이 강력 추천합니다."
-                        )
-//            ,filter_great = fGreat, filter_good = fGood, filter_bad = fBad
-            itemList.add(item1)
-        }
-    }
+//    private fun initData() {
+//        for (i in 0 until 2) {
+//            val item1 = TotalRecyclerItems(reviewImgList = innerItemList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
+//            userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = total_reviewReplyCount,
+//            reviewLikeCount = total_reviewLikeCount, restaurantName = total_restaurantName, restaurantLocation = total_restaurantLocation, updatedAt = total_updatedAt,
+//            reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus)
+////            ,filter_great = fGreat, filter_good = fGood, filter_bad = fBad
+//            itemList.add(item1)
+//        }
+//    }
 
 }

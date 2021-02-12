@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
@@ -50,6 +48,8 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         val items: HomeRecyclerItems = itemList[position]
         Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
+
+
         holder.title.text = "${items.idx}. ${items.title}"
         holder.location.text = items.areaName
         holder.grade.text = items.star

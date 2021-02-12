@@ -21,6 +21,35 @@
     <string name="home_search_look_for_friend_word">친구 찾기</string>
     <string name="home_search_edit_hint">키워드로 검색해보세요.</string>
 
+    <string name="details_text_loc_jibun_flag">지번</string>
+    <string name="details_text_finding_load">길 찾기</string>
+    <string name="details_text_navigation">내비게이션</string>
+    <string name="details_text_call_taxi">택시부르기</string>
+    <string name="details_text_copy_link">주소 복사</string>
+    <string name="details_text_do_call">전화하기</string>
+    <string name="details_text_convenience_info">편의정보</string>
+    <string name="details_text_opening_time">영업시간</string>
+    <string name="details_text_break_time">쉬는시간</string>
+    <string name="details_text_closed_date">휴일</string>
+    <string name="details_text_price">가격</string>
+    <string name="details_text_price_info">특정 메뉴는 미리 전화로 얘기해야 준비 될 수도 있어요.</string>
+    <string name="details_text_price_info2">전화 후 방문해주세요.</string>
+    <string name="details_text_more_info">정보 더 보기</string>
+    <string name="details_text_more_review">리뷰 더 보기</string>
+    <string name="details_text_wrong_info">잘못 되었거나 폐점된 정보를 알려주세요.</string>
+    <string name="details_text_keyword">이 식당의 인기 키워드</string>
+    <string name="details_text_near_restaurant">주변 인기 식당</string>
+
+    <string name="details_text_review_title">맛깔나는 리뷰 (%d)</string>
+    <string name="details_text_great">맛있다! (%d)</string>
+    <string name="details_text_good">괜찮다 (%d)</string>
+    <string name="details_text_bad">별로 (%d)</string>
+
+    <string name="news_total_review_like_count">좋아요 %d개</string>
+    <string name="news_total_review_reply_count">댓글 %d개</string>
+    <string name="news_total_review_restaurant_name_val"><u>%s</u></string>
+    <string name="news_total_review_restaurant_loc_val"><u>%s</u></string>
+
     <string name="news_text_great">맛있다!</string>
     <string name="news_text_good">괜찮다</string>
     <string name="news_text_bad">별로</string>
