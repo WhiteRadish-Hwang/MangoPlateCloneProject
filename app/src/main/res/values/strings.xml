@@ -129,6 +129,23 @@
     <string name="total_selected_cancel">전체 선택 취소</string>
     <string name="edit">편집</string>
 
+    <string name="register_restaurant">식당 등록</string>
+    <string name="notify_restaurant_name_and_loc">식당 이름과 위치를 알려주세요</string>
+    <string name="notify_restaurant_name">*식당 이름 (예: 망고반점)</string>
+    <string name="notify_restaurant_loc">*지역 및 위치 선택</string>
+    <string name="notify_restaurant_more_info">조금 더 자세히 알려주세요</string>
+    <string name="notify_restaurant_phone_number">전화번화 (예: 02-123-4567)</string>
+    <string name="notify_restaurant_select_food_kind">음식 종류 선택</string>
+    <string name="hansik">한식</string>
+    <string name="ilsik">일식</string>
+    <string name="joongsik">중식</string>
+    <string name="yangsik">양식</string>
+    <string name="world_food">세계음식</string>
+    <string name="buffet">뷔페</string>
+    <string name="cafe">카페</string>
+    <string name="bar">주점</string>
+    <string name="add">추가하기</string>
+
 
     <string name="holic_text_explain_first_line">홀릭이란? 망고플레이트가 선정한 공식 우수 리뷰어, 홀릭!</string>
     <string name="holic_text_explain_second_line">홀릭은 누구보다 먹는 즐거움을 잘 알고 실천하며 리뷰를 통해 자신의 경험을 누구보다 활발히 공유하는 사용자입니다.</string>

@@ -6,6 +6,8 @@ import android.view.animation.AnimationUtils
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentAddBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.register.RegisterRestaurantFragment
 
 class AddFragment: BaseFragment<FragmentAddBinding>(FragmentAddBinding::bind, R.layout.fragment_add){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,6 +22,12 @@ class AddFragment: BaseFragment<FragmentAddBinding>(FragmentAddBinding::bind, R.
         binding.addLayoutVisited.startAnimation(animation_visited)
         binding.addLayoutReview.startAnimation(animation_review)
         binding.addLayoutRegister.startAnimation(animation_register)
+
+        binding.addLayoutRegister.setOnClickListener {
+            (activity as MainActivity).onBackPressed()
+
+            (activity as MainActivity).addFragment(RegisterRestaurantFragment())
+        }
 
     }
 }
