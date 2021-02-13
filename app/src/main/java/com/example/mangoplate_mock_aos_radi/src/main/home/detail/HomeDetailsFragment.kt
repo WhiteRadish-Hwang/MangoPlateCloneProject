@@ -22,6 +22,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFram
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGoodItemKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGreatItemKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultImgArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
@@ -44,6 +45,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     val menuImgArrayList = ArrayList<String>()
     val keyWordArrayList = ArrayList<String>()
     val reviewArrayList = ArrayList<ReviewResultData>()
+    val reviewImgArrayList = ArrayList<ReviewImgResultData>()
     val nearRestaurantArrayList = ArrayList<NearRestaurantResultData>()
 
     // 상세정보 변수
@@ -108,6 +110,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
                 putStringArrayList(keywordItemKey, keyWordArrayList)
                 // 식당 리뷰
                 putSerializable(reviewResultArrayListKey, reviewArrayList)
+                putSerializable(reviewResultImgArrayListKey, reviewImgArrayList)
                 // 식당 리뷰 카운트
                 putInt(reviewTitleItemKey, reviewCount)
                 putInt(reviewGreatItemKey, deliciousCount)
@@ -205,6 +208,10 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
 
         // 리뷰
         for (reviewData in reviewList) reviewArrayList.add(reviewData)
+
+        // 리뷰 이미지
+        for (reviewImgData in reviewImgList) reviewImgArrayList.add(reviewImgData)
+        Log.d(TAG, "reviewImgArrayList: $reviewImgArrayList")
 
         // 근처 식당
         for (nearRestaurantData in nearRestaurantList) nearRestaurantArrayList.add(nearRestaurantData)

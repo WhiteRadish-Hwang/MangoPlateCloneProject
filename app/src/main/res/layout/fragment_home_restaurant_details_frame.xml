@@ -30,8 +30,8 @@
                 android:id="@+id/fDetails_layout_loc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp">
+                android:layout_margin="10dp"
+                >
 
                 <TextView
                     android:id="@+id/fDetails_text_juso"
@@ -39,10 +39,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginBottom="5dp"
                     android:text="TextView"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
+                    android:textColor="@color/dimgrey"
                     android:textStyle="bold" />
 
                 <TextView
@@ -50,9 +50,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fDetails_text_juso"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="5dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
                     android:background="@drawable/f_details_text_loc_flag_border"
                     android:text="@string/details_text_loc_jibun_flag"
+                    android:textSize="13sp"
                     android:textColor="@color/dimgrey" />
 
                 <TextView

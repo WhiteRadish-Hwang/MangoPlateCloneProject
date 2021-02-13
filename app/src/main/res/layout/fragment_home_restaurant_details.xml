@@ -20,10 +20,12 @@
 
         <ImageView
             android:id="@+id/details_img_back_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/arrow_down"
-            tools:ignore="VectorDrawableCompat" />
+            tools:ignore="VectorDrawableCompat"
+            app:tint="@color/cliked_color" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -73,18 +75,18 @@
                         android:id="@+id/details_layout_user_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="10dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/details_text_restaurant_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/blackForText"
                             android:text="userName"
-                            android:textSize="17sp" />
+                            android:textSize="23sp" />
 
                         <LinearLayout
                             android:id="@+id/details_layout_count"
@@ -145,13 +147,14 @@
                         android:id="@+id/details_text_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="35dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="4.3"
                         android:textColor="@color/cliked_color"
-                        android:textSize="20sp" />
+                        android:textSize="38sp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -177,10 +180,11 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_wanna_go"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/mango_wanna_go" />
+                        app:srcCompat="@drawable/wanna_go" />
 
                     <TextView
                         android:id="@+id/details_text_bottom_wanna_go"
@@ -189,6 +193,7 @@
                         android:layout_below="@+id/details_img_bottom_wanna_go"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
+                        android:textColor="@color/cliked_color"
                         android:text="@string/wanna_go"
                         android:textSize="11sp" />
                 </RelativeLayout>
@@ -203,10 +208,12 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_like"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/magno_like" />
+                        app:srcCompat="@drawable/visited" />
 
                     <TextView
                         android:id="@+id/details_text_bottom_like"
@@ -215,6 +222,7 @@
                         android:layout_below="@+id/details_img_bottom_like"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
+                        android:textColor="@color/cliked_color"
                         android:text="@string/visited"
                         android:textSize="11sp" />
                 </RelativeLayout>
@@ -229,10 +237,12 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_comment"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/mango_comment" />
+                        app:srcCompat="@drawable/review" />
 
                     <TextView
                         android:id="@+id/details_text_bottom_comment"
@@ -241,6 +251,7 @@
                         android:layout_below="@+id/details_img_bottom_comment"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
+                        android:textColor="@color/cliked_color"
                         android:text="@string/write_review"
                         android:textSize="11sp" />
                 </RelativeLayout>
@@ -255,10 +266,12 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_my_list"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginBottom="5dp"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/mango_comment" />
+                        app:srcCompat="@drawable/my_list" />
 
                     <TextView
                         android:id="@+id/details_text_bottom_my_list"
@@ -267,6 +280,7 @@
                         android:layout_below="@+id/details_img_bottom_my_list"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
+                        android:textColor="@color/cliked_color"
                         android:text="@string/my_list"
                         android:textSize="11sp" />
                 </RelativeLayout>

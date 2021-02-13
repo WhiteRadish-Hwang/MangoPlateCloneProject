@@ -29,7 +29,7 @@
         app:layout_constraintGuide_percent="0.18"/>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout2"
+        android:id="@+id/add_layout_eat_deal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -70,14 +70,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/add_layout_visited"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/v_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/add_layout_eat_deal">
 
 
         <ImageView
@@ -100,14 +100,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout5"
+        android:id="@+id/add_layout_review"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/v_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/add_layout_visited">
 
 
         <ImageView
@@ -130,14 +130,14 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout4"
+        android:id="@+id/add_layout_register"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/v_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/add_layout_review">
 
 
         <ImageView

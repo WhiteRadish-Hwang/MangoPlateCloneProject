@@ -49,7 +49,7 @@ data class ReviewResultData (val reviewId: Int,
 
 data class ReviewImgResultData (val reviewId: Int,
                                 val imgId: Int,
-                                val reviewImgUrl: String)
+                                val reviewImgUrl: String): Serializable
 
 data class NearRestaurantResultData (val restaurantId: Int,
                                      val restaurantName: String,
