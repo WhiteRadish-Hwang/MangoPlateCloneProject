@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,77 +8,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/home_toolbar_underline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/home_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/home_toolbar_underline">
-
-            <LinearLayout
-                android:id="@+id/home_toolbar_loc_selector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/home_toolbar_tv_loc_pointer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_toolbar_tv_loc_pointer_text"
-                    android:textColor="@color/black"
-                    android:textSize="10sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/home_toolbar_tv_loc_changed_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_toolbar_tv_loc_changed_text_ex"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="18sp" />
-
-                    <ImageView
-                        android:id="@+id/home_toolbar_arrow"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/arrow_down"
-                        tools:ignore="VectorDrawableCompat" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <FrameLayout
-            android:id="@+id/home_sort_select_frame"
+        <LinearLayout
+            android:id="@+id/home_toolbar_loc_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:orientation="vertical">
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/home_toolbar_tv_loc_pointer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_toolbar_tv_loc_pointer_text"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/home_nestedScrollView"
+                <TextView
+                    android:id="@+id/home_toolbar_tv_loc_changed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_toolbar_tv_loc_changed_text_ex"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/home_toolbar_arrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/arrow_down"
+                    tools:ignore="VectorDrawableCompat" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/home_sort_select_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/home_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_toolbar">
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/home_toolbar">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:liftOnScroll="true"
+            app:liftOnScrollTargetViewId="@id/main_layout_recycler">
 
             <LinearLayout
                 android:id="@+id/home_layout_linear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
                 android:orientation="vertical">
 
                 <androidx.viewpager2.widget.ViewPager2
@@ -175,8 +186,8 @@
                             android:layout_toRightOf="@id/home_img_filter"
                             android:gravity="center_horizontal"
                             android:text="필터"
-                            android:textColor="@color/dimgrey"
                             android:textAlignment="center"
+                            android:textColor="@color/dimgrey"
                             android:textSize="10sp" />
                     </RelativeLayout>
 
@@ -189,24 +200,35 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/mango_banner" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_main_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:nestedScrollingEnabled="false"
-                    tools:targetApi="lollipop">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <ProgressBar
-                    android:id="@+id/home_progressbar_below_recycler"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/main_layout_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_main_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <ProgressBar
+                android:id="@+id/home_progressbar_below_recycler"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <FrameLayout
         android:id="@+id/home_layout_frame"
@@ -221,4 +243,4 @@
     </FrameLayout>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

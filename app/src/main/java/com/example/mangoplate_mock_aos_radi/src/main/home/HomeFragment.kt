@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
@@ -37,13 +39,10 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     lateinit var homeRecyclerAdapter: HomeRecyclerAdapter
     lateinit var gridLayoutManager: GridLayoutManager
 
-    var callBackAt by Delegates.notNull<Int>()
-    var serviceCount = 1
     var pageNum: Int = 0
     var limit = 10
-    var isEnd = false
     var itemIndex = 1
-
+    var isCalled = false
     var isLoading = false
     var isSuccessful: Boolean = false
 
@@ -67,9 +66,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        val customLayout = TouchTestLayout(context!!)
-//        Log.d(TAG, "onViewCreated: $customLayout")
 
         // 메인 리사이클러뷰 정렬기준 선택
         setSortPivotSelect()
@@ -124,34 +120,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             homeSortSelectFragment.show((activity as MainActivity).supportFragmentManager, "BottomSheetDialog")
         }
 
-
-
-        //무한스크롤 리스너
-        callBackAt = serviceCount * (limit * 70)
-        binding.homeNestedScrollView.setOnScrollChangeListener(object : NestedScrollView.OnScrollChangeListener {
-            override fun onScrollChange(v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
-                Log.d(TAG, "onScrollChange: height: ${v?.height} scrollY: $scrollY, callBackAt: $callBackAt, isEnd: $isEnd")
-                v?.let {
-                    if (scrollY > callBackAt && !isEnd) {
-                        val visibleItemCount = binding.homeMainRecycler.childCount
-                        val totalItemCount = homeRecyclerAdapter.itemCount
-                        val firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition()
-
-                        if (!isLoading) {
-                            if ((visibleItemCount + firstVisibleItem) <= totalItemCount) {
-                                pageNum++
-                                callBackAt += (++serviceCount * (restaurantListSize * 70))
-                                excuteHomeService()
-                            }
-                        }
-
-                    }
-                }
-
-            }
-
-
-        })
     }
 
     private fun excuteHomeService(){
@@ -165,9 +133,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         pageNum = 0
         limit = 10
         itemIndex = 1
-        serviceCount = 1
-        callBackAt = serviceCount * (limit * 70)
-        isEnd = false
         homeRecyclerAdapter.clearItemList()
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
@@ -208,36 +173,22 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         binding.homeProgressbarBelowRecycler.visibility = View.VISIBLE
         val start = (pageNum * limit)
         var end = start + limit - 1
-        if (end < restaurantListSize) {
-            for (i in start..end) {
-                val item = HomeRecyclerItems(idx = itemIndex++,
-                    title = restaurantArrayList[i].restaurantName,
-                    areaName = restaurantArrayList[i].areaName,
-                    star = restaurantArrayList[i].star,
-                    viewPoint = restaurantArrayList[i].restaurantView,
-                    reviewCount = restaurantArrayList[i].reviewCount,
-                    image = restaurantArrayList[i].firstImageUrl,
-                    distanceFromUser = restaurantArrayList[i].distanceFromUser,
-                    restaurantId = restaurantArrayList[i].restaurantId)
-                itemList.add(item)
-                Log.d(TAG, "initData: $item")
-            }
-        } else if (end >= restaurantListSize && !isEnd) {
-            isEnd = true
-            end = restaurantListSize-1
-            for (i in start..end) {
-                val item = HomeRecyclerItems(idx = itemIndex++,
-                    title = restaurantArrayList[i].restaurantName,
-                    areaName = restaurantArrayList[i].areaName,
-                    star = restaurantArrayList[i].star,
-                    viewPoint = restaurantArrayList[i].restaurantView,
-                    reviewCount = restaurantArrayList[i].reviewCount,
-                    image = restaurantArrayList[i].firstImageUrl,
-                    distanceFromUser = restaurantArrayList[i].distanceFromUser,
-                    restaurantId = restaurantArrayList[i].restaurantId)
-                itemList.add(item)
-                Log.d(TAG, "initDataEnd: $item")
-            }
+        if (end > restaurantListSize) end = restaurantListSize -1
+        Log.d(TAG, "setDataAndRecyclerAdapter: pageNum = $pageNum, limit = $limit")
+        Log.d(TAG, "setDataAndRecyclerAdapter: start = $start end = $end")
+
+        for (i in start .. end) {
+            val item = HomeRecyclerItems(idx = itemIndex++,
+                title = restaurantArrayList[i].restaurantName,
+                areaName = restaurantArrayList[i].areaName,
+                star = restaurantArrayList[i].star,
+                viewPoint = restaurantArrayList[i].restaurantView,
+                reviewCount = restaurantArrayList[i].reviewCount,
+                image = restaurantArrayList[i].firstImageUrl,
+                distanceFromUser = restaurantArrayList[i].distanceFromUser,
+                restaurantId = restaurantArrayList[i].restaurantId)
+            itemList.add(item)
+            Log.d(TAG, "initDataEnd: $item")
         }
 
         Handler().postDelayed({
@@ -248,6 +199,27 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                 binding.homeMainRecycler.apply {
                     gridLayoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
                     layoutManager = gridLayoutManager
+
+                    // 무한스크롤 리스너
+                    binding.homeMainRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                            super.onScrolled(recyclerView, dx, dy);
+
+                            val layoutManager = gridLayoutManager
+                            val totalItemCount: Int = layoutManager.itemCount
+                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+
+                            if (lastVisible >= totalItemCount - 3 && isCalled) {
+                                isCalled = false
+                                Log.d(TAG, "isLoading: $isLoading")
+                                if (!isLoading) {
+                                    Log.d(TAG, "excuteHomeService: called")
+                                    pageNum++
+                                    excuteHomeService()
+                                }
+                            }
+                        }
+                    })
 
                     // 메인 리사이클러 아이템클릭 리스터
                     homeRecyclerAdapter.let {
@@ -298,6 +270,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
         val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter
+
+        isCalled = true
 
         setDataAndRecyclerAdapter()
     }

@@ -35,6 +35,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         val grade: TextView = itemView.findViewById(R.id.home_recycler_text_grade)
         val viewPoint: TextView = itemView.findViewById(R.id.home_recycler_text_view_point)
         val reviewCount: TextView = itemView.findViewById(R.id.home_recycler_text_review_count)
+        val distanceForUser: TextView = itemView.findViewById(R.id.home_recycler_text_distance_for_user)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -55,6 +56,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         holder.grade.text = items.star
         holder.viewPoint.text = items.viewPoint.toString()
         holder.reviewCount.text = items.reviewCount.toString()
+        holder.distanceForUser.text = items.distanceFromUser.toString()
     }
 
     fun clearItemList() {

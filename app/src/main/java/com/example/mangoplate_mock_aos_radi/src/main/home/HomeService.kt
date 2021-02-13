@@ -67,7 +67,7 @@ class HomeService (val view: HomeFragmentView) {
                                 val restaurantItemObject = listItem.asJsonObject
                                 val  restaurantId = restaurantItemObject.get("restaurantId").asInt
                                 val  restaurantName = restaurantItemObject.get("restaurantName").asString
-                                val  distanceFromUser = restaurantItemObject.get("distanceFromUser").asInt
+                                val  distanceFromUser = restaurantItemObject.get("distanceFromUser").asFloat
                                 val  areaName = restaurantItemObject.get("areaName").asString
                                 val  restaurantView = restaurantItemObject.get("restaurantView").asInt
                                 val  reviewCount = restaurantItemObject.get("reviewCount").asInt
