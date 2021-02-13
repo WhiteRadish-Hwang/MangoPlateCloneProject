@@ -9,6 +9,7 @@
     <color name="icon_color">#666666</color>
     <color name="orange">#FF7F00</color>
     <color name="holic_text_color">#f86936</color>
+    <color name="red">#FF0000</color>
     <color name="dimgrey">#696969</color>
     <color name="light_gray">#DCDCDC</color>
     <color name="discount_rate_border_color">#0ebebc</color>

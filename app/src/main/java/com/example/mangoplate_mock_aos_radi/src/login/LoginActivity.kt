@@ -13,7 +13,6 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KA
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isFacebookLogin
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGetMyInfo
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl

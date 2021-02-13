@@ -7,6 +7,8 @@ import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import retrofit2.http.Query
 
-data class MyInfoResultData (val  userId: Int,
-                             val  userProfileImgUrl: String,
-                             val  userName: String)
+data class MyInfoResultData (val userId: Int,
+                             val userProfileImgUrl: String,
+                             val userName: String,
+                             val userEmail: String?,
+                             val userPhoneNumber: String?)

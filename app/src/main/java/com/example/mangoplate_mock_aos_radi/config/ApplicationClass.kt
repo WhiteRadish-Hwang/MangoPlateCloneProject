@@ -52,6 +52,9 @@ class ApplicationClass : Application() {
         var user_name: String? = null
         var user_id: String? = null
         var profileImageUrl: String? = null
+        var user_email: String? = null
+        var user_phone_number: String? = null
+
         var isKakaoLogin: Boolean = false
         var isFacebookLogin: Boolean = false
         var restaurantListSize by Delegates.notNull<Int>()

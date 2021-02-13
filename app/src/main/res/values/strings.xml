@@ -87,6 +87,16 @@
     <string name="add_fragment_eat_deal">EAT딜 보러가기</string>
     <string name="add_fragment_register_restaurant">식당 등록하기</string>
 
+    <string name="my_page_edit_profile_title">내정보 수정</string>
+    <string name="my_page_edit_profile_name">이름</string>
+    <string name="my_page_edit_profile_name_changed">이름 변경</string>
+    <string name="my_page_edit_profile_name_error">이름은 2자 이상이어야 합니다.</string>
+    <string name="my_page_edit_profile_email">이메일</string>
+    <string name="my_page_edit_profile_email_changed">이메일 변경</string>
+    <string name="my_page_edit_profile_email_error">올바른 이메일 주소를 입력해주세요.</string>
+    <string name="my_page_edit_profile_phone_number">전화번호</string>
+    <string name="my_page_edit_profile_phone_number_changed">전화번호 변경</string>
+    <string name="my_page_edit_btn_apply">완료</string>
 
     <string name="eat_deal_text_select_loc">지역 선택</string>
     <string name="eat_deal_text_my_position">내 주변</string>

@@ -247,7 +247,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     }
 
-    inner class MainViewPagerAdapter(activity: AppCompatActivity, private val fragments: List<Fragment>) : FragmentStateAdapter(activity) {
+    inner class MainViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
         override fun getItemCount(): Int = 5
 
         override fun createFragment(position: Int): Fragment {
@@ -275,6 +275,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)
             fmbt.add(R.id.main_layout_sub_frame, fragment).addToBackStack("fragment").commit()
         }
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fmbt = supportFragmentManager.beginTransaction()
+        Log.d(ApplicationClass.TAG, "replaceFragment: $fragment")
+
+        fmbt.replace(R.id.main_frame, fragment).commitAllowingStateLoss()
+
     }
 
     override fun onBackPressed() {

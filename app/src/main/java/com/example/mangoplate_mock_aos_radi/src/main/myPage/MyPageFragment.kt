@@ -17,23 +17,46 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.is
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGetMyInfo
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_email
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_name
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_phone_number
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentMyPageBinding
 import com.example.mangoplate_mock_aos_radi.src.login.LoginActivity
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.myPage.MypageEditName.Companion.isEditDone
+import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.EditUserInfoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResultData
 import com.facebook.login.LoginManager
 import com.kakao.sdk.user.UserApiClient
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page), MypageFragmentView{
+    override fun onStart() {
+        super.onStart()
+        showCustomToast("onStart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        showCustomToast("onStop")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        showCustomToast("onPause")
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!isGetMyInfo) excuteGetMyInfo()
+        if (isEditDone) isEditDone = !isEditDone
+
+//        if (!isGetMyInfo)
+        excuteGetMyInfo()
 
         user_name?.let {
             Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
@@ -52,7 +75,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             }
         }
 
-
+        binding.myPageLayoutEdit.setOnClickListener {
+            (activity as MainActivity).addFragment(MypageEditProfile())
+        }
 
         binding.myPageBtnLogout.setOnClickListener {
             user_id = null
@@ -103,20 +128,33 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             user_id = infoList[0].userId.toString()
             user_name = infoList[0].userName
             profileImageUrl = infoList[0].userProfileImgUrl
+            if (infoList[0].userEmail != "-1") user_email = infoList[0].userEmail
+            if (infoList[0].userPhoneNumber != "-1") user_phone_number = infoList[0].userPhoneNumber
         }
         Log.d(TAG, "onGetMyInfoSuccess: user_id = ${user_id}")
         Log.d(TAG, "user_name: user_name = ${user_name}}")
         Log.d(TAG, "onGetMyInfoSuccess: profileImageUrl = ${profileImageUrl}}")
+        Log.d(TAG, "user_name: user_email = ${user_email}}")
+        Log.d(TAG, "onGetMyInfoSuccess: user_phone_number = ${user_phone_number}}")
 
         Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
         binding.myPageTextUserName.text = user_name
 
-        response.message?.let { showCustomToast(it) }
-        isGetMyInfo = true
+//        isGetMyInfo = true
     }
 
     override fun onGetMyInfoFailure(message: String) {
         dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPostEditUserInfoSuccess(response: EditUserInfoResponse) {
+        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.code}")
+        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.message}")
+    }
+
+    override fun onPostEditUserInfoFailure(message: String) {
         showCustomToast("오류 : $message")
     }
 
