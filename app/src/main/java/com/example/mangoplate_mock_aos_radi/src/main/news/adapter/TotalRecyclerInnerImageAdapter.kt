@@ -43,7 +43,6 @@ class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayL
 
     override fun onBindViewHolder(holder: TotalInnerViewHolder, position: Int) {
         val items = itemList[position]
-        Log.d(TAG, "innerImage: ${items}")
         Glide.with(holder.total_img_recycler_inner_image).load(items).placeholder(null).into(holder.total_img_recycler_inner_image)
 
     }

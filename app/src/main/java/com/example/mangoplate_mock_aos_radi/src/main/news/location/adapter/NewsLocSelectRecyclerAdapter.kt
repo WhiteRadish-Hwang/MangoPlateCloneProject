@@ -1,20 +1,31 @@
-package com.example.mangoplate_mock_aos_radi.src.main.location.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.news.location.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeSearchRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.location.model.LocSelectRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.news.location.model.NewsLocSelectRecyclerItems
 
-class LocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<LocSelectRecyclerItems>): RecyclerView.Adapter<LocSelectRecyclerAdapter.ItemViewHolder>() {
+class NewsLocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<NewsLocSelectRecyclerItems>): RecyclerView.Adapter<NewsLocSelectRecyclerAdapter.ItemViewHolder>() {
+    interface MyNewsLocItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    private lateinit var mItemClickListener: MyNewsLocItemClickListener
+
+    fun setMyNewsLocItemClickListener(itemClickListener: MyNewsLocItemClickListener){
+        mItemClickListener = itemClickListener
+    }
 
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+        }
+
         val locSelectTextSearchWord: TextView = itemView.findViewById(R.id.loc_select_text_location)
     }
 
@@ -26,7 +37,7 @@ class LocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<Lo
     override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val items: LocSelectRecyclerItems = itemList[position]
+        val items: NewsLocSelectRecyclerItems = itemList[position]
         holder.locSelectTextSearchWord.text = items.location
     }
 

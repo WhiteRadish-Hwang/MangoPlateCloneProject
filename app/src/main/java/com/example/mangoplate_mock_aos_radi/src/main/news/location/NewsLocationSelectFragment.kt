@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.location
+package com.example.mangoplate_mock_aos_radi.src.main.news.location
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeSortSelectBinding
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentLocSelectBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-class LocationSelectFragment(): BottomSheetDialogFragment() {
-//    val itemClick: (Int) -> Unit
+class NewsLocationSelectFragment(): BottomSheetDialogFragment() {
     var _binding: FragmentLocSelectBinding? = null
     val binding get() = _binding!!
 
@@ -37,14 +34,14 @@ class LocationSelectFragment(): BottomSheetDialogFragment() {
 
     }
 
-    private inner class LocSelectTabPagerAdapter(fragment: LocationSelectFragment) : FragmentStateAdapter(fragment) {
+    private inner class LocSelectTabPagerAdapter(fragment: NewsLocationSelectFragment) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = 29
 
         override fun createFragment(position: Int): Fragment {
             return when(position) {
-                0 -> RecentLocFragment()
-                1 -> AboutMyPlaceFragment()
-                else -> GangbukFragment()
+                0 -> NewsRecentLocFragment()
+                1 -> NewsAboutMyPlaceFragment()
+                else -> NewsGangbukFragment()
             }
         }
     }

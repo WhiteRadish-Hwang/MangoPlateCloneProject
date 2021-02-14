@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.location
+package com.example.mangoplate_mock_aos_radi.src.main.home.location
 
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +11,8 @@ import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountTopListB
 import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.TopListRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyclerItems
 
-class AboutMyPlaceFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
-    lateinit var topListRecyclerAdapter: TopListRecyclerAdapter
+class RecentLocFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
+    lateinit var locListRecyclerAdapter: TopListRecyclerAdapter
     val itemList = ArrayList<TopListRecyclerItems>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -21,12 +21,12 @@ class AboutMyPlaceFragment : BaseFragment<FragmentDiscountTopListBinding>(Fragme
     }
 
     fun setRecyclerAdapter(){
-        initData()
-        topListRecyclerAdapter = TopListRecyclerAdapter(context, itemList)
+//        initData()
+        locListRecyclerAdapter = TopListRecyclerAdapter(context, itemList)
         binding.topListRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-            adapter = topListRecyclerAdapter
+            adapter = locListRecyclerAdapter
         }
     }
 

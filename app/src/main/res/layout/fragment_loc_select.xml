@@ -64,11 +64,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <LinearLayout
+                android:id="@+id/loc_layout_edit"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -79,11 +81,11 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="20dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="8dp"
-                    app:srcCompat="@drawable/profile" />
+                    app:srcCompat="@drawable/loc_img_edit" />
 
                 <TextView
                     android:id="@+id/home_sort_select_text_point"
@@ -92,21 +94,23 @@
                     android:gravity="center_horizontal"
                     android:text="@string/edit"
                     android:textAlignment="center"
-                    android:textColor="@color/blackForText" />
+                    android:textColor="@color/dimgrey"
+                    android:textSize="17sp" />
 
 
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loc_select_btn_apply"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="15dp"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/loc_sort_apply_text_border"
-                android:gravity="center_horizontal"
                 android:text="@string/apply"
                 android:textAlignment="center"
+                android:textSize="17sp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -115,9 +119,9 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="15dp"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/loc_sort_nonapply_text_border"
-                android:gravity="center_horizontal"
                 android:text="@string/total_selected_cancel"
                 android:textAlignment="center"
                 android:textColor="@color/cliked_color" />

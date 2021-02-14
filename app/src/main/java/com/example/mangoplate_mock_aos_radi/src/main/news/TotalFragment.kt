@@ -1,32 +1,23 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news
 
 import android.os.Bundle
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
-import androidx.core.text.toSpannable
-import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fBad
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fGood
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.fGreat
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsTotalBinding
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFrameFragment.Companion.reviewListKey
-import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.HollicRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.HollicRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 import kotlin.properties.Delegates
 
-class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total){
+class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total), NewsFragmentView{
     val itemList = ArrayList<TotalRecyclerItems>()
-    val innerItemList = ArrayList<TotalRecyclerInnerImageItems>()
 
     var total_reviewList = ArrayList<TotalReviewResultData>()
     lateinit var total_reviewObject : TotalRecyclerItems
@@ -53,14 +44,23 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "arguments in Total Fragment: $arguments")
-        getNewsTotalReviewItems()
+        NewsService(this).tryGetRestaurants(page = 0, limit = 10)
+
+
     }
 
-    fun getNewsTotalReviewItems() {
-        total_reviewList = arguments?.getSerializable(reviewListKey) as ArrayList<TotalReviewResultData>
+    fun setRecyclerAdapter(){
+        binding.totalRecycler.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = TotalRecyclerAdapter(context, itemList)
+        }
+    }
 
-        total_reviewList.forEach {reviewResultData ->
+    override fun onGetTotalReviewSuccess(response: NewsResponse, reviewList: ArrayList<TotalReviewResultData>) {
+        Log.d(ApplicationClass.TAG, "onGetTotalReviewSuccess: $reviewList")
+
+        reviewList.forEach {reviewResultData ->
             total_reviewId = reviewResultData.reviewId
             total_userId = reviewResultData.userId
             total_userName = reviewResultData.userName
@@ -90,42 +90,21 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             val ul_restaurantLoc = String.format(getString(R.string.news_total_review_restaurant_loc_val, total_restaurantLocation))
 
             total_reviewObject = TotalRecyclerItems(reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
-                userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
-                reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
-                reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,
-                expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
+                    userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
+                    reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
+                    reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,
+                    expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
 
             itemList.add(total_reviewObject)
         }
 
         setRecyclerAdapter()
+
     }
 
-    fun setRecyclerAdapter(){
-        Log.d(TAG, "itemList: $itemList")
-        binding.totalRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = TotalRecyclerAdapter(context, itemList)
-        }
+    override fun onGetTotalReviewFailure(message: String) {
+
     }
 
-    private fun innerInitData() {
-        total_reviewImgList.forEach {
-            innerItem = TotalRecyclerInnerImageItems(innerImage = it)
-            innerItemList.add(innerItem)
-        }
-    }
-
-//    private fun initData() {
-//        for (i in 0 until 2) {
-//            val item1 = TotalRecyclerItems(reviewImgList = innerItemList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
-//            userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = total_reviewReplyCount,
-//            reviewLikeCount = total_reviewLikeCount, restaurantName = total_restaurantName, restaurantLocation = total_restaurantLocation, updatedAt = total_updatedAt,
-//            reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus)
-////            ,filter_great = fGreat, filter_good = fGood, filter_bad = fBad
-//            itemList.add(item1)
-//        }
-//    }
 
 }

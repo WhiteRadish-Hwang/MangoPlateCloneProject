@@ -1,35 +1,33 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.LOC_LIST
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.restaurantListSize
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.topListSize
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
+import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment.Companion.homeDetailsKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment.Companion.locList
+import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.search.HomeSearchFragment
-import com.example.mangoplate_mock_aos_radi.src.main.location.LocationSelectFragment
 import kotlin.properties.Delegates
 
 
@@ -54,9 +52,43 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     var restaurantArrayList = ArrayList<RestaurantResultData>()
     var reviewCount by Delegates.notNull<Int>()
 
+    var locationFilter_sungBuk: Int = 0
+    var locationFilter_suYu: Int = 0
+    var locationFilter_noWon: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate: called, jwt = $X_ACCESS_TOKEN")
+        SharedPreferenced.getArrayStringItem(LOC_LIST).let { locList = it!! }
+        Log.d(TAG, "locList: $locList")
+
+        for (loc in locList) {
+            when (loc) {
+                "성북구" -> {
+                    locationFilter_sungBuk = 1
+                }
+                "수유/도봉/강북" -> {
+                    locationFilter_suYu = 2
+                }
+                "노원구" -> {
+                    locationFilter_noWon = 3
+                }
+                "전체" -> {
+                    locationFilter_sungBuk = 1
+                    locationFilter_suYu = 2
+                    locationFilter_noWon = 3
+                }
+            }
+        }
+
+//        locList.clear()
+//        SharedPreferenced.putArrayStringItem(LOC_LIST, locList)
+
+        if (locList.isEmpty()) {
+            locationFilter_sungBuk = 1
+            locationFilter_suYu = 2
+            locationFilter_noWon = 3
+        }
+
         // 홈서비스 실행
         excuteHomeService()
     }
@@ -90,6 +122,16 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             locSelectFragment.show((activity as MainActivity).supportFragmentManager, "LocSel")
         }
 
+        Log.d(TAG, "locList: $locList")
+        val totalLocTitle  = String.format(getString(R.string.toolbar_tv_loc_changed_text_ex))
+        when (locList.size) {
+            0 -> binding.homeToolbarTvLocChangedText.text = totalLocTitle
+            1 -> binding.homeToolbarTvLocChangedText.text = locList[0]
+            else -> {
+                val manyLocTitle = String.format(getString(R.string.location_select_text_many_loc_title, locList[0], locList.size - 1))
+                binding.homeToolbarTvLocChangedText.text = manyLocTitle
+            }
+        }
 
         binding.homeLayoutSortSelect.setOnClickListener {
             val homeSortSelectFragment = HomeSortSelectFragment {
@@ -121,7 +163,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
-        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = 1, locationfilter2 = 2, locationfilter3 = 3,
+        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = locationFilter_sungBuk, locationfilter2 = locationFilter_suYu, locationfilter3 = locationFilter_noWon,
                 distance = 1000, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
 

@@ -112,37 +112,37 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
         }
         binding.registerLayoutIlsik.setOnClickListener {
             binding.registerImgIlsik.setImageResource(R.drawable.res_ilsik_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextIlsik.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 2
         }
         binding.registerLayoutJoongsik.setOnClickListener {
             binding.registerImgJoongsik.setImageResource(R.drawable.res_joongsik_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextJoongsik.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 3
         }
         binding.registerLayoutYangsik.setOnClickListener {
             binding.registerImgYangsik.setImageResource(R.drawable.res_joongsik_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextYangsik.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 4
         }
         binding.registerLayoutWorld.setOnClickListener {
             binding.registerImgWorld.setImageResource(R.drawable.res_world_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextWorld.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 5
         }
         binding.registerLayoutBuffet.setOnClickListener {
             binding.registerImgBuffet.setImageResource(R.drawable.res_buffet_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextBuffet.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 6
         }
         binding.registerLayoutCafe.setOnClickListener {
             binding.registerImgCafe.setImageResource(R.drawable.res_cafe_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextCafe.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 7
         }
         binding.registerLayoutBar.setOnClickListener {
             binding.registerImgBar.setImageResource(R.drawable.res_bar_click)
-            binding.registerTextHansik.setTextColor(Color.parseColor("#ff8104"))
+            binding.registerTextBar.setTextColor(Color.parseColor("#ff8104"))
             filterNum = 8
         }
 

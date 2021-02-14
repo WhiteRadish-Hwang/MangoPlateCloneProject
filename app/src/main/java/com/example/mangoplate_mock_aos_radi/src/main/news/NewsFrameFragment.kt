@@ -32,9 +32,6 @@ class NewsFrameFragment : BaseFragment<FragmentNewsFrameBinding>(FragmentNewsFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TotalReview로 전달해줄 아이템 받기
-        f_reviewList = arguments?.getSerializable(reviewListKey) as ArrayList<TotalReviewResultData>
-
         binding.newsVp.adapter = DiscountTabPagerAdapter(this)
 
         TabLayoutMediator(binding.newsTabLayout, binding.newsVp) {tab, position ->
@@ -103,14 +100,7 @@ class NewsFrameFragment : BaseFragment<FragmentNewsFrameBinding>(FragmentNewsFra
 
         override fun createFragment(position: Int): Fragment {
             return when(position) {
-                0 -> {
-                    TotalFragment().apply {
-                        arguments = Bundle().apply {
-                            putSerializable(reviewListKey, f_reviewList)
-                        }
-                        Log.d(TAG, "arguments: $arguments")
-                    }
-                }
+                0 -> TotalFragment()
                 1 -> FollowingFragment()
                 else -> HolicFragment()
             }

@@ -8,6 +8,7 @@
     <string name="main_bottom_nav_my_page_title">내정보</string>
     <string name="home_toolbar_tv_loc_pointer_text">지금 보고있는 지역은</string>
     <string name="home_toolbar_tv_loc_changed_text_ex"><u>수유/도봉/강북</u></string>
+    <string name="toolbar_tv_loc_changed_text_ex"><u>전체 지역</u></string>
     <string name="home_vp_dummy_text1">도봉구 맛집 베스트 20곳</string>
     <string name="home_vp_dummy_text2">샐러드 맛집 베스트 15곳</string>
     <string name="home_sort_select_point">평점순</string>
@@ -83,6 +84,7 @@
     <string name="location_select_list_central_south_usa">중남미</string>
     <string name="location_select_list_oceania">오세아니아</string>
     <string name="location_select_list_etc">해외기타</string>
+    <string name="location_select_text_many_loc_title"><u>"%s 외 %d곳"</u></string>
 
     <string name="add_fragment_eat_deal">EAT딜 보러가기</string>
     <string name="add_fragment_register_restaurant">식당 등록하기</string>

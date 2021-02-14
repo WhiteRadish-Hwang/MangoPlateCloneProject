@@ -1,10 +1,8 @@
 package com.example.mangoplate_mock_aos_radi.config
 
 import android.app.Application
-import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
-import com.example.mangoplate_mock_aos_radi.src.main.location.model.LocSelectRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.home.location.model.LocSelectRecyclerItems
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.gson.GsonBuilder
@@ -42,11 +40,14 @@ class ApplicationClass : Application() {
         private set
 
         // 변수
-        val KAKAO_ID = "kakao_id"
-        val KAKAO_IMG = "kakao_img"
-        val KAKAO_LOGIN = "kakao_login"
-        val FB_ID = "fb_id"
-        val FB_LOGIN = "fb_login"
+        const val KAKAO_ID = "kakao_id"
+        const val KAKAO_IMG = "kakao_img"
+        const val KAKAO_LOGIN = "kakao_login"
+        const val FB_ID = "fb_id"
+        const val FB_LOGIN = "fb_login"
+        const val LOC_LIST = "locListKey"
+
+
         var sortPivotSelect = "평점순"
 
         var user_name: String? = null

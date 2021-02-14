@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.location
+package com.example.mangoplate_mock_aos_radi.src.main.news.location
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,7 @@ import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountTopListB
 import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.TopListRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyclerItems
 
-class RecentLocFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
+class NewsAboutMyPlaceFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
     lateinit var topListRecyclerAdapter: TopListRecyclerAdapter
     val itemList = ArrayList<TopListRecyclerItems>()
 
@@ -31,14 +31,14 @@ class RecentLocFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentD
     }
 
     private fun initData() {
-        for (i in 0..5) {
-            val item1 = TopListRecyclerItems(title = "햄버거 맛집 베스트 50곳",
-                subTitle = "햄버거는 언제나 제일 맛있는 법!",
-                viewCount = "123,123",
-                uplosdDateAgo = "1일 전",
-                image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
-            itemList.add(item1)
-        }
+//        for (i in 0..5) {
+//            val item1 = TopListRecyclerItems(title = "햄버거 맛집 베스트 50곳",
+//                subTitle = "햄버거는 언제나 제일 맛있는 법!",
+//                viewCount = "123,123",
+//                uplosdDateAgo = "1일 전",
+//                image = "https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
+//            itemList.add(item1)
+//        }
         Log.d(ApplicationClass.TAG, "initData: $itemList")
     }
 }
