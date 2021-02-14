@@ -2,7 +2,7 @@ package com.example.mangoplate_mock_aos_radi.src.main.home.detail.model
 
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 
-data class DetailsReviewRecyclerItems (var reviewImgList: ArrayList<TotalRecyclerInnerImageItems>?,
+data class DetailsReviewRecyclerItems (var reviewImgList: ArrayList<String>,
                                        var userProfileImgUrl: String,
                                        var userName: String,
                                        var isHolic: Int,

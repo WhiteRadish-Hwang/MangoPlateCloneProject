@@ -99,10 +99,22 @@ class DetailsReviewRecyclerAdapter(val context: Context?, val itemList: ArrayLis
     }
 
     //inner 리사이클러뷰 어답터 장착
-    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<TotalRecyclerInnerImageItems>?){
+    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<String>){
         val itemsAdapter = TotalRecyclerInnerImageAdapter(context, item)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = itemsAdapter
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            // 이너 이미지 아이템 클릭 리스너
+            itemsAdapter.let {
+                it.setMyInnerImgItemClickListener(object : TotalRecyclerInnerImageAdapter.MyInnerImgItemClickListener {
+                    override fun onItemClick(position: Int) {
+
+
+                    }
+                })
+            } // end listener
+            recyclerView.adapter = itemsAdapter
+        }
     }
 
     override fun getItemCount(): Int = itemList.size

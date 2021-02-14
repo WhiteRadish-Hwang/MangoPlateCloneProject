@@ -15,10 +15,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.Details
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsReviewRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsKeywordRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.NearRestaurantResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewImgResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsReviewRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 
 class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(FragmentHomeDetailsFrameBinding::bind, R.layout.fragment_home_details_frame) {
     companion object {
@@ -44,8 +42,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
 
     val keywordItemList = ArrayList<DetailsKeywordRecyclerItems>()
     val reviewResultArrayList = ArrayList<ReviewResultData>()
-    var reviewImgListArg = ArrayList<ReviewImgResultData>()
-    val reviewImgArrayListArg = ArrayList<TotalRecyclerInnerImageItems>()
+    val reviewImgArrayListArg = ArrayList<String>()
     val reviewArray = ArrayList<DetailsReviewRecyclerItems>()
     val nearRestaurantArrayListArg = ArrayList<NearRestaurantResultData>()
 
@@ -90,16 +87,6 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         reviewGoodCount = arguments?.getInt(reviewGoodItemKey)
         reviewBadCount = arguments?.getInt(reviewBadItemKey)
 
-        // 리뷰 이미지
-        val reviewResultImgArrayListArg = arguments?.getSerializable(reviewResultImgArrayListKey) as ArrayList<*>
-        for (reviewImgData in reviewResultImgArrayListArg) reviewImgListArg.add(reviewImgData as ReviewImgResultData)
-
-        for (i in 0 until reviewImgListArg.size) {
-            val imgItem = TotalRecyclerInnerImageItems(innerImage = reviewImgListArg[i].reviewImgUrl)
-            reviewImgArrayListArg.add(imgItem)
-        }
-        Log.d(TAG, "reviewImgListArg: $reviewImgListArg")
-
         //사용자 리뷰
         val reviewResultArrayListArg = arguments?.getSerializable(reviewResultArrayListKey) as ArrayList<*>
         for (i in reviewResultArrayListArg) {
@@ -109,12 +96,14 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         val expression_delicious = getString(R.string.news_text_great)
         val expression_good = getString(R.string.news_text_good)
         val expression_bad = getString(R.string.news_text_bad)
-
+        var reviewId: Int = 0
+        var imgIndex = 0
         for (i in 0 until reviewResultArrayList.size) {
+
             val likeCountText = String.format(getString(R.string.news_total_review_like_count, reviewResultArrayList[i].reviewLikeCount))
             val replyCountText = String.format(getString(R.string.news_total_review_reply_count, reviewResultArrayList[i].reviewReplyCount))
 
-            val item = DetailsReviewRecyclerItems(reviewImgList = reviewImgArrayListArg, userProfileImgUrl = reviewResultArrayList[i].userProfileImgUrl,
+            val item = DetailsReviewRecyclerItems(reviewImgList = reviewResultArrayList[i].reviewImgList, userProfileImgUrl = reviewResultArrayList[i].userProfileImgUrl,
                     userName = reviewResultArrayList[i].userName, isHolic = reviewResultArrayList[i].isHolic, userReviewCount = reviewResultArrayList[i].userReviewCount,
                     userFollowerCount = reviewResultArrayList[i].userFollower, reviewExpression = reviewResultArrayList[i].reviewExpression, reviewReplyCount = replyCountText,
                     reviewLikeCount = likeCountText, updatedAt = reviewResultArrayList[i].updatedAt, reviewContents = reviewResultArrayList[i].reviewContents,

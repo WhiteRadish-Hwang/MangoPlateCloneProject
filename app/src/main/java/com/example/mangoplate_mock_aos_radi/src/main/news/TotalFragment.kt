@@ -49,6 +49,8 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     var total_restaurantLikeStatus by Delegates.notNull<Int>()
     var total_reviewLikeStatus by Delegates.notNull<Int>()
 
+    lateinit var innerItem : TotalRecyclerInnerImageItems
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "arguments in Total Fragment: $arguments")
@@ -77,8 +79,6 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             total_reviewLikeStatus = reviewResultData.reviewLikeStatus
             total_reviewImgList = reviewResultData.reviewImgList
 
-            innerInitData()
-
             val likeCountText = String.format(getString(R.string.news_total_review_like_count, total_reviewLikeCount))
             val replyCountText = String.format(getString(R.string.news_total_review_reply_count, total_reviewReplyCount))
 
@@ -89,23 +89,20 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             val ul_restaurantName = String.format(getString(R.string.news_total_review_restaurant_name_val, total_restaurantName))
             val ul_restaurantLoc = String.format(getString(R.string.news_total_review_restaurant_loc_val, total_restaurantLocation))
 
-            total_reviewObject = TotalRecyclerItems(reviewImgList = innerItemList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
+            total_reviewObject = TotalRecyclerItems(reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
                 userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
                 reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
                 reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,
                 expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
 
             itemList.add(total_reviewObject)
-
-            innerItemList.clear()
         }
 
         setRecyclerAdapter()
     }
 
     fun setRecyclerAdapter(){
-//        initData()
-//        innerInitData()
+        Log.d(TAG, "itemList: $itemList")
         binding.totalRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
@@ -114,7 +111,6 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     }
 
     private fun innerInitData() {
-        lateinit var innerItem : TotalRecyclerInnerImageItems
         total_reviewImgList.forEach {
             innerItem = TotalRecyclerInnerImageItems(innerImage = it)
             innerItemList.add(innerItem)

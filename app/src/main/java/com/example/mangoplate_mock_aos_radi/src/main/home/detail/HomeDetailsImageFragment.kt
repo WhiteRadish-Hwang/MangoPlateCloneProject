@@ -109,7 +109,7 @@ class HomeDetailsImageFragment: BaseFragment<FragmentHomeDetailsInnerImgBinding>
 
     }
 
-    override fun onGetDetailsSuccess(response: DetailsResponse, imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>, menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>, reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>, reviewImgList: ArrayList<ReviewImgResultData>, nearRestaurantList: ArrayList<NearRestaurantResultData>, areaResultList: ArrayList<AreaResultData>) {
+    override fun onGetDetailsSuccess(response: DetailsResponse, imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>, menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>, reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>, nearRestaurantList: ArrayList<NearRestaurantResultData>, areaResultList: ArrayList<AreaResultData>) {
 
     }
 

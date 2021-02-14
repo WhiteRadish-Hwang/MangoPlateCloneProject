@@ -68,7 +68,7 @@ class HollicRecyclerAdapter(val context: Context?, val itemList: ArrayList<Holli
 
     }
     //inner 리사이클러뷰 어답터 장착
-    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<TotalRecyclerInnerImageItems>?){
+    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<String>){
         val itemsAdapter = TotalRecyclerInnerImageAdapter(context, item)
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = itemsAdapter

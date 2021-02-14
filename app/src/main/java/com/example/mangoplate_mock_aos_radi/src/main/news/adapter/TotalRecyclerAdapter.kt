@@ -2,7 +2,9 @@ package com.example.mangoplate_mock_aos_radi.src.main.news.adapter
 
 import android.content.Context
 import android.graphics.Paint
+import android.os.Bundle
 import android.text.style.UnderlineSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsImageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
@@ -96,10 +100,23 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
     }
 
     //inner 리사이클러뷰 어답터 장착
-    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<TotalRecyclerInnerImageItems>?){
+    fun setItemsRecycler(recyclerView: RecyclerView, item: ArrayList<String>){
         val itemsAdapter = TotalRecyclerInnerImageAdapter(context, item)
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = itemsAdapter
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            // 이너 이미지 아이템 클릭 리스너
+            itemsAdapter.let {
+                it.setMyInnerImgItemClickListener(object : TotalRecyclerInnerImageAdapter.MyInnerImgItemClickListener {
+                    override fun onItemClick(position: Int) {
+
+
+                    }
+                })
+            } // end listener
+            recyclerView.adapter = itemsAdapter
+        }
+
     }
 
     override fun getItemCount(): Int = itemList.size

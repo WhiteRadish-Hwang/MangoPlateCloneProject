@@ -9,8 +9,7 @@ interface HomeDetailsFragmentView {
                             imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>,
                             menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>,
                             reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>,
-                            reviewImgList: ArrayList<ReviewImgResultData>, nearRestaurantList: ArrayList<NearRestaurantResultData>,
-                            areaResultList: ArrayList<AreaResultData>)
+                            nearRestaurantList: ArrayList<NearRestaurantResultData>, areaResultList: ArrayList<AreaResultData>)
 
 
     fun onGetDetailsFailure(message: String)

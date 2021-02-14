@@ -1,6 +1,6 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news.model
 
-data class TotalRecyclerItems (var reviewImgList: ArrayList<TotalRecyclerInnerImageItems>?,
+data class TotalRecyclerItems (var reviewImgList: ArrayList<String>,
                                var userProfileImgUrl: String,
                                var userName: String,
                                var isHolic: Int,

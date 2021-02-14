@@ -45,11 +45,9 @@ data class ReviewResultData (val reviewId: Int,
                              val reviewLikeCount: Int,
                              val reviewReplyCount: Int,
                              val userReviewLike: Int,
-                             val updatedAt: String): Serializable
-
-data class ReviewImgResultData (val reviewId: Int,
-                                val imgId: Int,
-                                val reviewImgUrl: String): Serializable
+                             val updatedAt: String,
+                             val reviewImgList: ArrayList<String>,
+                             val reviewImgIdList: ArrayList<Int>): Serializable
 
 data class NearRestaurantResultData (val restaurantId: Int,
                                      val restaurantName: String,

@@ -17,6 +17,7 @@ data class TotalReviewResultData (val reviewId: Int,
                                   val reviewReplyCount: Int,
                                   val updatedAt: String,
                                   val reviewImgList: ArrayList<String>,
+                                  val reviewImgIdList: ArrayList<Int>,
                                   val restaurantLikeStatus: Int,
                                   val reviewLikeStatus: Int): Serializable
 

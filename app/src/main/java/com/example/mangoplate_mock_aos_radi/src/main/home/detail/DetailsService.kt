@@ -132,26 +132,24 @@ class DetailsService (val view: HomeDetailsFragmentView) {
                                 val userReviewLike = reviewItemObject.get("userReviewLike").asInt
                                 val updatedAt = reviewItemObject.get("updatedAt").asString
 
+                                val reviewImg = reviewItemObject.getAsJsonArray("reviewImgList").asJsonArray
+                                val reviewImgArrayList = ArrayList<String>()
+                                val reviewImgIdArrayList = ArrayList<Int>()
+                                reviewImg.forEach { reviewImgItem ->
+                                    val reviewImgItemObject = reviewImgItem.asJsonObject
+                                    val imgId = reviewImgItemObject.get("imgId").asInt
+                                    val reviewImgUrl = reviewImgItemObject.get("reviewImgUrl").asString
+
+                                    reviewImgIdArrayList.add(imgId)
+                                    reviewImgArrayList.add(reviewImgUrl)
+                                }
+
                                 val reviewListItem = ReviewResultData(reviewId = reviewId, userProfileImgUrl = userProfileImgUrl, userName = userName, isHolic = isHolic,
                                     reviewExpression = reviewExpression, userReviewCount = userReviewCount, userFollower = userFollower, reviewContents = reviewContents,
-                                    reviewLikeCount = reviewLikeCount, reviewReplyCount = reviewReplyCount, userReviewLike = userReviewLike, updatedAt = updatedAt)
+                                    reviewLikeCount = reviewLikeCount, reviewReplyCount = reviewReplyCount, userReviewLike = userReviewLike, updatedAt = updatedAt,
+                                        reviewImgIdList = reviewImgIdArrayList, reviewImgList = reviewImgArrayList)
 
                                 reviewArray.add(reviewListItem)
-                            }
-
-                            // 리뷰이미지
-                            val reviewImgArray = ArrayList<ReviewImgResultData>()
-                            val reviewImg = it.result.getAsJsonArray("reviewImg")
-
-                            reviewImg.forEach { reviewImgItem ->
-                                val reviewImgItemObject = reviewImgItem.asJsonObject
-                                val reviewId = reviewImgItemObject.get("reviewId").asInt
-                                val imgId = reviewImgItemObject.get("imgId").asInt
-                                val reviewImgUrl = reviewImgItemObject.get("reviewImgUrl").asString
-
-                                val reviewImgListItem = ReviewImgResultData(reviewId = reviewId, imgId = imgId, reviewImgUrl = reviewImgUrl)
-
-                                reviewImgArray.add(reviewImgListItem)
                             }
 
                             // 근처 식당
@@ -188,7 +186,7 @@ class DetailsService (val view: HomeDetailsFragmentView) {
                             }
 
                             view.onGetDetailsSuccess(response.body()!!, imgsList = imgsArrayList, detailedInfoList = detailedInfoArray, menuImgList = menuImgArray, keyWordList = keywordArray,
-                                reviewCountList = reviewCountArray, reviewList = reviewArray, reviewImgList = reviewImgArray, nearRestaurantList = nearRestaurantArray, areaResultList = areaArray)
+                                reviewCountList = reviewCountArray, reviewList = reviewArray, nearRestaurantList = nearRestaurantArray, areaResultList = areaArray)
 
                         } // end body
 

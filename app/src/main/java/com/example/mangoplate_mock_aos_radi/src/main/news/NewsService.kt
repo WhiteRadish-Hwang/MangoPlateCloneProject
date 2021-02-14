@@ -4,10 +4,6 @@ import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGetNewsReviewItem
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 import retrofit2.Call
@@ -63,17 +59,21 @@ class NewsService (val view: NewsFragmentView) {
 
                                 val reviewImgList = resultItemObject.get("reviewImgList").asJsonArray
                                 val reviewImgArrayList = ArrayList<String>()
+                                val reviewImgIdArrayList = ArrayList<Int>()
                                 reviewImgList.forEach {reviewImgItem ->
                                     val reviewImgListItem = reviewImgItem.asJsonObject
+                                    val reviewImgId = reviewImgListItem.get("imgId").asInt
                                     val reviewImgUrl = reviewImgListItem.get("reviewImgUrl").asString
 
+                                    reviewImgIdArrayList.add(reviewImgId)
                                     reviewImgArrayList.add(reviewImgUrl)
                                 }
 
                                 val reviewListItem = TotalReviewResultData(reviewId = reviewId, userId = userId, userName = userName, isHolic = isHolic, userProfileImgUrl = userProfileImgUrl,
                                 userReviewCount = userReviewCount, userFollowerCount = userFollowerCount, reviewExpression = reviewExpression, reviewContents = reviewContents,
                                 restaurantName = restaurantName, restaurantLocation = restaurantLocation, reviewLikeCount = reviewLikeCount, reviewReplyCount = reviewReplyCount,
-                                updatedAt = updatedAt, restaurantLikeStatus = restaurantLikeStatus, reviewLikeStatus = reviewLikeStatus, reviewImgList = reviewImgArrayList)
+                                updatedAt = updatedAt, restaurantLikeStatus = restaurantLikeStatus, reviewLikeStatus = reviewLikeStatus, reviewImgList = reviewImgArrayList,
+                                        reviewImgIdList = reviewImgIdArrayList)
 
                                 reviewList.add(reviewListItem)
                             }

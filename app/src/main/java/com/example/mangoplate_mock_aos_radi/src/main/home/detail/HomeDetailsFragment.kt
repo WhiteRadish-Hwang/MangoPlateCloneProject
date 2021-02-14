@@ -44,11 +44,10 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
     }
 
     val imgsIdList = ArrayList<Int>()
-    val imgsItemList = ArrayList<TotalRecyclerInnerImageItems>()
+    val imgsItemList = ArrayList<String>()
     val menuImgArrayList = ArrayList<String>()
     val keyWordArrayList = ArrayList<String>()
     val reviewArrayList = ArrayList<ReviewResultData>()
-    val reviewImgArrayList = ArrayList<ReviewImgResultData>()
     val nearRestaurantArrayList = ArrayList<NearRestaurantResultData>()
 
     // 상세정보 변수
@@ -126,7 +125,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
                 putStringArrayList(keywordItemKey, keyWordArrayList)
                 // 식당 리뷰
                 putSerializable(reviewResultArrayListKey, reviewArrayList)
-                putSerializable(reviewResultImgArrayListKey, reviewImgArrayList)
                 // 식당 리뷰 카운트
                 putInt(reviewTitleItemKey, reviewCount)
                 putInt(reviewGreatItemKey, deliciousCount)
@@ -173,7 +171,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
                     override fun onItemClick(position: Int) {
                         (activity as MainActivity).addFragment(HomeDetailsImageFragment().apply {
                             arguments = Bundle().apply {
-                                putString("imageItemKey", imgsItemList[position].innerImage)
+                                putString("imageItemKey", imgsItemList[position])
                                 putInt("imageIdKey", imgsIdList[position])
                             }
                         })
@@ -193,7 +191,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         keyWordList: ArrayList<KeyWordResultData>,
         reviewCountList: ArrayList<ReviewCountResultData>,
         reviewList: ArrayList<ReviewResultData>,
-        reviewImgList: ArrayList<ReviewImgResultData>,
         nearRestaurantList: ArrayList<NearRestaurantResultData>,
         areaResultList: ArrayList<AreaResultData>
     ) {
@@ -204,13 +201,12 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         Log.d(TAG, "keyWordList: $keyWordList")
         Log.d(TAG, "reviewCountList: $reviewCountList")
         Log.d(TAG, "reviewList: $reviewList")
-        Log.d(TAG, "reviewImgList: $reviewImgList")
         Log.d(TAG, "nearRestaurantList: $nearRestaurantList")
         Log.d(TAG, "areaResultList: $areaResultList")
 
         // 이너 이미지 데이터입력
         for (i in 0 until imgsList.size) {
-            imgsItemList.add(TotalRecyclerInnerImageItems(innerImage = imgsList[i].reviewImgUrl))
+            imgsItemList.add(imgsList[i].reviewImgUrl)
             imgsIdList.add(imgsList[i].imgId)
         }
 
@@ -249,10 +245,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
 
         // 리뷰
         for (reviewData in reviewList) reviewArrayList.add(reviewData)
-
-        // 리뷰 이미지
-        for (reviewImgData in reviewImgList) reviewImgArrayList.add(reviewImgData)
-        Log.d(TAG, "reviewImgArrayList: $reviewImgArrayList")
 
         // 근처 식당
         for (nearRestaurantData in nearRestaurantList) nearRestaurantArrayList.add(nearRestaurantData)
