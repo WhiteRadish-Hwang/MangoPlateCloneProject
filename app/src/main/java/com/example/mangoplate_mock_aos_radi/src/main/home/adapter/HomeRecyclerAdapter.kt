@@ -3,6 +3,7 @@ package com.example.mangoplate_mock_aos_radi.src.main.home.adapter
 import android.content.Context
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
@@ -59,7 +61,6 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val items: HomeRecyclerItems = itemList[position]
-        val adapter = this
 
         Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
@@ -85,7 +86,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
             HomeService(this).tryPatchWannago(items.restaurantId)
 
             Thread {
-                Thread.sleep(500)
+                Thread.sleep(300)
                 Log.d(TAG, "isLikeAndVisitedDone: $isLikeAndVisitedDone")
                 try {
                     if (isLikeAndVisitedDone){
@@ -93,20 +94,18 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
                         Log.d(TAG, "onBindViewHolder: isLike = ${items.isLike}")
                         when (items.isLike) {
                             1 -> {
-                                Log.d(TAG, "onBindViewHolder: 1")
-                                Handler().post{
+                                Handler(Looper.getMainLooper()).post {
+                                    Log.d(TAG, "onBindViewHolder: 1")
                                     holder.wannaGo.setImageResource(R.drawable.wanngo_clicked)
+                                    notifyDataSetChanged()
                                 }
-                                notifyItemChanged(position)
-                                adapter.notifyDataSetChanged()
                             }
                             0 -> {
-                                Log.d(TAG, "onBindViewHolder: 2")
-                                Handler().post{
+                                Handler(Looper.getMainLooper()).post {
+                                    Log.d(TAG, "onBindViewHolder: 2")
                                     holder.wannaGo.setImageResource(R.drawable.star_white)
+                                    notifyDataSetChanged()
                                 }
-                                notifyItemChanged(position)
-                                adapter.notifyDataSetChanged()
                             }
                         }
                     }
@@ -153,6 +152,25 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
             }
         }
     }
+
+    fun updateList(items: ArrayList<HomeRecyclerItems>?) {
+        items?.let {
+            val diffCallback = DiffUtilCallback(this.itemList, items)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+            this.itemList.run {
+                clear()
+                addAll(items)
+                diffResult.dispatchUpdatesTo(HomeRecyclerAdapter(context, itemList))
+            }
+        }
+    }
+
+
+
+
+
+
 
     override fun onGetRestaurantSuccess(response: RestaurantsResponse, topList: ArrayList<TopListResultData>, restaurantList: ArrayList<RestaurantResultData>) {
 

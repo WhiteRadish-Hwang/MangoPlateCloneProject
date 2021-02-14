@@ -14,7 +14,22 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInn
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerInnerImageItems>?): RecyclerView.Adapter<TotalRecyclerInnerImageAdapter.TotalInnerViewHolder>() {
+    interface MyInnerImgItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    private lateinit var mItemClickListener: MyInnerImgItemClickListener
+
+    fun setMyInnerImgItemClickListener(itemClickListener: MyInnerImgItemClickListener){
+        mItemClickListener = itemClickListener
+    }
+
     inner class TotalInnerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+        }
+
         val total_img_recycler_inner_image: ImageView = itemView.findViewById(R.id.total_img_recycler_inner_image)
     }
 

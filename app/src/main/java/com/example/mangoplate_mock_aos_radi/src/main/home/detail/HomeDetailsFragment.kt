@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
@@ -25,8 +24,10 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFram
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultImgArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsReviewRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import kotlin.properties.Delegates
@@ -68,6 +69,9 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     var userLike by Delegates.notNull<Int>()
     var userVisited by Delegates.notNull<Int>()
 
+    var itemArrayList = ArrayList<HomeRecyclerItems>()
+    var restaurantId by Delegates.notNull<Int>()
+
     // 리뷰카운트 변수
     var deliciousCount by Delegates.notNull<Int>()
     var okayCount by Delegates.notNull<Int>()
@@ -76,9 +80,14 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "receiveId: ${arguments?.get(homeDetailsKey)}")
-        val restaurantId = arguments?.get(homeDetailsKey)
+
+        restaurantId = arguments?.get(homeDetailsKey) as Int
+        val itemListArg = arguments?.getSerializable("itemListKey") as ArrayList<HomeRecyclerItems>
+        itemArrayList = itemListArg
+
+
         //상세페이지 서비스 호출
-        DetailsService(this).tryGetRestaurants(restaurantId as Int)
+        DetailsService(this).tryGetRestaurants(restaurantId)
 
 
         binding.detailsImgBackArrow.setOnClickListener {
@@ -101,6 +110,9 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
             }
         }
 
+        binding.detailsLayoutBottomWannaGo.setOnClickListener {
+            DetailsService(this).tryPatchWannago(restaurantId)
+        }
 
 
     }
@@ -149,11 +161,21 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     }
 
     fun setRecyclerAdapter(){
-
+        val innerImgRecyclerAdapter = TotalRecyclerInnerImageAdapter(context, imgsItemList)
         binding.detailsRecycler.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
-            adapter = TotalRecyclerInnerImageAdapter(context, imgsItemList)
+
+            // 이너 이미지 아이템 클릭 리스너
+            innerImgRecyclerAdapter.let {
+                it.setMyInnerImgItemClickListener(object : TotalRecyclerInnerImageAdapter.MyInnerImgItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        showCustomToast("$position")
+                        Log.d(TAG, "position = $position, review = ${imgsItemList[position]}")
+                    }
+                })
+            } // end listener
+            adapter = innerImgRecyclerAdapter
         }
     }
 
@@ -183,7 +205,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
         // 이너 이미지 데이터입력
         for (i in 0 until imgsList.size) imgsItemList.add(TotalRecyclerInnerImageItems(innerImage = imgsList[i].reviewImgUrl))
 
-        // 식당 상세정보 --->>> inspection, restaurantId, userLike, uservisited, restaurantPhoneNumber 변수 없음
+        // 식당 상세정보 --->>> inspection, restaurantId, restaurantPhoneNumber 변수 없음
         for (i in 0 until detailedInfoList.size) {
             restaurantName = detailedInfoList[i].restaurantName
             star = detailedInfoList[i].star
@@ -244,6 +266,33 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
 
     override fun onGetDetailsFailure(message: String) {
         showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchWannaGoSuccess(response: PatchWannagoResponse) {
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.message}")
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.code}")
+
+        if (response.code == 1000){
+            binding.detailsImgBottomWannaGo.setColorFilter(Color.parseColor("#ff8104"))
+        } else if (response.code == 1001){
+            binding.detailsImgBottomWannaGo.colorFilter = null
+        }
+
+//        for (i in 0 until itemArrayList.size) {
+//            if (restaurantId == itemArrayList[i].restaurantId) {
+//                if (response.code == 1000) itemArrayList[i].isLike = 1
+//                else if (response.code == 1001) itemArrayList[i].isLike = 0
+//            }
+//        }
+//        HomeRecyclerAdapter(context, itemArrayList).notifyDataSetChanged()
+//        Log.d(TAG, "onPatchWannaGoSuccess: ")
+
+
+    }
+
+    override fun onPatchWannaGoFailure(message: String) {
+
     }
 
 }

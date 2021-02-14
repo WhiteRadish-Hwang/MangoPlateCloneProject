@@ -1,6 +1,7 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home.detail
 
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 
 interface HomeDetailsFragmentView {
 
@@ -13,5 +14,9 @@ interface HomeDetailsFragmentView {
 
 
     fun onGetDetailsFailure(message: String)
+
+    fun onPatchWannaGoSuccess(response: PatchWannagoResponse)
+
+    fun onPatchWannaGoFailure(message: String)
 
 }

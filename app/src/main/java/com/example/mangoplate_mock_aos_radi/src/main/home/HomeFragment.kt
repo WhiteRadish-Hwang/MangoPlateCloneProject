@@ -1,6 +1,7 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -231,6 +233,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                                 (activity as MainActivity).addFragment(HomeDetailsFragment().apply {
                                     arguments = Bundle().apply {
                                         putInt(homeDetailsKey, restaurantArrayList[position].restaurantId)
+                                        putSerializable("itemListKey",itemList)
                                     }
                                 })
                             }
@@ -280,10 +283,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     }
 
     override fun onPatchWannaGoSuccess(response: PatchWannagoResponse) {
-
-
         homeRecyclerAdapter.notifyDataSetChanged()
-
     }
 
     override fun onPatchWannaGoFailure(message: String) {

@@ -127,7 +127,7 @@ class HomeService (val view: HomeFragmentView) {
 
             override fun onFailure(call: Call<PatchWannagoResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
-                view.onGetRestaurantFailure(t.message ?: "통신 오류")
+                view.onPatchWannaGoFailure(t.message ?: "통신 오류")
             }
         })
     }
