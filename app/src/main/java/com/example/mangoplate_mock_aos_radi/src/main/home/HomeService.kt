@@ -3,6 +3,7 @@ package com.example.mangoplate_mock_aos_radi.src.main.home
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
@@ -105,4 +106,36 @@ class HomeService (val view: HomeFragmentView) {
             }
         })
     }
+
+    fun tryPatchWannago(restaurantId: Int) {
+        val homeRetrofitInterface = ApplicationClass.sRetrofit.create(HomeRetrofitInterface::class.java)
+        homeRetrofitInterface.patchWannago(restaurantId).enqueue(object : Callback<PatchWannagoResponse> {
+            override fun onResponse(call: Call<PatchWannagoResponse>, response: Response<PatchWannagoResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(TAG, "onResponse: ${response.body()}")
+
+                            view.onPatchWannaGoSuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+
+            override fun onFailure(call: Call<PatchWannagoResponse>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+                view.onGetRestaurantFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+
+
+
+
+
+
 }

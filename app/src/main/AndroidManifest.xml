@@ -14,8 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MangoPlate"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.example.mangoplate_mock_aos_radi.src.main.MainActivity">
 
+        <activity android:name="com.example.mangoplate_mock_aos_radi.src.main.MainActivity"
+            android:windowSoftInputMode="adjustResize">
         </activity>
 
         <activity android:name=".src.login.LoginActivity">

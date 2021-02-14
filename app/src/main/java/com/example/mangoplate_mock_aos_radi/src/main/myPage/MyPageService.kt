@@ -12,9 +12,9 @@ import retrofit2.Response
 class MyPageService (val view: MypageFragmentView) {
 
 
-    fun tryGetMyInfo(){
+    fun tryGetMyInfo(userId: Int){
         val myPageRetrofitInterface = ApplicationClass.sRetrofit.create(MyPageRetrofitInterface::class.java)
-        myPageRetrofitInterface.getUserInfos().enqueue(object : Callback<MyInfoResponse> {
+        myPageRetrofitInterface.getUserInfos(userId).enqueue(object : Callback<MyInfoResponse> {
             override fun onResponse(call: Call<MyInfoResponse>, response: Response<MyInfoResponse>) {
                 when (response.code()) {
                     200 -> {
@@ -30,9 +30,21 @@ class MyPageService (val view: MypageFragmentView) {
                                 val userName = myInfoItemObject.get("userName").asString
                                 val userEmail = myInfoItemObject.get("userEmail").asString
                                 val userPhoneNumber = myInfoItemObject.get("userPhoneNumber").asString
+                                val userFollowerCount = myInfoItemObject.get("userFollowerCount").asInt
+                                val userFollowingCount = myInfoItemObject.get("userFollowingCount").asInt
+                                val userReviewCount = myInfoItemObject.get("userReviewCount").asInt
+                                val userVisitedCount = myInfoItemObject.get("userVisitedCount").asInt
+                                val userUploadImgCount = myInfoItemObject.get("userUploadImgCount").asInt
+                                val userLikeCount = myInfoItemObject.get("userLikeCount").asInt
+                                val userMyListCount = myInfoItemObject.get("userMyListCount").asInt
+                                val userBookMarkCount = myInfoItemObject.get("userBookMarkCount").asInt
+
 
                                 val myInfoItem = MyInfoResultData(userId = userId, userProfileImgUrl = userProfileImgUrl,
-                                    userName = userName, userEmail = userEmail, userPhoneNumber = userPhoneNumber)
+                                    userName = userName, userEmail = userEmail, userPhoneNumber = userPhoneNumber,
+                                userFollowerCount = userFollowerCount, userFollowingCount = userFollowingCount, userReviewCount = userReviewCount,
+                                userVisitedCount = userVisitedCount, userUploadImgCount = userUploadImgCount, userLikeCount = userLikeCount,
+                                        userMyListCount = userMyListCount, userBookMarkCount = userBookMarkCount)
 
                                 myInfoArrayList.add(myInfoItem)
                             }

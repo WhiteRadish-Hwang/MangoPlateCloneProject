@@ -1,5 +1,6 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -64,6 +65,8 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
     lateinit var restaurantPrice: String
     lateinit var restaurantMenu: String
     lateinit var areaName: String
+    var userLike by Delegates.notNull<Int>()
+    var userVisited by Delegates.notNull<Int>()
 
     // 리뷰카운트 변수
     var deliciousCount by Delegates.notNull<Int>()
@@ -137,6 +140,11 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
         binding.detailsTextViewCount.text = restaurantView.toString()
         binding.detailsTextWannaGoCount.text = likeCount.toString()
         binding.detailsTextReviewCount.text = reviewCount.toString()
+        if (userLike == 1){
+            binding.detailsImgBottomWannaGo.setColorFilter(Color.parseColor("#ff8104"))
+        } else {
+            binding.detailsImgBottomWannaGo.colorFilter = null
+        }
 
     }
 
@@ -191,6 +199,8 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
             restaurantRestTime = detailedInfoList[i].restaurantRestTime
             restaurantPrice = detailedInfoList[i].restaurantPrice
             restaurantMenu = detailedInfoList[i].restaurantMenu
+            userLike = detailedInfoList[i].userLike
+            userVisited = detailedInfoList[i].uservisited
         }
 
         // 메뉴 이미지

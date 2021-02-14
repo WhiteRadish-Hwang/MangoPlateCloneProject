@@ -226,13 +226,13 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
     override fun onPostKakaoLoginSuccess(response: KakaoLoginResponse) {
         dismissLoadingDialog()
-        Log.d(TAG, "onPostKakaoLoginSuccess: kakaoId = ${response.jwt}")
+        Log.d(TAG, "onPostKakaoLoginSuccess: jwt = ${response.jwt}")
         Log.d(TAG, "onPostKakaoLoginSuccess: isSuccess = ${response.isSuccess}")
         Log.d(TAG, "onPostKakaoLoginSuccess: code = ${response.code}")
         Log.d(TAG, "onPostKakaoLoginSuccess: message = ${response.message}")
         X_ACCESS_TOKEN = response.jwt
+        user_id = response.userId.toString()
         SharedPreferenced.putSettingItem("X-ACCESS-TOKEN", X_ACCESS_TOKEN)
-        Log.d(TAG, "onPostKakaoLoginSuccess: X_ACCESS_TOKEN = $X_ACCESS_TOKEN")
         isLogin = true
         response.message?.let { showCustomToast(it) }
     }
@@ -249,8 +249,8 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         Log.d(TAG, "onPostFacebookLoginSuccess: code = ${response.code}")
         Log.d(TAG, "onPostFacebookLoginSuccess: message = ${response.message}")
         X_ACCESS_TOKEN = response.jwt
+        user_id = response.userId.toString()
         SharedPreferenced.putSettingItem("X-ACCESS-TOKEN", X_ACCESS_TOKEN)
-        Log.d(TAG, "onPostFacebookLoginSuccess: X_ACCESS_TOKEN = $X_ACCESS_TOKEN")
         isLogin = true
         response.message?.let { showCustomToast(it) }
     }

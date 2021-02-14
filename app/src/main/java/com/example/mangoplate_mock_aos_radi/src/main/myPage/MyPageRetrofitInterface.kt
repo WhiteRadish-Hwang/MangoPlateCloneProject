@@ -6,8 +6,8 @@ import retrofit2.http.*
 
 interface MyPageRetrofitInterface {
 
-    @GET("/users/profile")
-    fun getUserInfos() : Call<MyInfoResponse>
+    @GET("/users/{userId}")
+    fun getUserInfos(@Path ("userId") userId: Int) : Call<MyInfoResponse>
 
     @PATCH("/users/{userId}")
     fun postEditUserName (@Path ("userId") userId: Int,

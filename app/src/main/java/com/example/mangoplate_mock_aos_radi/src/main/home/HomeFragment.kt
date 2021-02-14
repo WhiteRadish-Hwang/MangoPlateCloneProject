@@ -25,10 +25,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment.Companion.homeDetailsKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.search.HomeSearchFragment
 import com.example.mangoplate_mock_aos_radi.src.main.location.LocationSelectFragment
 import kotlin.properties.Delegates
@@ -179,14 +176,16 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
         for (i in start .. end) {
             val item = HomeRecyclerItems(idx = itemIndex++,
-                title = restaurantArrayList[i].restaurantName,
-                areaName = restaurantArrayList[i].areaName,
-                star = restaurantArrayList[i].star,
-                viewPoint = restaurantArrayList[i].restaurantView,
-                reviewCount = restaurantArrayList[i].reviewCount,
-                image = restaurantArrayList[i].firstImageUrl,
-                distanceFromUser = restaurantArrayList[i].distanceFromUser,
-                restaurantId = restaurantArrayList[i].restaurantId)
+                    title = restaurantArrayList[i].restaurantName,
+                    areaName = restaurantArrayList[i].areaName,
+                    star = restaurantArrayList[i].star,
+                    viewPoint = restaurantArrayList[i].restaurantView,
+                    reviewCount = restaurantArrayList[i].reviewCount,
+                    image = restaurantArrayList[i].firstImageUrl,
+                    distanceFromUser = restaurantArrayList[i].distanceFromUser,
+                    restaurantId = restaurantArrayList[i].restaurantId,
+                    isLike = restaurantArrayList[i].isLike,
+                    isVisited = restaurantArrayList[i].visited)
             itemList.add(item)
             Log.d(TAG, "initDataEnd: $item")
         }
@@ -278,6 +277,17 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
     override fun onGetRestaurantFailure(message: String) {
         showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchWannaGoSuccess(response: PatchWannagoResponse) {
+
+
+        homeRecyclerAdapter.notifyDataSetChanged()
+
+    }
+
+    override fun onPatchWannaGoFailure(message: String) {
+
     }
 
 }

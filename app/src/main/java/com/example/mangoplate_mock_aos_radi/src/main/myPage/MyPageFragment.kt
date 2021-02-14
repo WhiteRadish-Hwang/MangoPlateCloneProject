@@ -32,36 +32,29 @@ import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.model.MyInfoResultData
 import com.facebook.login.LoginManager
 import com.kakao.sdk.user.UserApiClient
+import kotlin.properties.Delegates
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page), MypageFragmentView{
-    override fun onStart() {
-        super.onStart()
-        showCustomToast("onStart")
-    }
 
-    override fun onStop() {
-        super.onStop()
-        showCustomToast("onStop")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        showCustomToast("onPause")
-    }
-
+    var userFollowerCount by Delegates.notNull<Int>()
+    var userFollowingCount by Delegates.notNull<Int>()
+    var userReviewCount by Delegates.notNull<Int>()
+    var userVisitedCount by Delegates.notNull<Int>()
+    var userUploadImgCount by Delegates.notNull<Int>()
+    var userLikeCount by Delegates.notNull<Int>()
+    var userMyListCount by Delegates.notNull<Int>()
+    var userBookMarkCount by Delegates.notNull<Int>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if (isEditDone) isEditDone = !isEditDone
 
-//        if (!isGetMyInfo)
-        excuteGetMyInfo()
+        executeGetMyInfo()
 
-        user_name?.let {
-            Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
-            binding.myPageTextUserName.text = user_name
-        }
+//        user_name?.let {
+//            viewHoldData()
+//        }
 
         binding.myPageToolbar.inflateMenu(R.menu.menu_my_page_toolbar)
         binding.myPageToolbar.setOnMenuItemClickListener {
@@ -112,9 +105,22 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
     }
 
-    fun excuteGetMyInfo() {
+    fun executeGetMyInfo() {
         showLoadingDialog(context!!)
-        MyPageService(this).tryGetMyInfo()
+        MyPageService(this).tryGetMyInfo(user_id!!.toInt())
+    }
+
+    fun viewHoldData() {
+        Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
+        binding.myPageTextUserName.text = user_name
+        binding.myPageTextFollowerCount.text = userFollowerCount.toString()
+        binding.myPageTextFollowingCount.text = userFollowingCount.toString()
+        binding.myPageTextReviewCount.text = userReviewCount.toString()
+        binding.myPageTextVisitedCount.text = userVisitedCount.toString()
+        binding.myPageTextPhotoCount.text = userUploadImgCount.toString()
+        binding.myPageTextWannaGoCount.text = userLikeCount.toString()
+        binding.myPageTextMyListCount.text = userMyListCount.toString()
+        binding.myPageTextBookMarkCount.text = userBookMarkCount.toString()
     }
 
     override fun onGetMyInfoSuccess(response: MyInfoResponse, infoList: ArrayList<MyInfoResultData>) {
@@ -130,6 +136,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
             profileImageUrl = infoList[0].userProfileImgUrl
             if (infoList[0].userEmail != "-1") user_email = infoList[0].userEmail
             if (infoList[0].userPhoneNumber != "-1") user_phone_number = infoList[0].userPhoneNumber
+            userFollowerCount = infoList[0].userFollowerCount
+            userFollowingCount = infoList[0].userFollowingCount
+            userReviewCount = infoList[0].userReviewCount
+            userVisitedCount = infoList[0].userVisitedCount
+            userUploadImgCount = infoList[0].userUploadImgCount
+            userLikeCount = infoList[0].userLikeCount
+            userMyListCount = infoList[0].userMyListCount
+            userBookMarkCount = infoList[0].userBookMarkCount
+
         }
         Log.d(TAG, "onGetMyInfoSuccess: user_id = ${user_id}")
         Log.d(TAG, "user_name: user_name = ${user_name}}")
@@ -137,10 +152,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
         Log.d(TAG, "user_name: user_email = ${user_email}}")
         Log.d(TAG, "onGetMyInfoSuccess: user_phone_number = ${user_phone_number}}")
 
-        Glide.with(binding.myPageImgProfile).load(profileImageUrl).circleCrop().override(110, 110).into(binding.myPageImgProfile)
-        binding.myPageTextUserName.text = user_name
+        viewHoldData()
 
-//        isGetMyInfo = true
     }
 
     override fun onGetMyInfoFailure(message: String) {

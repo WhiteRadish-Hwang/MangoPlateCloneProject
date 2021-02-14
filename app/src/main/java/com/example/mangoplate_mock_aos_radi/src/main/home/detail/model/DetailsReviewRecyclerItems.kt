@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.model
+package com.example.mangoplate_mock_aos_radi.src.main.home.detail.model
 
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 

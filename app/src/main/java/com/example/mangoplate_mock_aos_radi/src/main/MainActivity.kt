@@ -19,6 +19,7 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_LOGIN
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isFacebookLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.BaseActivity
@@ -39,9 +40,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     companion object {
         var backStack = true
         var fragmentBack: Fragment? = null
+        var isOpen: Boolean = false
+        var isFgInAddOpen: Boolean = false
     }
 
-    var isOpen: Boolean = false
+
 
 //    private val homeFragment by lazy { HomeFragment() }
 //    private val discountFragment by lazy { DiscountFragment() }
@@ -91,7 +94,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             val cx = binding.mainLayoutFrame.width / 2
             val cy2 = binding.mainLayoutFrame.height - binding.mainFbtn.height / 2
             val cy = binding.mainLayoutFrame.height
-            var duration = 2
             // get the final radius for the clipping circle
             val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
 
@@ -99,79 +101,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             if (!isOpen) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     isOpen = !isOpen
-
-                    binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn))
-
                     val revealAnimator: Animator = ViewAnimationUtils
                         .createCircularReveal(binding.mainLayoutFrame, cx, cy2, 0f, finalRadius)
-//                    binding.mainLayoutFrame.visibility = View.VISIBLE
+
                     addFragment(AddFragment())
                     revealAnimator.duration = 200
                     revealAnimator.start()
-
-//                revealAnimator.addListener(object : Animator.AnimatorListener {
-//                    override fun onAnimationRepeat(animation: Animator?) {
-//
-//                    }
-//
-//                    override fun onAnimationEnd(animation: Animator?) {
-//                        binding.mainLayoutFrame.visibility = View.VISIBLE
-//                    }
-//
-//                    override fun onAnimationCancel(animation: Animator?) {
-//
-//                    }
-//
-//                    override fun onAnimationStart(animation: Animator?) {
-//
-//                    }
-//
-//                })
-
-//                revealAnimator.setDuration(300)
-
-
-//                binding.mainFbtn.setBackgroundColor(R.color.white)
-//                addFragment(AddFragment())
                 }
             } else {
                 isOpen = !isOpen
-                Log.d(ApplicationClass.TAG, "onCreate: isOpen")
-
                 val revealAnimator: Animator = ViewAnimationUtils
                     .createCircularReveal(binding.mainLayoutFrame, cx, cy2, finalRadius, 0f)
                 revealAnimator.duration = 200
                 revealAnimator.start()
-
-                binding.mainFbtn.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotate_fbtn_after))
-
-                val handler = Handler {
-                    when (it.what) {
-                        0 -> {
-                            onBackPressed()
-//                            binding.mainLayoutFrame.visibility = View.GONE
-                            true
-                        }
-                        else -> {true}
-                    }
-                }
-
-
-                timer(period = 100) {
-                    duration--
-                    if (duration == 0) handler.obtainMessage(0).sendToTarget()
-                }
-//                binding.mainFbtn.setBackgroundColor(R.color.cliked_color)
-//
             }
         }
 
         binding.mainBtmNav.setOnNavigationItemSelectedListener(
             BottomNavigationView.OnNavigationItemSelectedListener { item ->
-                var page = 0
+//                var page = 0
                 when (item.itemId) {
                     R.id.menu_main_bottom_nav_home -> {
-                        page = R.id.menu_main_bottom_nav_home
+//                        page = R.id.menu_main_bottom_nav_home
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frame, HomeFragment())
                             .commitAllowingStateLoss()
@@ -184,9 +135,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         return@OnNavigationItemSelectedListener true
                     }
 //                    R.id.menu_main_bottom_nav_add -> {
-////                        supportFragmentManager.beginTransaction()
-////                            .replace(R.id.main_frame, AddFragment())
-////                            .commitAllowingStateLoss()
+//                        supportFragmentManager.beginTransaction()
+//                            .replace(R.id.main_frame, AddFragment())
+//                            .commitAllowingStateLoss()
 //                        return@OnNavigationItemSelectedListener true
 //                    }
                     R.id.menu_main_bottom_nav_news -> {
@@ -265,13 +216,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         val fmbt = supportFragmentManager.beginTransaction()
         backStack = true
         fragmentBack = fragment
-        Log.d(ApplicationClass.TAG, "addFragment: isOpen= $isOpen")
-        Log.d(ApplicationClass.TAG, "addFragment: $fragment")
 
         if (isOpen){
             fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
         } else {
-            binding.mainFbtn.visibility = View.GONE
+            isOpen = false
             fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)
             fmbt.add(R.id.main_layout_sub_frame, fragment).addToBackStack("fragment").commit()
         }
@@ -279,16 +228,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     fun replaceFragment(fragment: Fragment) {
         val fmbt = supportFragmentManager.beginTransaction()
-        Log.d(ApplicationClass.TAG, "replaceFragment: $fragment")
-
         fmbt.replace(R.id.main_frame, fragment).commitAllowingStateLoss()
-
     }
 
     override fun onBackPressed() {
-        Log.d(ApplicationClass.TAG, "onBackPressed: backstck= $backStack")
         if (backStack) { //상세정보창 프래그먼트를 킨 상태면 뒤로가기했을 때 해당 프래그먼트를 삭제해줌
-            binding.mainFbtn.visibility = View.VISIBLE
             fragmentBack?.let { supportFragmentManager.popBackStack() }
             backStack = false
         } else {

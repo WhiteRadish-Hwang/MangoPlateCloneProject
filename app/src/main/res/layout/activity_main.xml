@@ -47,6 +47,26 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_main_bottom_nav">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/main_fbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="2dp"
+                android:backgroundTint="@color/cliked_color"
+                android:clickable="true"
+                android:focusable="true"
+                android:outlineSpotShadowColor="@color/white"
+                android:src="@drawable/plus2"
+                app:borderWidth="0dp"
+                app:fabCustomSize="40dp"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tint="@null"
+                tools:ignore="UnusedAttribute" />
+
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,25 +81,7 @@
 
     </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/main_fbtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="2dp"
-        android:backgroundTint="@color/cliked_color"
-        android:clickable="true"
-        android:focusable="true"
-        android:outlineSpotShadowColor="@color/white"
-        android:src="@drawable/plus2"
-        app:borderWidth="0dp"
-        app:fabCustomSize="40dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@null"
-        tools:ignore="UnusedAttribute" />
+
 
     <FrameLayout
         android:id="@+id/main_layout_sub_frame"

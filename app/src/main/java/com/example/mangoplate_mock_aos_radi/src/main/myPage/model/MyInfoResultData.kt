@@ -11,4 +11,12 @@ data class MyInfoResultData (val userId: Int,
                              val userProfileImgUrl: String,
                              val userName: String,
                              val userEmail: String?,
-                             val userPhoneNumber: String?)
+                             val userPhoneNumber: String?,
+                             val userFollowerCount: Int,
+                             val userFollowingCount: Int,
+                             val userReviewCount: Int,
+                             val userVisitedCount: Int,
+                             val userUploadImgCount: Int,
+                             val userLikeCount: Int,
+                             val userMyListCount: Int,
+                             val userBookMarkCount: Int)

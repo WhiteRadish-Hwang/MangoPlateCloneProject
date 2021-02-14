@@ -207,7 +207,7 @@
                     android:layout_weight="1">
 
                     <ImageView
-                        android:id="@+id/details_img_bottom_like"
+                        android:id="@+id/details_img_bottom_visited"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         android:scaleType="centerCrop"
@@ -216,10 +216,10 @@
                         app:srcCompat="@drawable/visited" />
 
                     <TextView
-                        android:id="@+id/details_text_bottom_like"
+                        android:id="@+id/details_text_bottom_visited"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/details_img_bottom_like"
+                        android:layout_below="@+id/details_img_bottom_visited"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cliked_color"

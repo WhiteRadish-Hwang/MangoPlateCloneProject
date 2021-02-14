@@ -1,17 +1,29 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home.adapter
 
 import android.content.Context
+import android.os.Build
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragmentView
+import com.example.mangoplate_mock_aos_radi.src.main.home.HomeService
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.*
+import java.lang.Exception
 
-class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRecyclerItems>): RecyclerView.Adapter<HomeRecyclerAdapter.ItemViewHolder>() {
+class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRecyclerItems>): RecyclerView.Adapter<HomeRecyclerAdapter.ItemViewHolder>(), HomeFragmentView {
+    var isLikeAndVisitedDone: Boolean = false
+    var adapterIsLike: Boolean = false
+    var adapterIsVisited: Boolean = false
+
     interface MyItemClickListener {
         fun onItemClick(position: Int)
     }
@@ -28,7 +40,6 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
             }
         }
 
-
         val foodImg: ImageView = itemView.findViewById(R.id.home_recycler_main_img)
         val title: TextView = itemView.findViewById(R.id.home_recycler_text_title)
         val location: TextView = itemView.findViewById(R.id.home_recycler_text_loc)
@@ -36,6 +47,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         val viewPoint: TextView = itemView.findViewById(R.id.home_recycler_text_view_point)
         val reviewCount: TextView = itemView.findViewById(R.id.home_recycler_text_review_count)
         val distanceForUser: TextView = itemView.findViewById(R.id.home_recycler_text_distance_for_user)
+        val wannaGo: ImageView = itemView.findViewById(R.id.home_img_star)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -47,8 +59,67 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val items: HomeRecyclerItems = itemList[position]
+        val adapter = this
+
         Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
+
+        if (items.isVisited == 1) { // 가봤어요 1일 때 체크표시
+            holder.wannaGo.setImageResource(R.drawable.already_visited)
+            adapterIsVisited = true
+        }
+
+        if (!adapterIsVisited) {
+            when (items.isLike) {
+                1 -> {
+                    holder.wannaGo.setImageResource(R.drawable.wanngo_clicked)
+                }
+                0 -> {
+                    holder.wannaGo.setImageResource(R.drawable.star_white)
+                }
+            }
+        }
+
+        holder.wannaGo.setOnClickListener {
+            // 가고싶다 추가, 해제 서비스 호출
+            HomeService(this).tryPatchWannago(items.restaurantId)
+
+            Thread {
+                Thread.sleep(500)
+                Log.d(TAG, "isLikeAndVisitedDone: $isLikeAndVisitedDone")
+                try {
+                    if (isLikeAndVisitedDone){
+                        checkLikeImgStatus(items)
+                        Log.d(TAG, "onBindViewHolder: isLike = ${items.isLike}")
+                        when (items.isLike) {
+                            1 -> {
+                                Log.d(TAG, "onBindViewHolder: 1")
+                                Handler().post{
+                                    holder.wannaGo.setImageResource(R.drawable.wanngo_clicked)
+                                }
+                                notifyItemChanged(position)
+                                adapter.notifyDataSetChanged()
+                            }
+                            0 -> {
+                                Log.d(TAG, "onBindViewHolder: 2")
+                                Handler().post{
+                                    holder.wannaGo.setImageResource(R.drawable.star_white)
+                                }
+                                notifyItemChanged(position)
+                                adapter.notifyDataSetChanged()
+                            }
+                        }
+                    }
+                    if (isLikeAndVisitedDone) throw Exception()
+
+                }catch (e: Exception){
+                    Log.d(TAG, "Thread: Done > $isLikeAndVisitedDone")
+                    isLikeAndVisitedDone = false
+                }
+
+            }.start()
+
+        }
 
 
         holder.title.text = "${items.idx}. ${items.title}"
@@ -62,6 +133,48 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
     fun clearItemList() {
         itemList.clear()
         notifyDataSetChanged()
+    }
+
+    fun checkLikeImgStatus(items: HomeRecyclerItems) {
+        Log.d(TAG, "items.isLike: $adapterIsLike")
+        when {
+            adapterIsLike -> { // 서비스가 끝나고 좋아요 성공 시
+                Log.d(TAG, "onBindViewHolder: 2")
+                if (isLikeAndVisitedDone){
+                    items.isLike = 1
+                }
+            }
+            else -> { // 서비스가 끝나고 좋아요 해제 시
+                Log.d(TAG, "onBindViewHolder: 3")
+                if (isLikeAndVisitedDone){
+                    if (!adapterIsLike) items.isLike = 0
+                }
+
+            }
+        }
+    }
+
+    override fun onGetRestaurantSuccess(response: RestaurantsResponse, topList: ArrayList<TopListResultData>, restaurantList: ArrayList<RestaurantResultData>) {
+
+    }
+
+    override fun onGetRestaurantFailure(message: String) {
+
+    }
+
+    override fun onPatchWannaGoSuccess(response: PatchWannagoResponse) {
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.code}")
+        Log.d(TAG, "onPatchWannaGoSuccess: ${response.message}")
+        isLikeAndVisitedDone = true
+
+        if (response.code == 1000) adapterIsLike = true
+        else if (response.code == 1001) adapterIsLike = false
+
+    }
+
+    override fun onPatchWannaGoFailure(message: String) {
+        Toast.makeText(context, "오류 : $message", Toast.LENGTH_SHORT).show()
     }
 
 }

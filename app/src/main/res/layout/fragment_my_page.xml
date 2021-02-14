@@ -348,14 +348,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ma_page_text_review"
+                            android:id="@+id/my_page_text_review"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/review" />
 
                         <TextView
-                            android:id="@+id/ma_page_text_review_count"
+                            android:id="@+id/my_page_text_review_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -371,14 +371,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ma_page_text_visited"
+                            android:id="@+id/my_page_text_visited"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/visited" />
 
                         <TextView
-                            android:id="@+id/ma_page_text_visited_count"
+                            android:id="@+id/my_page_text_visited_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -393,14 +393,14 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/ma_page_text_photo"
+                            android:id="@+id/my_page_text_photo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/photo" />
 
                         <TextView
-                            android:id="@+id/ma_page_text_photo_count"
+                            android:id="@+id/my_page_text_photo_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -434,6 +434,16 @@
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/black"
                         android:text="@string/wanna_go" />
+
+                    <TextView
+                        android:id="@+id/my_page_text_wanna_go_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/my_page_img_arrow_right_second_in_fourth"
+                        android:textColor="@color/black"
+                        android:text="0" />
 
                     <ImageView
                         android:id="@+id/my_page_img_arrow_right_second_in_fourth"
@@ -471,6 +481,16 @@
                         android:textColor="@color/black"
                         android:text="@string/my_list" />
 
+                    <TextView
+                        android:id="@+id/my_page_text_my_list_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/my_page_img_arrow_right_third_in_fourth"
+                        android:textColor="@color/black"
+                        android:text="0" />
+
                     <ImageView
                         android:id="@+id/my_page_img_arrow_right_third_in_fourth"
                         android:layout_width="wrap_content"
@@ -506,6 +526,16 @@
                         android:layout_marginLeft="15dp"
                         android:textColor="@color/black"
                         android:text="@string/book_mark" />
+                    <TextView
+                        android:id="@+id/my_page_text_book_mark_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/my_page_img_arrow_right_fourth_in_fourth"
+                        android:textColor="@color/black"
+                        android:text="0" />
+
 
                     <ImageView
                         android:id="@+id/my_page_img_arrow_right_fourth_in_fourth"

@@ -17,10 +17,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsKe
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.NearRestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewImgResultData
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.DetailsReviewRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsReviewRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class HomeDetailsFrameFragment : BaseFragment<FragmentHomeRestaurantDetailsFrameBinding>(FragmentHomeRestaurantDetailsFrameBinding::bind, R.layout.fragment_home_restaurant_details_frame) {
     companion object {
@@ -117,10 +115,10 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeRestaurantDetailsFrame
             val replyCountText = String.format(getString(R.string.news_total_review_reply_count, reviewResultArrayList[i].reviewReplyCount))
 
             val item = DetailsReviewRecyclerItems(reviewImgList = reviewImgArrayListArg, userProfileImgUrl = reviewResultArrayList[i].userProfileImgUrl,
-            userName = reviewResultArrayList[i].userName, isHolic = reviewResultArrayList[i].isHolic, userReviewCount = reviewResultArrayList[i].userReviewCount,
-            userFollowerCount = reviewResultArrayList[i].userFollower, reviewExpression = reviewResultArrayList[i].reviewExpression, reviewReplyCount = replyCountText,
-            reviewLikeCount = likeCountText, updatedAt = reviewResultArrayList[i].updatedAt, reviewContents = reviewResultArrayList[i].reviewContents,
-            reviewLikeStatus = reviewResultArrayList[i].userReviewLike, expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
+                    userName = reviewResultArrayList[i].userName, isHolic = reviewResultArrayList[i].isHolic, userReviewCount = reviewResultArrayList[i].userReviewCount,
+                    userFollowerCount = reviewResultArrayList[i].userFollower, reviewExpression = reviewResultArrayList[i].reviewExpression, reviewReplyCount = replyCountText,
+                    reviewLikeCount = likeCountText, updatedAt = reviewResultArrayList[i].updatedAt, reviewContents = reviewResultArrayList[i].reviewContents,
+                    reviewLikeStatus = reviewResultArrayList[i].userReviewLike, expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
 
             reviewArray.add(item)
         }

@@ -42,8 +42,7 @@
             android:id="@+id/home_img_star"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            app:srcCompat="@drawable/star"
-            app:tint="@color/white" />
+            app:srcCompat="@drawable/star_white" />
     </FrameLayout>
 
     <LinearLayout
