@@ -57,7 +57,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: called, jwt = $X_ACCESS_TOKEN")
-        showCustomToast("onCreate")
         // 홈서비스 실행
         excuteHomeService()
     }
@@ -74,7 +73,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         binding.homeToolbar.setOnMenuItemClickListener {
             when (it.itemId){
                 R.id.menu_home_toolbar_search -> {
-                    showCustomToast("Clicked Search Item")
                     (activity as MainActivity).addFragment(HomeSearchFragment())
                     true
                 }
@@ -123,7 +121,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
-        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 1000, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = 1, locationfilter2 = 2, locationfilter3 = 3,
+                distance = 1000, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
 
     fun<T> clearFilter(itemList: ArrayList<T>, sort: Int) {
@@ -133,7 +132,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         limit = 10
         itemIndex = 1
         homeRecyclerAdapter.clearItemList()
-        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, areaName = "성북", distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+        HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = 1, locationfilter2 = 2, locationfilter3 = 3,
+                distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
     }
 
     fun setSortPivotSelect(){
@@ -227,9 +227,6 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                         it.setMyItemClickListener(object :
                             HomeRecyclerAdapter.MyItemClickListener {
                             override fun onItemClick(position: Int) {
-                                showCustomToast("position = $position")
-                                //아직 포지션에 따른 데이터 전달 구현안함
-
                                 (activity as MainActivity).addFragment(HomeDetailsFragment().apply {
                                     arguments = Bundle().apply {
                                         putInt(homeDetailsKey, restaurantArrayList[position].restaurantId)

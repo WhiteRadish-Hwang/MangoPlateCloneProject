@@ -19,4 +19,9 @@ interface HomeDetailsFragmentView {
 
     fun onPatchWannaGoFailure(message: String)
 
+    fun onGetDetailsImageSuccess(response: DetailsImageResponse)
+
+
+    fun onGetDetailsImageFailure(message: String)
+
 }

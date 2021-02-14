@@ -1,5 +1,6 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home.detail
 
+import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsImageResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
@@ -16,4 +17,7 @@ interface DetailsRetrofitInterface {
 
     @PATCH("/restaurants/{restaurantId}/like")
     fun patchWannago(@Path("restaurantId") restaurantId: Int) : Call<PatchWannagoResponse>
+
+    @GET("/reviews/images/{imgId}")
+    fun getDetailsImage(@Path("imgId") imgId: Int) : Call<DetailsImageResponse>
 }

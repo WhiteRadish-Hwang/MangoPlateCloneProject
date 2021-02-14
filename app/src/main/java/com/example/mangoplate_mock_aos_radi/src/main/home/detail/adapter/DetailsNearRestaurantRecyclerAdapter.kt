@@ -38,7 +38,7 @@ class DetailsNearRestaurantRecyclerAdapter(val context: Context?, var itemList: 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_restaurant_details_near_restaurant_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_details_near_restaurant_item, parent, false)
         return ItemViewHolder(view)
     }
 

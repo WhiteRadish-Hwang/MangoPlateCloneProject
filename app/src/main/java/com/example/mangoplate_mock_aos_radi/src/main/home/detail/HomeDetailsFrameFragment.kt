@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeRestaurantDetailsFrameBinding
+import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsFrameBinding
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsKeywordRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsNearRestaurantRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsReviewRecyclerAdapter
@@ -20,7 +20,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewRes
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsReviewRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 
-class HomeDetailsFrameFragment : BaseFragment<FragmentHomeRestaurantDetailsFrameBinding>(FragmentHomeRestaurantDetailsFrameBinding::bind, R.layout.fragment_home_restaurant_details_frame) {
+class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(FragmentHomeDetailsFrameBinding::bind, R.layout.fragment_home_details_frame) {
     companion object {
         const val keywordItemKey = "keywordItemKey"
         const val reviewTitleItemKey = "reviewTitleItemKey"

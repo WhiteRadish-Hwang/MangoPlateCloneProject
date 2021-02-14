@@ -13,7 +13,9 @@ interface HomeRetrofitInterface {
     @GET("/restaurants")
     fun getRestaurants(@Query("page") page: Int,
                        @Query("limit") limit: Int,
-                       @Query("areaName") areaName: String,
+                       @Query("locationfilter") locationfilter1: Int,
+                       @Query("locationfilter") locationfilter2: Int,
+                       @Query("locationfilter") locationfilter3: Int,
                        @Query("distance") distance: Int,
                        @Query("sort") sort: Int,
                        @Query("userLatitude") userLatitude: Float,

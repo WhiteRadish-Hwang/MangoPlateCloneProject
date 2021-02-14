@@ -4,15 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsKeywordRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 
 class DetailsKeywordRecyclerAdapter(val context: Context?, var itemList: ArrayList<DetailsKeywordRecyclerItems>): RecyclerView.Adapter<DetailsKeywordRecyclerAdapter.ItemViewHolder>() {
     interface MyKeywordItemClickListener {
@@ -35,7 +30,7 @@ class DetailsKeywordRecyclerAdapter(val context: Context?, var itemList: ArrayLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_restaurant_details_keyword_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_details_keyword_item, parent, false)
         return ItemViewHolder(view)
     }
 

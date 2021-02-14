@@ -229,4 +229,29 @@ class DetailsService (val view: HomeDetailsFragmentView) {
         })
     }
 
+    fun tryGetDetailsImage(imageId: Int) {
+        val detailsRetrofitInterface = ApplicationClass.sRetrofit.create(DetailsRetrofitInterface::class.java)
+        detailsRetrofitInterface.getDetailsImage(imageId).enqueue(object : Callback<DetailsImageResponse> {
+            override fun onResponse(call: Call<DetailsImageResponse>, response: Response<DetailsImageResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(TAG, "onResponse: ${response.body()}")
+
+                            view.onGetDetailsImageSuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+
+            override fun onFailure(call: Call<DetailsImageResponse>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+                view.onGetDetailsImageFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
 }

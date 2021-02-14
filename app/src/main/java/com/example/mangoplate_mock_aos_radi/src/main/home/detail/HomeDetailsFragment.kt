@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeRestaurantDetailsBinding
+import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.areaNameKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
@@ -24,15 +24,15 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFram
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultImgArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsReviewRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
+import kotlin.math.log
 import kotlin.properties.Delegates
 
-class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(FragmentHomeRestaurantDetailsBinding::bind, R.layout.fragment_home_restaurant_details), HomeDetailsFragmentView {
+class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHomeDetailsBinding::bind, R.layout.fragment_home_details), HomeDetailsFragmentView {
     companion object {
         const val homeDetailsKey = "restaurantId"
 //        fun newInstance(restaurantId: Int) = HomeRestaurantDetailsFragment().apply {
@@ -43,6 +43,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
 //        }
     }
 
+    val imgsIdList = ArrayList<Int>()
     val imgsItemList = ArrayList<TotalRecyclerInnerImageItems>()
     val menuImgArrayList = ArrayList<String>()
     val keyWordArrayList = ArrayList<String>()
@@ -170,7 +171,12 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
             innerImgRecyclerAdapter.let {
                 it.setMyInnerImgItemClickListener(object : TotalRecyclerInnerImageAdapter.MyInnerImgItemClickListener {
                     override fun onItemClick(position: Int) {
-                        showCustomToast("$position")
+                        (activity as MainActivity).addFragment(HomeDetailsImageFragment().apply {
+                            arguments = Bundle().apply {
+                                putString("imageItemKey", imgsItemList[position].innerImage)
+                                putInt("imageIdKey", imgsIdList[position])
+                            }
+                        })
                         Log.d(TAG, "position = $position, review = ${imgsItemList[position]}")
                     }
                 })
@@ -203,7 +209,10 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
         Log.d(TAG, "areaResultList: $areaResultList")
 
         // 이너 이미지 데이터입력
-        for (i in 0 until imgsList.size) imgsItemList.add(TotalRecyclerInnerImageItems(innerImage = imgsList[i].reviewImgUrl))
+        for (i in 0 until imgsList.size) {
+            imgsItemList.add(TotalRecyclerInnerImageItems(innerImage = imgsList[i].reviewImgUrl))
+            imgsIdList.add(imgsList[i].imgId)
+        }
 
         // 식당 상세정보 --->>> inspection, restaurantId, restaurantPhoneNumber 변수 없음
         for (i in 0 until detailedInfoList.size) {
@@ -293,6 +302,14 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeRestaurantDetailsBinding>(Fr
 
     override fun onPatchWannaGoFailure(message: String) {
 
+    }
+
+    override fun onGetDetailsImageSuccess(response: DetailsImageResponse) {
+        Log.d(TAG, "onGetDetailsImageSuccess: ${response.result}")
+    }
+
+    override fun onGetDetailsImageFailure(message: String) {
+        showCustomToast("오류 : $message")
     }
 
 }

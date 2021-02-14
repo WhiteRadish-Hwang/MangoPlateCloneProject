@@ -47,7 +47,7 @@ class DetailsReviewRecyclerAdapter(val context: Context?, val itemList: ArrayLis
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_restaurant_details_review_recycler_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_home_details_review_recycler_item, parent, false)
         return ReviewViewHolder(view)
     }
 

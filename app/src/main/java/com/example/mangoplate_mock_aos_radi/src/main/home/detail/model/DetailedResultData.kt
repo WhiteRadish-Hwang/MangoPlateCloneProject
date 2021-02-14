@@ -61,3 +61,15 @@ data class NearRestaurantResultData (val restaurantId: Int,
                                      val firstImageUrl: String): Serializable
 
 data class AreaResultData (val areaName: String)
+
+data class DetailsImageData (val restaurantName: String,
+                             val reviewId: Int,
+                             val userProfileImgUrl: String,
+                             val userName: String,
+                             val isHolic: Int,
+                             val userReviewCount: Int,
+                             val userFollower: Int,
+                             val reviewImgUrl: String,
+                             val reviewContents: String,
+                             val userReviewLike: Int,
+                             val updatedAt: String)
