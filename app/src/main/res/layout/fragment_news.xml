@@ -23,20 +23,20 @@
             app:liftOnScrollTargetViewId="@id/news_vp">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/home_toolbar"
+                android:id="@+id/news_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/home_toolbar_underline"
                 app:layout_scrollFlags="scroll|enterAlways|snap">
 
                 <LinearLayout
-                    android:id="@+id/home_toolbar_loc_selector"
+                    android:id="@+id/news_toolbar_loc_selector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/home_toolbar_tv_loc_pointer"
+                        android:id="@+id/news_toolbar_tv_loc_pointer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/home_toolbar_tv_loc_pointer_text"
@@ -49,7 +49,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/home_toolbar_tv_loc_changed_text"
+                            android:id="@+id/news_toolbar_tv_loc_changed_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/toolbar_tv_loc_changed_text_ex"
@@ -58,7 +58,7 @@
                             android:textStyle="bold" />
 
                         <ImageView
-                            android:id="@+id/home_toolbar_arrow"
+                            android:id="@+id/news_toolbar_arrow"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:srcCompat="@drawable/arrow_down"

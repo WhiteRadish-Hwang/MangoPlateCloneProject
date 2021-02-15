@@ -16,6 +16,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragme
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment.Companion.isLocCheck
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment.Companion.locList
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.model.LocSelectRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.news.location.NewsGangbukFragment.Companion.newsLocList
 import kotlin.reflect.typeOf
 
 class LocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<LocSelectRecyclerItems>): RecyclerView.Adapter<LocSelectRecyclerAdapter.ItemViewHolder>() {
@@ -72,16 +73,20 @@ class LocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<Lo
                     holder.locSelectImgCheck.visibility = View.VISIBLE
                     holder.locSelectTextSearchWord.setBackgroundResource(R.drawable.loc_select_text_border)
                     holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context!!,R.color.cliked_color))
-                    locList.add(items.location)
+                    if (items.isHomeLoc) locList.add(items.location)
+                    else newsLocList.add(items.location)
                 }
                 false -> {
                     holder.locSelectImgCheck.visibility = View.INVISIBLE
                     holder.locSelectTextSearchWord.setBackgroundResource(R.drawable.loc_select_text_border_unclicked)
                     holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context!!,R.color.uncliked_color))
-                    locList.remove(items.location)
+                    if (items.isHomeLoc) locList.remove(items.location)
+                    else newsLocList.remove(items.location)
                 }
             }
-            Log.d(TAG, "locList: $locList")
+            if (items.isHomeLoc) Log.d(TAG, "locList: $locList")
+            else Log.d(TAG, "newsLocList: $newsLocList")
+
         }
     }
 

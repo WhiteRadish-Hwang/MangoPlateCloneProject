@@ -1,6 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail.model
-
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
+package com.example.mangoplate_mock_aos_radi.src.main.detail.model
 
 data class DetailsReviewRecyclerItems (var reviewImgList: ArrayList<String>,
                                        var userProfileImgUrl: String,

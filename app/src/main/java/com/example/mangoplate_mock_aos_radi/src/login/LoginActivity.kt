@@ -35,6 +35,7 @@ import com.kakao.sdk.user.UserApiClient
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
+import java.lang.reflect.InvocationTargetException
 import java.net.URL
 
 
@@ -72,6 +73,9 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         // If the access token is available already assign it.
 
 //        binding.loginBtnFacebook.setReadPermissions("user_status")
+        binding.loginBtnFacebook.setOnClickListener{
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"));
+        }
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
@@ -115,9 +119,15 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                                     startActivity(intent)
                                     finish()
                                 }
-                                if (isLoginDone) throw Exception()
+//                                if (isLoginDone) {
+//                                    isLoginDone = !isLoginDone
+//                                    throw Exception()
+//                                }
                             }
+                        } catch (e: InvocationTargetException){
+                            Log.d(TAG, "Exception: $e")
                         } catch (e: Exception){
+                            Log.d(TAG, "Exception: $e")
                         }
                     }.start()
 
@@ -151,7 +161,10 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                                     isLogin = false
                                     updateKakaoLogin()
                                 }
-                            if (isLoginDone) throw Exception()
+//                                if (isLoginDone) {
+//                                    isLoginDone = !isLoginDone
+//                                    throw Exception()
+//                                }
                             }
                         } catch (e: Exception){
                         }
@@ -175,12 +188,14 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                                     isLogin = false
                                     updateKakaoLogin()
                                 }
-                                if (isLoginDone) {
-                                    isLoginDone = !isLoginDone
-                                    throw Exception()
-                                }
+                                Log.d(TAG, "isLoginDone: $isLoginDone")
+//                                if (isLoginDone) {
+//                                    isLoginDone = !isLoginDone
+//                                    throw Exception()
+//                                }
                             }
                         } catch (e: Exception){
+                            Log.d(TAG, "Exception: $e")
                         }
                     }.start()
 
@@ -202,14 +217,9 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                 Log.d(TAG, "updateKakaoLoginUi: id = ${user.id}")
                 Log.d(TAG, "updateKakaoLoginUi: name = ${user.kakaoAccount?.profile?.nickname}")
-//                user_name = user.kakaoAccount?.profile?.nickname.toString()
-//                profileImageUrl = user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
+
                 isKakaoLogin = true
                 Log.d(TAG, "updateKakaoLoginUi: id = ${user.kakaoAccount?.profile?.thumbnailImageUrl.toString()}")
-
-//                SharedPreferenced.putSettingItem(KAKAO_LOGIN, isKakaoLogin.toString())
-//                SharedPreferenced.putSettingItem(KAKAO_ID, user_id)
-//                SharedPreferenced.putSettingItem(KAKAO_IMG, profileImageUrl)
 
                 isLoginDone = true
 
@@ -227,6 +237,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     override fun onPostKakaoLoginSuccess(response: KakaoLoginResponse) {
         dismissLoadingDialog()
         Log.d(TAG, "onPostKakaoLoginSuccess: jwt = ${response.jwt}")
+        Log.d(TAG, "onPostFacebookLoginSuccess: userId = ${response.userId}")
         Log.d(TAG, "onPostKakaoLoginSuccess: isSuccess = ${response.isSuccess}")
         Log.d(TAG, "onPostKakaoLoginSuccess: code = ${response.code}")
         Log.d(TAG, "onPostKakaoLoginSuccess: message = ${response.message}")
@@ -245,6 +256,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     override fun onPostFacebookLoginSuccess(response: FacebookLoginResponse) {
 //        dismissLoadingDialog()
         Log.d(TAG, "onPostFacebookLoginSuccess: jwt = ${response.jwt}")
+        Log.d(TAG, "onPostFacebookLoginSuccess: userId = ${response.userId}")
         Log.d(TAG, "onPostFacebookLoginSuccess: isSuccess = ${response.isSuccess}")
         Log.d(TAG, "onPostFacebookLoginSuccess: code = ${response.code}")
         Log.d(TAG, "onPostFacebookLoginSuccess: message = ${response.message}")

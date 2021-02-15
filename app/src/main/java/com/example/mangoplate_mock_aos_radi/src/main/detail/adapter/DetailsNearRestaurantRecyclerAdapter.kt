@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.detail.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.NearRestaurantResultData
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.NearRestaurantResultData
 
-class DetailsNearRestaurantRecyclerAdapter(val context: Context?, var itemList: ArrayList<NearRestaurantResultData>, var areaName: String): RecyclerView.Adapter<DetailsNearRestaurantRecyclerAdapter.ItemViewHolder>() {
+class DetailsNearRestaurantRecyclerAdapter(val context: Context?, var itemList: ArrayList<NearRestaurantResultData>): RecyclerView.Adapter<DetailsNearRestaurantRecyclerAdapter.ItemViewHolder>() {
     interface MyItemClickListener {
         fun onItemClick(position: Int)
     }
@@ -51,7 +51,7 @@ class DetailsNearRestaurantRecyclerAdapter(val context: Context?, var itemList: 
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
 
         holder.restaurantName.text = items.restaurantName
-        holder.locName.text = areaName
+        holder.locName.text = items.areaName
         holder.star.text = items.star
         holder.restaurantView.text = items.restaurantView.toString()
         holder.reviewCount.text = items.reviewCount.toString()

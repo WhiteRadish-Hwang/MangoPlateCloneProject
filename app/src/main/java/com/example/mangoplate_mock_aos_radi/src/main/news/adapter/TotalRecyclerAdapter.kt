@@ -1,27 +1,17 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Paint
-import android.os.Bundle
-import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.text.toSpannable
-import androidx.core.text.toSpanned
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
-import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsImageFragment
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerItems>): RecyclerView.Adapter<TotalRecyclerAdapter.TotalViewHolder>() {
@@ -40,6 +30,9 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         val totalInnerRecycler: RecyclerView = itemView.findViewById(R.id.total_recycler_img)
         val totalImgExpression: ImageView = itemView.findViewById(R.id.total_img_expression)
         val totalTextExpression: TextView = itemView.findViewById(R.id.total_text_expression)
+        val totalImgHolic: ImageView = itemView.findViewById(R.id.total_img_user_holic)
+        val totalImgBottomWannaGo: ImageView = itemView.findViewById(R.id.total_img_bottom_wanna_go)
+        val totalImgBottomLike: ImageView = itemView.findViewById(R.id.total_img_bottom_like)
 
     }
 
@@ -85,16 +78,15 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
             }
         }
 
-//        if (items.isHolic == 1) {
-//
-//        }
-//
-//        if (items.restaurantLikeStatus == 1){
-//
-//        }
-//        if (items.reviewLikeStatus == 1){
-//
-//        }
+        //메인스레드 이용해서 클릭시 이미지변하게 할 것, 홈리사이클러뷰 Like부분 참고
+        if (items.isHolic == 1) holder.totalImgHolic.visibility = View.VISIBLE
+        else holder.totalImgHolic.visibility = View.GONE
+
+        if (items.restaurantLikeStatus == 1)holder.totalImgBottomWannaGo.setColorFilter(Color.parseColor("#ff8104"))
+        else holder.totalImgBottomWannaGo.colorFilter = null
+
+        if (items.reviewLikeStatus == 1)holder.totalImgBottomLike.setColorFilter(Color.parseColor("#ff8104"))
+        else holder.totalImgBottomLike.colorFilter = null
 
         setItemsRecycler(holder.totalInnerRecycler, items.reviewImgList)
     }

@@ -7,7 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.NEWS_LOC_LIST
+import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentLocSelectBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
+import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment
+import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.news.location.NewsGangbukFragment.Companion.isNewsLocCheck
+import com.example.mangoplate_mock_aos_radi.src.main.news.location.NewsGangbukFragment.Companion.newsLocList
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -29,7 +38,10 @@ class NewsLocationSelectFragment(): BottomSheetDialogFragment() {
         setTabLayoutMediator()
 
         binding.locSelectBtnApply.setOnClickListener {
+            isNewsLocCheck = false
             dialog?.dismiss()
+            SharedPreferenced.putArrayStringItem(NEWS_LOC_LIST, newsLocList)
+            (activity as MainActivity).replaceFragment(NewsFragment())
         }
 
     }
@@ -41,7 +53,8 @@ class NewsLocationSelectFragment(): BottomSheetDialogFragment() {
             return when(position) {
                 0 -> NewsRecentLocFragment()
                 1 -> NewsAboutMyPlaceFragment()
-                else -> NewsGangbukFragment()
+                3 -> NewsGangbukFragment()
+                else -> NewsRecentLocFragment()
             }
         }
     }

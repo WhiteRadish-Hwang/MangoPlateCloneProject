@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail.model
+package com.example.mangoplate_mock_aos_radi.src.main.detail.model
 
 import java.io.Serializable
 
@@ -56,9 +56,9 @@ data class NearRestaurantResultData (val restaurantId: Int,
                                      val isLike: Int,
                                      val visited: Int,
                                      val star: String,
-                                     val firstImageUrl: String): Serializable
+                                     val firstImageUrl: String,
+                                     val areaName: String): Serializable
 
-data class AreaResultData (val areaName: String)
 
 data class DetailsImageData (val restaurantName: String,
                              val reviewId: Int,

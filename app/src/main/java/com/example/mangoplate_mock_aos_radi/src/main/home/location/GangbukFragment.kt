@@ -11,7 +11,6 @@ import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentLocSelectGangbukBinding
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.adapter.LocSelectRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.model.LocSelectRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.location.adapter.NewsLocSelectRecyclerAdapter
 
 
 class GangbukFragment : BaseFragment<FragmentLocSelectGangbukBinding>(FragmentLocSelectGangbukBinding::bind, R.layout.fragment_loc_select_gangbuk){
@@ -57,9 +56,9 @@ class GangbukFragment : BaseFragment<FragmentLocSelectGangbukBinding>(FragmentLo
         val items = ArrayList<LocSelectRecyclerItems>()
 
         for (locItem in locItemList) {
-            for (loc in locList) if (locItem == loc) items.add(LocSelectRecyclerItems(location = loc, isSelected = true))
+            for (loc in locList) if (locItem == loc) items.add(LocSelectRecyclerItems(location = loc, isSelected = true, isHomeLoc = true))
 
-            items.add(LocSelectRecyclerItems(location = locItem, isSelected = false))
+            items.add(LocSelectRecyclerItems(location = locItem, isSelected = false, isHomeLoc = true))
         }
         Log.d(TAG, "items: $items")
         for (item in items) itemList.add(item)

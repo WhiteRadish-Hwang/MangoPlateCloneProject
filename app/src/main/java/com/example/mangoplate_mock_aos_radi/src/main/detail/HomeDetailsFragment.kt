@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
 import android.graphics.Color
 import android.os.Bundle
@@ -10,26 +10,22 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TA
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.areaNameKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.nearRestaurantArrayListKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantBreakTimeKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantClosedDateKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantLocationKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantOpeningTimeKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.restaurantPriceKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewBadItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGoodItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewGreatItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewResultImgArrayListKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.nearRestaurantArrayListKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantBreakTimeKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantClosedDateKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantLocationKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantOpeningTimeKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantPriceKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewBadItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewGoodItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewGreatItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
-import kotlin.math.log
 import kotlin.properties.Delegates
 
 class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHomeDetailsBinding::bind, R.layout.fragment_home_details), HomeDetailsFragmentView {
@@ -65,7 +61,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
     lateinit var restaurantRestTime: String
     lateinit var restaurantPrice: String
     lateinit var restaurantMenu: String
-    lateinit var areaName: String
     var userLike by Delegates.notNull<Int>()
     var userVisited by Delegates.notNull<Int>()
 
@@ -140,7 +135,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
                 // 근처 식당
                 putSerializable(nearRestaurantArrayListKey, nearRestaurantArrayList)
                 // 지역 이름
-                putString(areaNameKey, areaName)
             }
             Log.d(TAG, "arguments: $arguments")
         }).commit()
@@ -191,8 +185,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         keyWordList: ArrayList<KeyWordResultData>,
         reviewCountList: ArrayList<ReviewCountResultData>,
         reviewList: ArrayList<ReviewResultData>,
-        nearRestaurantList: ArrayList<NearRestaurantResultData>,
-        areaResultList: ArrayList<AreaResultData>
+        nearRestaurantList: ArrayList<NearRestaurantResultData>
     ) {
         Log.d(TAG, "onGetDetailsSuccess: ${response.result}")
         Log.d(TAG, "imgsList: $imgsList")
@@ -202,7 +195,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         Log.d(TAG, "reviewCountList: $reviewCountList")
         Log.d(TAG, "reviewList: $reviewList")
         Log.d(TAG, "nearRestaurantList: $nearRestaurantList")
-        Log.d(TAG, "areaResultList: $areaResultList")
 
         // 이너 이미지 데이터입력
         for (i in 0 until imgsList.size) {
@@ -248,9 +240,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
 
         // 근처 식당
         for (nearRestaurantData in nearRestaurantList) nearRestaurantArrayList.add(nearRestaurantData)
-
-        // 지역 이름
-        for (areaResultData in areaResultList) areaName = areaResultData.areaName
 
 
 

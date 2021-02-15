@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_gray"
+    android:background="@color/more_light_gray"
     android:orientation="vertical">
 
 
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="7dp"
-                        app:srcCompat="@drawable/mango_review_count" />
+                        app:srcCompat="@drawable/review_follow" />
 
                     <TextView
                         android:id="@+id/review_text_user_follower_count"

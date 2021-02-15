@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.detail.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsReviewRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsReviewRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 
 class DetailsReviewRecyclerAdapter(val context: Context?, val itemList: ArrayList<DetailsReviewRecyclerItems>): RecyclerView.Adapter<DetailsReviewRecyclerAdapter.ReviewViewHolder>() {
 

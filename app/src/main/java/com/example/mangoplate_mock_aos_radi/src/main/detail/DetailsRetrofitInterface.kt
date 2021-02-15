@@ -1,14 +1,12 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsImageResponse
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsResponse
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsImageResponse
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.RestaurantsResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface DetailsRetrofitInterface {
 

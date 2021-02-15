@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/light_gray"
+    android:background="@color/more_light_gray"
     android:orientation="vertical">
 
 
@@ -39,14 +39,32 @@
                 android:layout_toRightOf="@+id/total_img_profile"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/total_text_user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="userName"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/total_text_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="userName"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/total_img_user_holic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/holic_img" />
+
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/total_layout_count"
@@ -75,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="7dp"
-                        app:srcCompat="@drawable/mango_review_count" />
+                        app:srcCompat="@drawable/review_follow" />
 
                     <TextView
                         android:id="@+id/total_text_user_follower_count"

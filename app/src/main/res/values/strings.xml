@@ -2,6 +2,8 @@
     <string name="app_name">Mango Plate</string>
     <string name="facebook_app_id">419298462518109</string> <string name="fb_login_protocol_scheme">fb419298462518109</string>
 
+    <string name="login_skip">건너뛰기</string>
+
     <string name="main_bottom_nav_home_title">맞집찾기</string>
     <string name="main_bottom_nav_discount_title">할인</string>
     <string name="main_bottom_nav_news_title">소식</string>

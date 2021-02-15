@@ -1,10 +1,9 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.src.main.home.HomeRetrofitInterface
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -166,27 +165,16 @@ class DetailsService (val view: HomeDetailsFragmentView) {
                                 val visited = nearRestaurantItemObject.get("visited").asInt
                                 val star = nearRestaurantItemObject.get("star").asString
                                 val firstImageUrl = nearRestaurantItemObject.get("firstImageUrl").asString
+                                val areaName = nearRestaurantItemObject.get("areaName").asString
 
                                 val nearRestaurantListItem = NearRestaurantResultData(restaurantId = restaurantId, restaurantName = restaurantName, restaurantView = restaurantView,
-                                    reviewCount = reviewCount, isLike = isLike, visited = visited, star = star, firstImageUrl = firstImageUrl)
+                                    reviewCount = reviewCount, isLike = isLike, visited = visited, star = star, firstImageUrl = firstImageUrl, areaName = areaName)
 
                                 nearRestaurantArray.add(nearRestaurantListItem)
                             }
 
-                            // 지역
-                            val areaArray = ArrayList<AreaResultData>()
-                            val area = it.result.getAsJsonArray("area")
-
-                            area.forEach { areaItem ->
-                                val areaItemObject = areaItem.asJsonObject
-                                val areaName = areaItemObject.get("areaName").asString
-
-                                val areaListItem = AreaResultData(areaName = areaName)
-                                areaArray.add(areaListItem)
-                            }
-
                             view.onGetDetailsSuccess(response.body()!!, imgsList = imgsArrayList, detailedInfoList = detailedInfoArray, menuImgList = menuImgArray, keyWordList = keywordArray,
-                                reviewCountList = reviewCountArray, reviewList = reviewArray, nearRestaurantList = nearRestaurantArray, areaResultList = areaArray)
+                                reviewCountList = reviewCountArray, reviewList = reviewArray, nearRestaurantList = nearRestaurantArray)
 
                         } // end body
 

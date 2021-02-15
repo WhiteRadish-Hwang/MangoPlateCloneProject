@@ -107,7 +107,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
 
     fun executeGetMyInfo() {
         showLoadingDialog(context!!)
-        MyPageService(this).tryGetMyInfo(user_id!!.toInt())
+        user_id?.toInt()?.let { MyPageService(this).tryGetMyInfo(it) }
     }
 
     fun viewHoldData() {

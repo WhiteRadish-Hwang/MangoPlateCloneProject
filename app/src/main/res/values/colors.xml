@@ -11,6 +11,7 @@
     <color name="holic_text_color">#f86936</color>
     <color name="red">#FF0000</color>
     <color name="dimgrey">#696969</color>
+    <color name="more_light_gray">#FAFAFA</color>
     <color name="light_gray">#DCDCDC</color>
     <color name="discount_rate_border_color">#0ebebc</color>
     <color name="transparent">#70000000</color>

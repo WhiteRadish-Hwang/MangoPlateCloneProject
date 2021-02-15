@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    tools:context=".src.main.home.detail.HomeDetailsFragment"
+    tools:context=".src.main.detail.HomeDetailsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

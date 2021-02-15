@@ -46,6 +46,8 @@ class ApplicationClass : Application() {
         const val FB_ID = "fb_id"
         const val FB_LOGIN = "fb_login"
         const val LOC_LIST = "locListKey"
+        const val NEWS_LOC_LIST = "newsLocListKey"
+        const val NEWS_EXPRESSION_LIST = "newsExpressionKey"
 
 
         var sortPivotSelect = "평점순"
@@ -65,9 +67,9 @@ class ApplicationClass : Application() {
         var isGetNewsReviewItem: Boolean = false
 
         //news filter 변수
-        var isGreat: Boolean = true
-        var isGood: Boolean = true
-        var isBad: Boolean = true
+        var isGreat: Boolean = false
+        var isGood: Boolean = false
+        var isBad: Boolean = false
         var fGreat = 0
         var fGood = 0
         var fBad = 0

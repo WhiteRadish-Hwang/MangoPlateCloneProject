@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,13 +10,13 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsFrameBinding
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsKeywordRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsNearRestaurantRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter.DetailsReviewRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsKeywordRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.NearRestaurantResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.ReviewResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsReviewRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsKeywordRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsNearRestaurantRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsReviewRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsKeywordRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.NearRestaurantResultData
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.ReviewResultData
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsReviewRecyclerItems
 
 class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(FragmentHomeDetailsFrameBinding::bind, R.layout.fragment_home_details_frame) {
     companion object {
@@ -31,9 +31,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         const val restaurantPriceKey = "restaurantPrice"
         const val restaurantLocationKey = "restaurantLocationKey"
         const val reviewResultArrayListKey = "reviewResultArrayListKey"
-        const val reviewResultImgArrayListKey = "reviewResultImgArrayListKey"
         const val nearRestaurantArrayListKey = "nearRestaurantArrayListKey"
-        const val areaNameKey = "areaNameKey"
     }
 
     lateinit var keywordRecyclerAdapter: DetailsKeywordRecyclerAdapter
@@ -42,7 +40,6 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
 
     val keywordItemList = ArrayList<DetailsKeywordRecyclerItems>()
     val reviewResultArrayList = ArrayList<ReviewResultData>()
-    val reviewImgArrayListArg = ArrayList<String>()
     val reviewArray = ArrayList<DetailsReviewRecyclerItems>()
     val nearRestaurantArrayListArg = ArrayList<NearRestaurantResultData>()
 
@@ -56,7 +53,6 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
     var restaurantClosedDate: String? = ""
     var restaurantPriceArg: String? = ""
     var restaurantLocationArg: String? = ""
-    var restaurantAreaName: String? = ""
 
     @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,9 +112,6 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         val nearRestaurantListArg = arguments?.getSerializable(nearRestaurantArrayListKey) as ArrayList<*>
         for (i in nearRestaurantListArg) nearRestaurantArrayListArg.add(i as NearRestaurantResultData)
 
-        // 지역 이름
-        restaurantAreaName = arguments?.getString(areaNameKey)
-
 
         //어댑터 설정
         setRecyclerAdapter()
@@ -143,7 +136,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
     fun setRecyclerAdapter() {
 
         // 주변식당 리사이클러뷰
-        restaurantAreaName.let { nearRestaurantRecyclerAdapter = DetailsNearRestaurantRecyclerAdapter(context, nearRestaurantArrayListArg, restaurantAreaName!!) }
+        nearRestaurantRecyclerAdapter = DetailsNearRestaurantRecyclerAdapter(context, nearRestaurantArrayListArg)
         binding.fDetailsRecyclerNearRestaurant.apply {
             layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
             setHasFixedSize(true)

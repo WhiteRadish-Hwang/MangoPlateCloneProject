@@ -13,7 +13,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.LOC_LIST
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.restaurantListSize
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.topListSize
@@ -22,8 +21,8 @@ import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.HomeDetailsFragment.Companion.homeDetailsKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFragment.Companion.homeDetailsKey
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment.Companion.locList
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.*

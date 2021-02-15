@@ -1,7 +1,6 @@
 package com.example.mangoplate_mock_aos_radi.src.main.register
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -9,12 +8,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentRegisterRestaurantBinding
@@ -173,7 +169,7 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.registerBtnAddApply.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.light_gray)
+                binding.registerBtnAddApply.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.more_light_gray)
                 binding.registerBtnAddApply.isEnabled = false
             }
         }

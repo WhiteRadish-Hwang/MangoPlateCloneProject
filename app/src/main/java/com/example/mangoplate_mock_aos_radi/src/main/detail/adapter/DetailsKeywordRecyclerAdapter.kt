@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.detail.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.DetailsKeywordRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsKeywordRecyclerItems
 
 class DetailsKeywordRecyclerAdapter(val context: Context?, var itemList: ArrayList<DetailsKeywordRecyclerItems>): RecyclerView.Adapter<DetailsKeywordRecyclerAdapter.ItemViewHolder>() {
     interface MyKeywordItemClickListener {

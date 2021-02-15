@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,7 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TA
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsInnerImgBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import kotlin.properties.Delegates
 
@@ -109,7 +109,7 @@ class HomeDetailsImageFragment: BaseFragment<FragmentHomeDetailsInnerImgBinding>
 
     }
 
-    override fun onGetDetailsSuccess(response: DetailsResponse, imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>, menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>, reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>, nearRestaurantList: ArrayList<NearRestaurantResultData>, areaResultList: ArrayList<AreaResultData>) {
+    override fun onGetDetailsSuccess(response: DetailsResponse, imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>, menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>, reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>, nearRestaurantList: ArrayList<NearRestaurantResultData>) {
 
     }
 

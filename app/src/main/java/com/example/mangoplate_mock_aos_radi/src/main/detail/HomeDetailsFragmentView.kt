@@ -1,6 +1,6 @@
-package com.example.mangoplate_mock_aos_radi.src.main.home.detail
+package com.example.mangoplate_mock_aos_radi.src.main.detail
 
-import com.example.mangoplate_mock_aos_radi.src.main.home.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 
 interface HomeDetailsFragmentView {
@@ -9,7 +9,7 @@ interface HomeDetailsFragmentView {
                             imgsList: ArrayList<ImgsResultData>, detailedInfoList: ArrayList<DetailedInfoResultData>,
                             menuImgList: ArrayList<MenuImgResultData>, keyWordList: ArrayList<KeyWordResultData>,
                             reviewCountList: ArrayList<ReviewCountResultData>, reviewList: ArrayList<ReviewResultData>,
-                            nearRestaurantList: ArrayList<NearRestaurantResultData>, areaResultList: ArrayList<AreaResultData>)
+                            nearRestaurantList: ArrayList<NearRestaurantResultData>)
 
 
     fun onGetDetailsFailure(message: String)
