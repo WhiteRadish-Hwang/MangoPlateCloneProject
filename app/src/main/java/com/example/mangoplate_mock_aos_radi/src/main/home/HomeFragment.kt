@@ -19,6 +19,7 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.to
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeBinding
+import com.example.mangoplate_mock_aos_radi.src.main.FirebaseImgtest
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFragment
@@ -109,6 +110,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                 }
                 R.id.menu_home_toolbar_map -> {
                     showCustomToast("Clicked Map Item")
+                    (activity as MainActivity).addFragment(FirebaseImgtest())
                     true
                 }
 

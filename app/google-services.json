@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "577113700673",
+    "project_id": "mango-plate-clone",
+    "storage_bucket": "mango-plate-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577113700673:android:abf1bc312ea7849a96c9c0",
+        "android_client_info": {
+          "package_name": "com.example.mangoplate_mock_aos_radi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577113700673-90g5n17o8366pqpkqcc34tqd951lhkm1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mangoplate_mock_aos_radi",
+            "certificate_hash": "60388d66209946935122b4f500f4ae82b2f2982d"
+          }
+        },
+        {
+          "client_id": "577113700673-nk3gh0qahu1qe3urijsa74bnap9qijts.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm2i0OedKCTOgT21swxFKUvwYRsIMUuZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577113700673-nk3gh0qahu1qe3urijsa74bnap9qijts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

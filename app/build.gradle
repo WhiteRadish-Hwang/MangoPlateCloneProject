@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -47,10 +48,20 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0-alpha2'
 
+    //파이어베이스
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
+
+    //블러뷰
+    implementation 'com.github.mmin18:realtimeblurview:1.2.1'
+
     //리사이클러뷰
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     //글라이드
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     //카드뷰
     implementation "androidx.cardview:cardview:1.0.0"

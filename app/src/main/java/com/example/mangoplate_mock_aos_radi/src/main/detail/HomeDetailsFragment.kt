@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
+import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
@@ -26,6 +27,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.visited.VisitedFragment
+import com.example.mangoplate_mock_aos_radi.src.main.visited.VisitedFragment.Companion.visitedRestaurantIdKey
 import kotlin.properties.Delegates
 
 class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHomeDetailsBinding::bind, R.layout.fragment_home_details), HomeDetailsFragmentView {
@@ -77,11 +80,11 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         Log.d(TAG, "receiveId: ${arguments?.get(homeDetailsKey)}")
 
         restaurantId = arguments?.get(homeDetailsKey) as Int
-        val itemListArg = arguments?.getSerializable("itemListKey") as ArrayList<HomeRecyclerItems>
-        itemArrayList = itemListArg
-
+//        val itemListArg = arguments?.getSerializable("itemListKey") as ArrayList<HomeRecyclerItems>
+//        itemArrayList = itemListArg
 
         //상세페이지 서비스 호출
+
         DetailsService(this).tryGetRestaurants(restaurantId)
 
 
@@ -107,6 +110,14 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
 
         binding.detailsLayoutBottomWannaGo.setOnClickListener {
             DetailsService(this).tryPatchWannago(restaurantId)
+        }
+
+        binding.detailsLayoutBottomVisited.setOnClickListener {
+            (activity as MainActivity).addFragment(VisitedFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(visitedRestaurantIdKey, restaurantId)
+                }
+            })
         }
 
 
@@ -151,6 +162,18 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
             binding.detailsImgBottomWannaGo.colorFilter = null
         }
 
+        Log.d(TAG, "userVisited: $userVisited")
+        when (userVisited) {
+            0 -> {
+                val visitedText = String.format(getString(R.string.visited))
+                binding.detailsTextBottomVisited.text = visitedText
+
+            }
+            else -> {
+                val visitedText = String.format(getString(R.string.visited_add, userVisited))
+                binding.detailsTextBottomVisited.text = visitedText
+            }
+        }
     }
 
     fun setRecyclerAdapter(){

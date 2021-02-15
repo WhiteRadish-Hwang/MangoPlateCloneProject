@@ -96,8 +96,8 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         var imgIndex = 0
         for (i in 0 until reviewResultArrayList.size) {
 
-            val likeCountText = String.format(getString(R.string.news_total_review_like_count, reviewResultArrayList[i].reviewLikeCount))
-            val replyCountText = String.format(getString(R.string.news_total_review_reply_count, reviewResultArrayList[i].reviewReplyCount))
+            val likeCountText = String.format(getString(R.string.review_like_count, reviewResultArrayList[i].reviewLikeCount))
+            val replyCountText = String.format(getString(R.string.review_reply_count, reviewResultArrayList[i].reviewReplyCount))
 
             val item = DetailsReviewRecyclerItems(reviewImgList = reviewResultArrayList[i].reviewImgList, userProfileImgUrl = reviewResultArrayList[i].userProfileImgUrl,
                     userName = reviewResultArrayList[i].userName, isHolic = reviewResultArrayList[i].isHolic, userReviewCount = reviewResultArrayList[i].userReviewCount,

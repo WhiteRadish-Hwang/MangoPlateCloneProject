@@ -8,7 +8,6 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsTotalBinding
-import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFrameFragment.Companion.reviewListKey
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
@@ -79,15 +78,15 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             total_reviewLikeStatus = reviewResultData.reviewLikeStatus
             total_reviewImgList = reviewResultData.reviewImgList
 
-            val likeCountText = String.format(getString(R.string.news_total_review_like_count, total_reviewLikeCount))
-            val replyCountText = String.format(getString(R.string.news_total_review_reply_count, total_reviewReplyCount))
+            val likeCountText = String.format(getString(R.string.review_like_count, total_reviewLikeCount))
+            val replyCountText = String.format(getString(R.string.review_reply_count, total_reviewReplyCount))
 
             val expression_delicious = getString(R.string.news_text_great)
             val expression_good = getString(R.string.news_text_good)
             val expression_bad = getString(R.string.news_text_bad)
 
-            val ul_restaurantName = String.format(getString(R.string.news_total_review_restaurant_name_val, total_restaurantName))
-            val ul_restaurantLoc = String.format(getString(R.string.news_total_review_restaurant_loc_val, total_restaurantLocation))
+            val ul_restaurantName = String.format(getString(R.string.review_restaurant_name_val, total_restaurantName))
+            val ul_restaurantLoc = String.format(getString(R.string.review_restaurant_loc_val, total_restaurantLocation))
 
             total_reviewObject = TotalRecyclerItems(reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
                     userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,

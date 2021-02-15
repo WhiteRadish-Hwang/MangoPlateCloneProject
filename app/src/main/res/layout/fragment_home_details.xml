@@ -180,8 +180,8 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_wanna_go"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
                         app:srcCompat="@drawable/wanna_go" />
@@ -195,11 +195,11 @@
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cliked_color"
                         android:text="@string/wanna_go"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/details_layout_bottom_like"
+                    android:id="@+id/details_layout_bottom_visited"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -208,8 +208,8 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_visited"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:scaleType="centerCrop"
                         android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
@@ -224,7 +224,7 @@
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cliked_color"
                         android:text="@string/visited"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -232,13 +232,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/details_layout_bottom_like"
+                    android:layout_toRightOf="@id/details_layout_bottom_visited"
                     android:layout_weight="1">
 
                     <ImageView
                         android:id="@+id/details_img_bottom_comment"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:scaleType="centerCrop"
                         android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
@@ -253,7 +253,7 @@
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cliked_color"
                         android:text="@string/write_review"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -266,10 +266,10 @@
 
                     <ImageView
                         android:id="@+id/details_img_bottom_my_list"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:scaleType="centerCrop"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
                         app:srcCompat="@drawable/my_list" />
 
@@ -282,7 +282,7 @@
                         android:layout_marginLeft="5dp"
                         android:textColor="@color/cliked_color"
                         android:text="@string/my_list"
-                        android:textSize="11sp" />
+                        android:textSize="15sp" />
                 </RelativeLayout>
             </LinearLayout>
 

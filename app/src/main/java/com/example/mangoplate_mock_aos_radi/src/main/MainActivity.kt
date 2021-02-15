@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -31,6 +32,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.jar.Manifest
 import kotlin.concurrent.timer
 import kotlin.concurrent.timerTask
 import kotlin.math.log
@@ -60,6 +62,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 앨범에 접근허용 메세지 띄움, 최초 1회만 띄움움
+       ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
+
         isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
         isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
 
@@ -89,6 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 //                }
 //            }
 //        }.attach()
+
 
         binding.mainFbtn.setOnClickListener {
             val cx = binding.mainLayoutFrame.width / 2
@@ -229,6 +236,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     fun replaceFragment(fragment: Fragment) {
         val fmbt = supportFragmentManager.beginTransaction()
         fmbt.replace(R.id.main_frame, fragment).commitAllowingStateLoss()
+    }
+
+    fun replaceFragmentInSubFrame(fragment: Fragment) {
+        val fmbt = supportFragmentManager.beginTransaction()
+        fmbt.replace(R.id.main_layout_sub_frame, fragment).commitAllowingStateLoss()
     }
 
     override fun onBackPressed() {
