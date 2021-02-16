@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.adapter
 
 import android.content.Context
 import android.graphics.Paint
@@ -10,8 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerData
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResultData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealRecyclerData
 
 class EatDealRecyclerAdapter(val context: Context?, val itemList: ArrayList<EatDealRecyclerData>): RecyclerView.Adapter<EatDealRecyclerAdapter.EatDealViewHolder>() {
     interface MyEatDealItemClickListener {

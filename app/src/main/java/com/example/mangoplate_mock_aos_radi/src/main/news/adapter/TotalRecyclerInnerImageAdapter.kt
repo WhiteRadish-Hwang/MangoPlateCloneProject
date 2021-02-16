@@ -1,19 +1,13 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.TopListRecyclerItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
-import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class TotalRecyclerInnerImageAdapter(val context: Context?, val itemList: ArrayList<String>): RecyclerView.Adapter<TotalRecyclerInnerImageAdapter.TotalInnerViewHolder>() {
     interface MyInnerImgItemClickListener {

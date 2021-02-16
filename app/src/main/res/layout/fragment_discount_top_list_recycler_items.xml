@@ -19,37 +19,39 @@
         app:srcCompat="@drawable/home_vp_img2" />
 
     <TextView
-        android:id="@+id/top_list_text_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/top_list_text_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginLeft="15dp"
-        android:textStyle="bold"
-        android:textSize="18sp"
+        android:layout_marginTop="12dp"
         android:text="TextView"
+        android:textSize="20sp"
+        android:textColor="@color/blackForText"
+        app:layout_constraintEnd_toStartOf="@+id/top_list_img_book_mark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_list_img" />
 
     <TextView
-        android:id="@+id/top_list_text_sub_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/top_list_text_one_line"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="TextView"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="@+id/top_list_text_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_list_text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/top_list_text_name" />
 
     <ImageView
         android:id="@+id/top_list_img_book_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_width="27dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="15dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_list_img"
-        app:srcCompat="@drawable/bookmark"
-        app:tint="@color/uncliked_color" />
+        app:srcCompat="@drawable/bookmark" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -62,6 +64,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/top_list_img_view_count_top"
+                android:layout_width="55dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="20dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/view_count_top" />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/h_guideline"
                 android:layout_width="wrap_content"
@@ -73,13 +85,14 @@
                 android:id="@+id/imageView"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:layout_marginRight="3dp"
                 app:layout_constraintBottom_toTopOf="@+id/h_guideline"
-                app:layout_constraintEnd_toStartOf="@+id/top_list_text_view_count"
+                app:layout_constraintEnd_toStartOf="@+id/top_list_text_upload_date_at"
                 app:srcCompat="@drawable/mango_view_point"
                 app:tint="@color/white" />
 
             <TextView
-                android:id="@+id/top_list_text_view_count"
+                android:id="@+id/top_list_text_upload_date_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -91,13 +104,15 @@
                 android:id="@+id/top_list_text_split_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="1dp"
+                android:layout_marginLeft="1dp"
                 android:text=" | "
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/h_guideline"
-                app:layout_constraintEnd_toStartOf="@+id/top_list_text_upload_date_ago" />
+                app:layout_constraintEnd_toStartOf="@+id/top_list_text_view_count" />
 
             <TextView
-                android:id="@+id/top_list_text_upload_date_ago"
+                android:id="@+id/top_list_text_view_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"

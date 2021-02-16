@@ -1,21 +1,23 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal
 
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResponse
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountRetrofitInterface
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResultData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EatDealTotalService (val view: EatDealTotalFragmentView) {
+class EatDealService (val view: EatDealFragmentView) {
 
-    fun tryTotalGetEatDeal(page: Int,
-                      limit: Int){
+    fun tryGetEatDeal(page: Int,
+                          limit: Int,
+                          userlatitude: Float,
+                          userlongtitude: Float){
         val discountRetrofitInterface = ApplicationClass.sRetrofit.create(DiscountRetrofitInterface::class.java)
-        discountRetrofitInterface.getTotalEatDeal(page, limit).enqueue(object : Callback<EatDealResponse> {
+        discountRetrofitInterface.getEatDeal(page, limit, userlatitude, userlongtitude).enqueue(object : Callback<EatDealResponse> {
             override fun onResponse(call: Call<EatDealResponse>, response: Response<EatDealResponse>) {
                 when (response.code()) {
                     200 -> {
@@ -46,7 +48,7 @@ class EatDealTotalService (val view: EatDealTotalFragmentView) {
                             }
 
 
-                            view.onGetTotalEatDealSuccess(response.body()!!, eatDealArray)
+                            view.onGetEatDealSuccess(response.body()!!, eatDealArray)
                         }
 
                     }
@@ -56,10 +58,11 @@ class EatDealTotalService (val view: EatDealTotalFragmentView) {
 
             override fun onFailure(call: Call<EatDealResponse>, t: Throwable) {
                 Log.d(TAG, "onFailure: ${t.message}")
-                view.onGetTotalEatDealFailure(t.message ?: "통신 오류")
+                view.onGetEatDealFailure(t.message ?: "통신 오류")
             }
         })
     }
+
 
 
 

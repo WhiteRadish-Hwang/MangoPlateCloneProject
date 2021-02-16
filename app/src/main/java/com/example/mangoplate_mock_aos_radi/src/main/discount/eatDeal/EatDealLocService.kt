@@ -1,11 +1,11 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal
 
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResponse
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResultData
-import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountRetrofitInterface
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResultData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

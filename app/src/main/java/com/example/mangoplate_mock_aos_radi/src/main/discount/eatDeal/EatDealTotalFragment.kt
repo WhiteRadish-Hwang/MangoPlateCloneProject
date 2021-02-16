@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal
 
 import android.os.Bundle
 import android.os.Handler
@@ -9,20 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealBinding
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealTotalBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealLoc
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealTotal
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealUser
-import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.EatDealRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerData
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResponse
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResultData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment.Companion.isEatDealLoc
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment.Companion.isEatDealTotal
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment.Companion.isEatDealUser
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.adapter.EatDealRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealRecyclerData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResultData
 import java.text.DecimalFormat
-import kotlin.properties.Delegates
 
-class EatDealTotalFragment : BaseFragment<FragmentDiscountEatDealTotalBinding>(FragmentDiscountEatDealTotalBinding::bind, R.layout.fragment_discount_eat_deal_total), EatDealTotalFragmentView{
+class EatDealTotalFragment : BaseFragment<FragmentDiscountEatDealTotalBinding>(FragmentDiscountEatDealTotalBinding::bind, R.layout.fragment_discount_eat_deal_total), EatDealTotalFragmentView {
     lateinit var eatDealRecyclerAdapter: EatDealRecyclerAdapter
     lateinit var eatDealLayoutManager: LinearLayoutManager
 
@@ -149,6 +148,9 @@ class EatDealTotalFragment : BaseFragment<FragmentDiscountEatDealTotalBinding>(F
     }
 
     override fun onGetTotalEatDealSuccess(response: EatDealResponse, eatDealList: ArrayList<EatDealResultData>) {
+        Log.d(TAG, "onGetTotalEatDealSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onGetTotalEatDealSuccess: ${response.code}")
+        Log.d(TAG, "onGetTotalEatDealSuccess: ${response.message}")
         eatDealList.forEach { item ->
             eatDealTotalItemArray.add(item)
         }

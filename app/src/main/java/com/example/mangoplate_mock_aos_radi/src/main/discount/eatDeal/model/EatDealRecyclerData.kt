@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount.model
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model
 
 data class EatDealRecyclerData (val eatDealId: Int,
                                 val firstImageUrl: String,

@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount
+package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal
 
 import android.os.Bundle
 import android.os.Handler
@@ -11,14 +11,14 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TA
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.EatDealRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerData
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResponse
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResultData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.adapter.EatDealRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealRecyclerData
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResultData
 import java.text.DecimalFormat
-import kotlin.properties.Delegates
 
-class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDiscountEatDealBinding::bind, R.layout.fragment_discount_eat_deal), EatDealFragmentView{
+class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDiscountEatDealBinding::bind, R.layout.fragment_discount_eat_deal), EatDealFragmentView {
     companion object {
         var isEatDealUser: Boolean = true
         var isEatDealTotal: Boolean = false
@@ -59,8 +59,6 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
         }
 
     }
-
-
 
     fun executeService() {
         EatDealService(this).tryGetEatDeal(page = eatDealPage * eatDealLimit, limit = eatDealLimit, userlatitude = 37.6511723f, userlongtitude = 127.0481563f)

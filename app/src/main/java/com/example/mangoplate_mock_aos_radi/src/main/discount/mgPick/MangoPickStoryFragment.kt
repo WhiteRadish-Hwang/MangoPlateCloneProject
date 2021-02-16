@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount
+package com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,8 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountMangoPickStoryBinding
-import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.MangoPickStoryRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.MangoPickStoryRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick.adapter.MangoPickStoryRecyclerAdapter
+import com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick.model.MangoPickStoryRecyclerItems
 
 class MangoPickStoryFragment : BaseFragment<FragmentDiscountMangoPickStoryBinding>(FragmentDiscountMangoPickStoryBinding::bind, R.layout.fragment_discount_mango_pick_story){
     lateinit var mangoPickStoryRecyclerAdapter: MangoPickStoryRecyclerAdapter
@@ -38,8 +38,8 @@ class MangoPickStoryFragment : BaseFragment<FragmentDiscountMangoPickStoryBindin
     private fun initData() {
         for (i in 0..5) {
             val item1 = MangoPickStoryRecyclerItems(title = "비건을 위한 맛집 6곳",
-                subTitle = "비건도 맛있게 즐겨봐!",
-                image = null)
+                    subTitle = "비건도 맛있게 즐겨봐!",
+                    image = null)
             itemList.add(item1)
         }
         Log.d(ApplicationClass.TAG, "initData: $itemList")

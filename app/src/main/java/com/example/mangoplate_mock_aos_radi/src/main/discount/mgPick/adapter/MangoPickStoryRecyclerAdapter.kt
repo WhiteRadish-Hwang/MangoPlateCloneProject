@@ -1,4 +1,4 @@
-package com.example.mangoplate_mock_aos_radi.src.main.discount.adapter
+package com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.MangoPickStoryRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick.model.MangoPickStoryRecyclerItems
 
 class MangoPickStoryRecyclerAdapter(val context: Context?, val itemList: ArrayList<MangoPickStoryRecyclerItems>): RecyclerView.Adapter<MangoPickStoryRecyclerAdapter.MangoPickStoryViewHolder>() {
     inner class MangoPickStoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

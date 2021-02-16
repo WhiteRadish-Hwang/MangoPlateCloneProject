@@ -7,9 +7,13 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountBinding
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealLoc
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealTotal
-import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealUser
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment.Companion.isEatDealLoc
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealFragment.Companion.isEatDealTotal
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealLocFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealTotalFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.mgPick.MangoPickStoryFragment
+import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.TopListFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DiscountFragment : BaseFragment<FragmentDiscountBinding>(FragmentDiscountBinding::bind, R.layout.fragment_discount){
