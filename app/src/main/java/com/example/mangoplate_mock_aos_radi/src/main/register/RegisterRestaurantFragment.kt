@@ -159,6 +159,7 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
         val registerParams = PostRegisterRequest(restaurantName, restaurantLatitude, restaurantLongitude, restaurantPhoneNumber, restaurantFilter)
 
+        showLoadingDialog(context!!)
         RegisterService(this).tryPostRegister(registerParams)
     }
 
@@ -178,6 +179,7 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
     }
 
     override fun onPostRegisterInfoSuccess(response: RegisterResponse) {
+        dismissLoadingDialog()
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.isSuccess}")
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.code}")
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.message}")
@@ -189,6 +191,7 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
     }
 
     override fun onPostRegisterInfoFailure(message: String) {
+        dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
 

@@ -3,22 +3,32 @@ package com.example.mangoplate_mock_aos_radi.src.main.news
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsTotalBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.home.adapter.HomeRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerInnerImageItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
+import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewDetailsFragment
+import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewDetailsFragment.Companion.reviewIdKey
 import kotlin.properties.Delegates
 
 class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total){
     companion object {
         const val totalListKey = "totalListKey"
     }
+
+    lateinit var totalRecyclerAdapter: TotalRecyclerAdapter
+    lateinit var totalLayoutManager: LinearLayoutManager
 
     val itemList = ArrayList<TotalRecyclerItems>()
 
@@ -80,7 +90,7 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             val ul_restaurantName = String.format(getString(R.string.review_restaurant_name_val, total_restaurantName))
             val ul_restaurantLoc = String.format(getString(R.string.review_restaurant_loc_val, total_restaurantLocation))
 
-            total_reviewObject = TotalRecyclerItems(reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
+            total_reviewObject = TotalRecyclerItems(reviewId = total_reviewId, reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
                     userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
                     reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
                     reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,
@@ -93,10 +103,48 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     }
 
     fun setRecyclerAdapter(){
+        totalRecyclerAdapter = TotalRecyclerAdapter(context, itemList)
         binding.totalRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            totalLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = totalLayoutManager
             setHasFixedSize(true)
-            adapter = TotalRecyclerAdapter(context, itemList)
+
+//            // 무한스크롤 리스너
+//            binding.homeMainRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//
+//                    val layoutManager = gridLayoutManager
+//                    val totalItemCount: Int = layoutManager.itemCount
+//                    val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+//
+//                    if (lastVisible >= totalItemCount - 3 && isCalled) {
+//                        isCalled = false
+//                        Log.d(ApplicationClass.TAG, "isLoading: $isLoading")
+//                        if (!isLoading) {
+//                            Log.d(ApplicationClass.TAG, "excuteHomeService: called")
+//                            pageNum++
+//                            excuteHomeService()
+//                        }
+//                    }
+//                }
+//            })
+
+            // 메인 리사이클러 아이템클릭 리스터
+            totalRecyclerAdapter.let {
+                it.setMyReviewClickListener(object :
+                        TotalRecyclerAdapter.MyReviewItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        (activity as MainActivity).addFragment(ReviewDetailsFragment().apply {
+                            arguments = Bundle().apply {
+                                putInt(reviewIdKey, itemList[position].reviewId)
+                            }
+                        })
+                    }
+                })
+            }
+
+            adapter = totalRecyclerAdapter
         }
     }
 

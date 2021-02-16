@@ -68,6 +68,7 @@ class MypageEditName: BaseFragment<FragmentMyPageEditProfileNameBinding>(Fragmen
         })
 
         binding.mpEditBtnApply.setOnClickListener {
+            showLoadingDialog(context!!)
             changedUserName = binding.mpEditEtName.text.toString()
             Log.d(TAG, "changedUserName: $changedUserName")
             MyPageService(this).tryPostUserInfo(1, changedUserName)
@@ -94,6 +95,7 @@ class MypageEditName: BaseFragment<FragmentMyPageEditProfileNameBinding>(Fragmen
     }
 
     override fun onPostEditUserInfoSuccess(response: EditUserInfoResponse) {
+        dismissLoadingDialog()
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.isSuccess}")
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.code}")
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.message}")
@@ -101,6 +103,7 @@ class MypageEditName: BaseFragment<FragmentMyPageEditProfileNameBinding>(Fragmen
     }
 
     override fun onPostEditUserInfoFailure(message: String) {
+        dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
 }

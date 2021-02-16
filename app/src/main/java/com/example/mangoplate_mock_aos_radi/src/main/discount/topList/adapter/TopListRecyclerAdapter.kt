@@ -132,8 +132,8 @@ class TopListRecyclerAdapter(val context: Context?, val itemList: ArrayList<Disc
         Log.d(TAG, "onPatchTopListSuccess: ${response.isSuccess}")
         Log.d(TAG, "onPatchTopListSuccess: ${response.code}")
         Log.d(TAG, "onPatchTopListSuccess: ${response.message}")
-        if (response.code == 1000) adapterIsBookmark = true
-        else if (response.code == 1001) adapterIsBookmark = false
+        if (response.code == 1001) adapterIsBookmark = true
+        else if (response.code == 1002) adapterIsBookmark = false
     }
 
     override fun onPatchTopListFailure(message: String) {

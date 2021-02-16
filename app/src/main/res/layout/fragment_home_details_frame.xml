@@ -72,12 +72,12 @@
                     android:textColor="@color/dimgrey" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/imageView4"
+            <RelativeLayout
+                android:id="@+id/fDetails_map_container"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/home_vp_img1" />
+                android:layout_height="120dp">
+
+            </RelativeLayout>
 
 
             <LinearLayout
@@ -257,7 +257,7 @@
                     android:layout_alignParentLeft="true"
                     android:text="@string/details_text_opening_time" />
 
-                <TextView
+                FragmentHomeDetailsFrameBinding<TextView
                     android:id="@+id/fDetails_text_opening_time_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

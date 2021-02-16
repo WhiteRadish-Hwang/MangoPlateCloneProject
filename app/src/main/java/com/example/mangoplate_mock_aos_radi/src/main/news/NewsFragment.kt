@@ -77,10 +77,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // News API 호출
-        // expression의 아래 설정값에 따라 해당 위치에서 API 재호출하는 코드 만들어야함...!!
-        NewsService(this).tryGetRestaurants(page = 0, limit = 10)
 
+        executeService()
 
         // 탭 레이아웃 아래 메인 내용 뷰 바인딩
         frameViewBind()
@@ -105,6 +103,12 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
 
     } //end onViewCreate
 
+    private fun executeService() {
+        // News API 호출
+        // expression의 아래 설정값에 따라 해당 위치에서 API 재호출하는 코드 만들어야함...!!
+        showLoadingDialog(context!!)
+        NewsService(this).tryGetRestaurants(page = 0, limit = 10)
+    }
 
     fun frameViewBind() {
         // expressionList 값에 따라 초기 버튼 상태 설정
@@ -268,6 +272,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
 
     // API 호출
     override fun onGetTotalReviewSuccess(response: NewsResponse, reviewList: ArrayList<TotalReviewResultData>) {
+        dismissLoadingDialog()
         Log.d(TAG, "onGetTotalReviewSuccess: $reviewList")
 
         totalArgList = reviewList
@@ -298,6 +303,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
     }
 
     override fun onGetTotalReviewFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
 
     }
 

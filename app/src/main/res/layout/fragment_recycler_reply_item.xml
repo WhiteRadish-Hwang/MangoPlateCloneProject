@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/reply_img_user_profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/profile" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/review_reply_border"
+        android:padding="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reply_img_user_profile"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/reply_text_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/blackForText"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/reply_img_user_holic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toEndOf="@+id/reply_text_user_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/holic_img" />
+
+        <TextView
+            android:id="@+id/reply_text_reply_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:textColor="@color/cliked_color"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reply_text_user_name" />
+
+        <TextView
+            android:id="@+id/reply_text_reply_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blackForText"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/reply_text_reply_tag"
+            app:layout_constraintTop_toBottomOf="@+id/reply_text_user_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/reply_text_update_at"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="updateAt"
+        app:layout_constraintStart_toEndOf="@+id/reply_img_user_profile"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:text="·"
+        app:layout_constraintStart_toEndOf="@+id/reply_text_update_at"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+
+    <TextView
+        android:id="@+id/reply_text_reply_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/blackForText"
+        android:text="@string/review_reply_add"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,8 +15,23 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 
 class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerItems>): RecyclerView.Adapter<TotalRecyclerAdapter.TotalViewHolder>() {
+    interface MyReviewItemClickListener {
+        fun onItemClick(position: Int)
+    }
+    private lateinit var mItemClickListener: MyReviewItemClickListener
+
+    fun setMyReviewClickListener(itemClickListener: MyReviewItemClickListener){
+        mItemClickListener = itemClickListener
+    }
+
 
     inner class TotalViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+        }
+
         val totalImgProfile: ImageView = itemView.findViewById(R.id.total_img_profile)
         val totalTextUserName: TextView = itemView.findViewById(R.id.total_text_user_name)
         val totalTextUserReviewCount: TextView = itemView.findViewById(R.id.total_text_user_review_count)
@@ -82,11 +97,11 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
         if (items.isHolic == 1) holder.totalImgHolic.visibility = View.VISIBLE
         else holder.totalImgHolic.visibility = View.GONE
 
-        if (items.restaurantLikeStatus == 1)holder.totalImgBottomWannaGo.setColorFilter(Color.parseColor("#ff8104"))
-        else holder.totalImgBottomWannaGo.colorFilter = null
+        if (items.restaurantLikeStatus == 1) holder.totalImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go_clicked)
+        else holder.totalImgBottomWannaGo.setImageResource(R.drawable.mp_wanna_go)
 
-        if (items.reviewLikeStatus == 1)holder.totalImgBottomLike.setColorFilter(Color.parseColor("#ff8104"))
-        else holder.totalImgBottomLike.colorFilter = null
+        if (items.reviewLikeStatus == 1) holder.totalImgBottomLike.setImageResource(R.drawable.review_like_click)
+        else holder.totalImgBottomLike.setImageResource(R.drawable.magno_like)
 
         setItemsRecycler(holder.totalInnerRecycler, items.reviewImgList)
     }

@@ -52,6 +52,7 @@
     <string name="review_reply_count">댓글 %d개</string>
     <string name="review_restaurant_name_val"><u>%s</u></string>
     <string name="review_restaurant_loc_val"><u>%s</u></string>
+    <string name="review_reply_add">답글 달기</string>
 
     <string name="news_text_great">맛있다!</string>
     <string name="news_text_good">괜찮다</string>

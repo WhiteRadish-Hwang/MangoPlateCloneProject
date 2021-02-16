@@ -15,7 +15,9 @@ import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFrag
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.nearRestaurantArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantBreakTimeKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantClosedDateKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantLatitudeKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantLocationKey
+import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantLongitudeKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantOpeningTimeKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.restaurantPriceKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewBadItemKey
@@ -82,7 +84,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         restaurantId = arguments?.get(homeDetailsKey) as Int
 
         //상세페이지 서비스 호출
-
+        showLoadingDialog(context!!)
         DetailsService(this).tryGetRestaurants(restaurantId)
 
 
@@ -107,6 +109,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         }
 
         binding.detailsLayoutBottomWannaGo.setOnClickListener {
+            showLoadingDialog(context!!)
             DetailsService(this).tryPatchWannago(restaurantId)
         }
 
@@ -139,6 +142,8 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
                 putString(restaurantBreakTimeKey, restaurantRestTime)
                 putString(restaurantClosedDateKey, restaurantHoliday)
                 putString(restaurantPriceKey, restaurantPrice)
+                putString(restaurantLongitudeKey, restaurantLongitude)
+                putString(restaurantLatitudeKey, restaurantLatitude)
                 // 식당 주소
                 putString(restaurantLocationKey, restaurantLocation)
                 // 근처 식당
@@ -208,6 +213,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         reviewList: ArrayList<ReviewResultData>,
         nearRestaurantList: ArrayList<NearRestaurantResultData>
     ) {
+        dismissLoadingDialog()
         Log.d(TAG, "onGetDetailsSuccess: ${response.result}")
         Log.d(TAG, "imgsList: $imgsList")
         Log.d(TAG, "detailedInfoList: $detailedInfoList")
@@ -280,6 +286,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
     }
 
     override fun onPatchWannaGoSuccess(response: PatchWannagoResponse) {
+        dismissLoadingDialog()
         Log.d(TAG, "onPatchWannaGoSuccess: ${response.message}")
         Log.d(TAG, "onPatchWannaGoSuccess: ${response.isSuccess}")
         Log.d(TAG, "onPatchWannaGoSuccess: ${response.code}")
@@ -303,14 +310,17 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
     }
 
     override fun onPatchWannaGoFailure(message: String) {
+        dismissLoadingDialog()
 
     }
 
     override fun onGetDetailsImageSuccess(response: DetailsImageResponse) {
+        dismissLoadingDialog()
         Log.d(TAG, "onGetDetailsImageSuccess: ${response.result}")
     }
 
     override fun onGetDetailsImageFailure(message: String) {
+        dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
 

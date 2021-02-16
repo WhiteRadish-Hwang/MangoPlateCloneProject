@@ -1,22 +1,39 @@
 package com.example.mangoplate_mock_aos_radi.src.main.detail
 
+
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsFrameBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsKeywordRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsNearRestaurantRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.detail.adapter.DetailsReviewRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsKeywordRecyclerItems
+import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsReviewRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.NearRestaurantResultData
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.ReviewResultData
-import com.example.mangoplate_mock_aos_radi.src.main.detail.model.DetailsReviewRecyclerItems
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
+import kotlin.properties.Delegates
+
 
 class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(FragmentHomeDetailsFrameBinding::bind, R.layout.fragment_home_details_frame) {
     companion object {
@@ -29,6 +46,8 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         const val restaurantBreakTimeKey = "restaurantBreakTime"
         const val restaurantClosedDateKey = "restaurantClosedDate"
         const val restaurantPriceKey = "restaurantPrice"
+        const val restaurantLatitudeKey = "restaurantLatitudeKey"
+        const val restaurantLongitudeKey = "restaurantLongitudeKey"
         const val restaurantLocationKey = "restaurantLocationKey"
         const val reviewResultArrayListKey = "reviewResultArrayListKey"
         const val nearRestaurantArrayListKey = "nearRestaurantArrayListKey"
@@ -48,15 +67,71 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
     var reviewGoodCount:Int? = 0
     var reviewBadCount:Int? = 0
 
+    var restaurantLatitudeArg: String? = ""
+    var restaurantLongiudeArg: String? = ""
+
     var restaurantOpeningTime: String? = ""
     var restaurantBreakTime: String? = ""
     var restaurantClosedDate: String? = ""
     var restaurantPriceArg: String? = ""
     var restaurantLocationArg: String? = ""
 
+    var getLongitude by Delegates.notNull<Double>()
+    var getLatitude by Delegates.notNull<Double>()
+
     @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        val mapView = MapView(activity)
+
+        val mapViewContainer = binding.fDetailsMapContainer as ViewGroup
+        mapViewContainer.addView(mapView)
+
+        // 현재 위치 가져오기
+        val Im = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGPSEnabled: Boolean = Im.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnabled: Boolean = Im.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+        } else {
+            when {
+                isNetworkEnabled -> {
+                    val location = Im.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    getLongitude = location?.longitude!!
+                    getLatitude = location.latitude
+                    showCustomToast("NET 현재위치를 불러옴 $getLatitude, $getLongitude")
+                }
+                isGPSEnabled -> {
+                    val location = Im.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    getLatitude = location?.longitude!!
+                    getLatitude = location.latitude
+                    showCustomToast("GPS 현재위치를 불러옴 $getLatitude, $getLongitude")
+                }
+                else -> {
+
+                }
+            }
+
+        }
+        restaurantLatitudeArg = arguments?.getString(restaurantLatitudeKey)
+        restaurantLongiudeArg = arguments?.getString(restaurantLongitudeKey)
+
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(restaurantLatitudeArg!!.toDouble(), restaurantLongiudeArg!!.toDouble()), true);
+
+        val marker = MapPOIItem()
+        val mapPoint = MapPoint.mapPointWithGeoCoord(restaurantLatitudeArg!!.toDouble(), restaurantLongiudeArg!!.toDouble())
+        mapView.setMapCenterPoint(mapPoint, true)
+        marker.itemName = "쉐프마인드"
+        marker.tag = 0
+        marker.mapPoint = mapPoint
+        marker.markerType = MapPOIItem.MarkerType.BluePin
+        // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
+        mapView.addPOIItem(marker);
 
         // 키워드
         val keywordItemListArgument = arguments?.getStringArrayList(keywordItemKey)
@@ -73,6 +148,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         restaurantBreakTime = arguments?.getString(restaurantBreakTimeKey)
         restaurantClosedDate = arguments?.getString(restaurantClosedDateKey)
         restaurantPriceArg = arguments?.getString(restaurantPriceKey)
+
 
         // 식당 주소
         restaurantLocationArg = arguments?.getString(restaurantLocationKey)

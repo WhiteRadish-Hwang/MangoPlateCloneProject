@@ -162,13 +162,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding
     }
 
     override fun onPostEditUserInfoSuccess(response: EditUserInfoResponse) {
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.isSuccess}")
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.code}")
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.message}")
     }
 
     override fun onPostEditUserInfoFailure(message: String) {
-        showCustomToast("오류 : $message")
+        
     }
 
 

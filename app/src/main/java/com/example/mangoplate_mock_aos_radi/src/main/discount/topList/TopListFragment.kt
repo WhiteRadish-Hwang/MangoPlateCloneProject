@@ -42,6 +42,7 @@ class TopListFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDis
     }
 
     fun executeService() {
+        showLoadingDialog(context!!)
         DiscountTopListService(this).tryGetDiscountTopList(page = topListPage * topListLimit, limit = topListLimit)
     }
 
@@ -123,6 +124,7 @@ class TopListFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDis
 
 
     override fun onGetTopListSuccess(response: DiscountTopListResponse, topListList: ArrayList<DiscountTopListResultData>) {
+        dismissLoadingDialog()
         Log.d(ApplicationClass.TAG, "onGetTopListSuccess: ${response.isSuccess}")
         Log.d(ApplicationClass.TAG, "onGetTopListSuccess: ${response.code}")
         Log.d(ApplicationClass.TAG, "onGetTopListSuccess: ${response.message}")
@@ -135,6 +137,7 @@ class TopListFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDis
     }
 
     override fun onGetTopListFailure(message: String) {
+        dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
 

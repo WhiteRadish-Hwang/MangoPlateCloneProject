@@ -6,15 +6,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsHolicBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
+import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewDetailsFragment
 import kotlin.properties.Delegates
 
 class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBinding::bind, R.layout.fragment_news_holic){
     companion object {
         const val holicListKey = "holicListKey"
     }
+    lateinit var holicRecyclerAdapter: TotalRecyclerAdapter
+    lateinit var holicLayoutManager: LinearLayoutManager
 
     val itemList = ArrayList<TotalRecyclerItems>()
     var isExpanable: Boolean = false
@@ -92,7 +96,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
             val ul_restaurantName = String.format(getString(R.string.review_restaurant_name_val, holic_restaurantName))
             val ul_restaurantLoc = String.format(getString(R.string.review_restaurant_loc_val, holic_restaurantLocation))
 
-            holic_reviewObject = TotalRecyclerItems(reviewImgList = holic_reviewImgList, userProfileImgUrl = holic_userProfileImgUrl, userName = holic_userName, isHolic = holic_isHolic,
+            holic_reviewObject = TotalRecyclerItems(reviewId = holic_reviewId, reviewImgList = holic_reviewImgList, userProfileImgUrl = holic_userProfileImgUrl, userName = holic_userName, isHolic = holic_isHolic,
                     userReviewCount = holic_userReviewCount, userFollowerCount = holic_userFollowerCount, reviewExpression = holic_reviewExpression, reviewReplyCount = replyCountText,
                     reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = holic_updatedAt,
                     reviewContents = holic_reviewContents, restaurantLikeStatus = holic_restaurantLikeStatus, reviewLikeStatus = holic_reviewLikeStatus,
@@ -104,10 +108,48 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
         setRecyclerAdapter()
     }
     fun setRecyclerAdapter(){
+        holicRecyclerAdapter = TotalRecyclerAdapter(context, itemList)
         binding.hollicRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            holicLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = holicLayoutManager
             setHasFixedSize(true)
-            adapter = TotalRecyclerAdapter(context, itemList)
+
+            //            // 무한스크롤 리스너
+//            binding.homeMainRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+//                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//
+//                    val layoutManager = gridLayoutManager
+//                    val totalItemCount: Int = layoutManager.itemCount
+//                    val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+//
+//                    if (lastVisible >= totalItemCount - 3 && isCalled) {
+//                        isCalled = false
+//                        Log.d(ApplicationClass.TAG, "isLoading: $isLoading")
+//                        if (!isLoading) {
+//                            Log.d(ApplicationClass.TAG, "excuteHomeService: called")
+//                            pageNum++
+//                            excuteHomeService()
+//                        }
+//                    }
+//                }
+//            })
+
+            // 메인 리사이클러 아이템클릭 리스터
+            holicRecyclerAdapter.let {
+                it.setMyReviewClickListener(object :
+                        TotalRecyclerAdapter.MyReviewItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        (activity as MainActivity).addFragment(ReviewDetailsFragment().apply {
+                            arguments = Bundle().apply {
+                                putInt(ReviewDetailsFragment.reviewIdKey, itemList[position].reviewId)
+                            }
+                        })
+                    }
+                })
+            }
+
+            adapter = holicRecyclerAdapter
         }
     }
 
