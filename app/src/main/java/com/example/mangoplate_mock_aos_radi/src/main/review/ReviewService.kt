@@ -2,8 +2,10 @@ package com.example.mangoplate_mock_aos_radi.src.main.review
 
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.src.main.detail.DetailsRetrofitInterface
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResultData
 import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewImgListResultData
@@ -116,4 +118,59 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
 
         })
     }
+
+
+    fun tryPatchReviewWannago(restaurantId: Int) {
+        val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
+        reviewRetrofitInterface.patchReviewWannago(restaurantId).enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
+
+                            view.onPatchReviewWannaGoSuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
+                view.onPatchReviewWannaGoFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+    fun tryPatchReviewLike(reviewId: Int) {
+        val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
+        reviewRetrofitInterface.patchReviewLike(reviewId).enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
+
+                            view.onPatchReviewLikeSuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
+                view.onPatchReviewLikeFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+
+
+
 }

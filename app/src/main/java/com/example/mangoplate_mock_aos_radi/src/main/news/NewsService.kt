@@ -4,8 +4,11 @@ import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGetNewsReviewItem
+import com.example.mangoplate_mock_aos_radi.src.main.detail.DetailsRetrofitInterface
+import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
+import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewRetrofitInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -93,4 +96,6 @@ class NewsService (val view: NewsFragmentView) {
 
             })
     }
+
+
 }

@@ -1,6 +1,5 @@
 package com.example.mangoplate_mock_aos_radi.src.main.review
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +10,7 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
+import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentReviewDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.review.adapter.ReviewReplyAdapter
@@ -23,6 +23,7 @@ import kotlin.properties.Delegates
 class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(FragmentReviewDetailsBinding::bind, R.layout.fragment_review_details), ReviewDetailsFragmentView {
     companion object {
         const val reviewIdKey = "reviewIdKey"
+        const val reviewrestaurantIdKey = "reviewrestaurantIdKey"
     }
 
     //리뷰상세
@@ -72,28 +73,14 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         reviewIdArg = arguments?.getInt(reviewIdKey) as Int
         executeReviewDetailsService(reviewIdArg)
 
-        binding.reviewImgBottomWannaGo.setOnClickListener {
-            isBottomWannaGo = !isBottomWannaGo
-            when (isBottomWannaGo) {
-                true -> {
-                    binding.reviewImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go_clicked)
-                }
-                false -> {
-                    binding.reviewImgBottomWannaGo.setImageResource(R.drawable.mp_wanna_go)
-                }
-            }
+        binding.reviewLayoutBottomWannaGo.setOnClickListener {
+//            showLoadingDialog(context!!)
+//            ReviewService(this).tryPatchReviewWannago()
         }
 
-        binding.reviewImgBottomLike.setOnClickListener {
-            isBottomLike= !isBottomLike
-            when (isBottomLike) {
-                true -> {
-                    binding.reviewImgBottomLike.setImageResource(R.drawable.review_like_click)
-                }
-                false -> {
-                    binding.reviewImgBottomLike.setImageResource(R.drawable.magno_like)
-                }
-            }
+        binding.reviewLayoutBottomLike.setOnClickListener {
+            showLoadingDialog(context!!)
+            ReviewService(this).tryPatchReviewLike(reviewId)
         }
 
     }
@@ -101,6 +88,28 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     private fun executeReviewDetailsService(reviewId: Int) {
         showLoadingDialog(context!!)
         ReviewService(this).tryGetReviewDtails(reviewId)
+    }
+
+    private fun reviewLayoutBottomWannaGoViewBind() {
+        when (isBottomWannaGo) {
+            true -> {
+                binding.reviewImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go_clicked)
+            }
+            false -> {
+                binding.reviewImgBottomWannaGo.setImageResource(R.drawable.mp_wanna_go)
+            }
+        }
+    }
+
+    private fun reviewLayoutBottomLikeViewBind() {
+        when (isBottomLike) {
+            true -> {
+                binding.reviewImgBottomLike.setImageResource(R.drawable.review_like_click)
+            }
+            false -> {
+                binding.reviewImgBottomLike.setImageResource(R.drawable.magno_like)
+            }
+        }
     }
 
     private fun viewBindData() {
@@ -252,6 +261,44 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     }
 
     override fun onGetReviewDetailsFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchReviewWannaGoSuccess(response: BaseResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.code}")
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.message}")
+
+        when (response.code) {
+            1000 -> isBottomWannaGo = true
+            1001 -> isBottomWannaGo = false
+        }
+
+        reviewLayoutBottomWannaGoViewBind()
+    }
+
+    override fun onPatchReviewWannaGoFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchReviewLikeSuccess(response: BaseResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.code}")
+        Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.message}")
+
+        when (response.code) {
+            1000 -> isBottomLike = true
+            1001 -> isBottomLike = false
+        }
+
+        reviewLayoutBottomLikeViewBind()
+    }
+
+    override fun onPatchReviewLikeFailure(message: String) {
         dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
