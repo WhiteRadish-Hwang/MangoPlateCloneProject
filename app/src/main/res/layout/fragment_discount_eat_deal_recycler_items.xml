@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/home_vp_img2" />
 
     <TextView
-        android:id="@+id/eat_deal_text_title"
+        android:id="@+id/eat_deal_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -31,14 +31,14 @@
         app:layout_constraintTop_toBottomOf="@+id/eat_deal_img" />
 
     <TextView
-        android:id="@+id/eat_deal_text_sub_title"
+        android:id="@+id/eat_deal_text_one_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eat_deal_text_title" />
+        app:layout_constraintTop_toBottomOf="@+id/eat_deal_text_name" />
 
     <TextView
         android:id="@+id/eat_deal_text_can_take_out"
@@ -53,7 +53,7 @@
         android:textSize="12sp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eat_deal_text_sub_title" />
+        app:layout_constraintTop_toBottomOf="@+id/eat_deal_text_one_line" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -71,40 +71,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.85" />
+                app:layout_constraintGuide_percent="0.95" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/h_guideline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.65" />
+                app:layout_constraintGuide_percent="0.70" />
 
             <TextView
                 android:id="@+id/eat_deal_text_new_and_hot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="28dp"
                 android:background="@drawable/discount_new_and_hot_border"
+                android:gravity="center"
                 android:paddingTop="1dp"
                 android:paddingBottom="1dp"
                 android:paddingRight="5dp"
                 android:paddingLeft="15dp"
-                android:text="TextView"
+                android:text="NEW"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toTopOf="@+id/h_guideline1"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/eat_deal_text_discount_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="63dp"
+                android:layout_height="28dp"
+                android:gravity="center"
                 android:paddingTop="1dp"
                 android:paddingBottom="1dp"
                 android:paddingRight="5dp"
                 android:paddingLeft="15dp"
                 android:background="@drawable/discount_rate_border"
+                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:text="TextView"
+                android:textSize="20sp"
+                android:text="10%"
                 app:layout_constraintBottom_toTopOf="@+id/h_guideline2"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -119,11 +125,21 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
+                android:id="@+id/eat_deal_text_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:text="&#8361;"
+                app:layout_constraintBottom_toTopOf="@+id/h_guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/eat_deal_text_discounted_price" />
+            <TextView
                 android:id="@+id/eat_deal_text_discounted_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:text="TextView"

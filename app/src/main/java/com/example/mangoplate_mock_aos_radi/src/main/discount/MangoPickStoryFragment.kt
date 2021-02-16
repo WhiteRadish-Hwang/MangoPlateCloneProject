@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountMangoPickStoryBinding
-import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.EatDealRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.MangoPickStoryRecyclerAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.MangoPickStoryRecyclerItems
 
 class MangoPickStoryFragment : BaseFragment<FragmentDiscountMangoPickStoryBinding>(FragmentDiscountMangoPickStoryBinding::bind, R.layout.fragment_discount_mango_pick_story){

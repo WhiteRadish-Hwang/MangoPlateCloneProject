@@ -7,6 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountBinding
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealLoc
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealTotal
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealUser
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DiscountFragment : BaseFragment<FragmentDiscountBinding>(FragmentDiscountBinding::bind, R.layout.fragment_discount){
@@ -38,7 +41,22 @@ class DiscountFragment : BaseFragment<FragmentDiscountBinding>(FragmentDiscountB
 
         override fun createFragment(position: Int): Fragment {
             return when(position) {
-                0 -> EatDealFragment()
+                0 -> {
+                    when {
+                        isEatDealTotal -> {
+                            EatDealTotalFragment()
+                        }
+                        isEatDealLoc -> {
+                            EatDealLocFragment()
+
+                        }
+                        else -> {
+                            EatDealFragment()
+                        }
+
+                    }
+
+                }
                 1 -> MangoPickStoryFragment()
                 else -> TopListFragment()
             }

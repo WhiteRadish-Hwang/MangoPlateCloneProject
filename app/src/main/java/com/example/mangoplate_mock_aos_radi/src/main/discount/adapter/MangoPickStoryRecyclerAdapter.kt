@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.MangoPickStoryRecyclerItems
 
 class MangoPickStoryRecyclerAdapter(val context: Context?, val itemList: ArrayList<MangoPickStoryRecyclerItems>): RecyclerView.Adapter<MangoPickStoryRecyclerAdapter.MangoPickStoryViewHolder>() {

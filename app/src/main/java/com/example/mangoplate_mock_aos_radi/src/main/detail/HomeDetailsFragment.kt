@@ -80,8 +80,6 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         Log.d(TAG, "receiveId: ${arguments?.get(homeDetailsKey)}")
 
         restaurantId = arguments?.get(homeDetailsKey) as Int
-//        val itemListArg = arguments?.getSerializable("itemListKey") as ArrayList<HomeRecyclerItems>
-//        itemArrayList = itemListArg
 
         //상세페이지 서비스 호출
 
@@ -157,9 +155,9 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         binding.detailsTextWannaGoCount.text = likeCount.toString()
         binding.detailsTextReviewCount.text = reviewCount.toString()
         if (userLike == 1){
-            binding.detailsImgBottomWannaGo.setColorFilter(Color.parseColor("#ff8104"))
+            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go_clicked)
         } else {
-            binding.detailsImgBottomWannaGo.colorFilter = null
+            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go)
         }
 
         Log.d(TAG, "userVisited: $userVisited")

@@ -10,7 +10,12 @@ import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealBinding
+import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealLocBinding
+import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealTotalBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealLoc
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealTotal
+import com.example.mangoplate_mock_aos_radi.src.main.discount.EatDealFragment.Companion.isEatDealUser
 import com.example.mangoplate_mock_aos_radi.src.main.discount.adapter.EatDealRecyclerAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealRecyclerData
 import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResponse
@@ -18,40 +23,33 @@ import com.example.mangoplate_mock_aos_radi.src.main.discount.model.EatDealResul
 import java.text.DecimalFormat
 import kotlin.properties.Delegates
 
-class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDiscountEatDealBinding::bind, R.layout.fragment_discount_eat_deal), EatDealFragmentView{
-    companion object {
-        var isEatDealUser: Boolean = true
-        var isEatDealTotal: Boolean = false
-        var isEatDealLoc: Boolean = false
-    }
-
+class EatDealLocFragment : BaseFragment<FragmentDiscountEatDealLocBinding>(FragmentDiscountEatDealLocBinding::bind, R.layout.fragment_discount_eat_deal_loc), EatDealLocFragmentView{
     lateinit var eatDealRecyclerAdapter: EatDealRecyclerAdapter
     lateinit var eatDealLayoutManager: LinearLayoutManager
 
-    var eatDealItemArray = ArrayList<EatDealResultData>()
-    val eatDealItemList = ArrayList<EatDealRecyclerData>()
+    var eatDealLocItemArray = ArrayList<EatDealResultData>()
+    val eatDealLocItemList = ArrayList<EatDealRecyclerData>()
 
-    lateinit var eatDealItemObject: EatDealRecyclerData
+    lateinit var eatDealLocItemObject: EatDealRecyclerData
 
-    var eatDealPage = 0
-    var eatDealLimit = 10
+    var locEatDealPage = 0
+    var locEatDealLimit = 10
     var isCanScroll = false
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        executeService()
+        executeLocEatDealService()
 
-        binding.eatDealLayoutSelectLoc.setOnClickListener {
-            isEatDealUser = false
+        binding.eatDealLocLayoutMyPosition.setOnClickListener {
+            isEatDealUser = true
             isEatDealTotal = false
-            isEatDealLoc = true
+            isEatDealLoc = false
             (activity as MainActivity).replaceFragment(DiscountFragment())
         }
 
-        binding.eatDealTextTotalView.setOnClickListener {
+        binding.eatDealLocLayoutTotalView.setOnClickListener {
             isEatDealUser = false
             isEatDealTotal = true
             isEatDealLoc = false
@@ -60,10 +58,9 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
 
     }
 
-
-
-    fun executeService() {
-        EatDealService(this).tryGetEatDeal(page = eatDealPage * eatDealLimit, limit = eatDealLimit, userlatitude = 37.6511723f, userlongtitude = 127.0481563f)
+    fun executeLocEatDealService() {
+        EatDealLocService(this).tryGetLocEatDeal(page = locEatDealPage * locEatDealLimit, limit = locEatDealLimit,
+                locationfilter_sungbuk = 1, locationfilter_suyu = 2, locationfilter_nowon = 3)
     }
 
     fun setRecyclerAdapter(){
@@ -74,14 +71,14 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
             if (this::eatDealRecyclerAdapter.isInitialized) {
                 eatDealRecyclerAdapter.notifyDataSetChanged()
             } else{
-                eatDealRecyclerAdapter = EatDealRecyclerAdapter(context, eatDealItemList)
-                binding.eatDealRecycler.apply {
+                eatDealRecyclerAdapter = EatDealRecyclerAdapter(context, eatDealLocItemList)
+                binding.eatDealLocRecycler.apply {
                     eatDealLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     layoutManager = eatDealLayoutManager
                     setHasFixedSize(true)
 
                     // 무한스크롤 리스너
-                    binding.eatDealRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                    binding.eatDealLocRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                             super.onScrolled(recyclerView, dx, dy);
 
@@ -89,17 +86,18 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
 //                            val totalItemCount: Int = layoutManager.itemCount
 //                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
 //
-//                            if (lastVisible >= totalItemCount - 2 && isCanScroll) {
-//                                eatDealPage++
-//                                executeService()
+//                            if (lastVisible >= totalItemCount - 4 && isCanScroll) {
+//                                locEatDealPage++
+//                                executeLocEatDealService()
 //                                isCanScroll = false
 //                            }
 //
 //                            if (lastVisible >= totalItemCount - 1) {
-//                                binding.eatDealTextTotalView.visibility = View.VISIBLE
+//                                binding.eatDealLocLayoutTotalView.visibility = View.VISIBLE
 //                            } else{
-//                                binding.eatDealTextTotalView.visibility = View.GONE
+//                                binding.eatDealLocLayoutTotalView.visibility = View.GONE
 //                            }
+
                         }
                     })
 
@@ -123,54 +121,49 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
     fun setData() {
         var pickUpText = ""
 
-        val start = eatDealPage * eatDealLimit
-        var end = start + eatDealLimit - 1
-        if (end >= eatDealItemArray.size) end = eatDealItemArray.size - 1
+        val start = locEatDealPage * locEatDealLimit
+        var end = start + locEatDealLimit - 1
+        if (end >= eatDealLocItemArray.size) end = eatDealLocItemArray.size - 1
         else isCanScroll = true
 
         Log.d(TAG, "start: $start, end: $end")
-        Log.d(TAG, "eatDealList Size: ${eatDealItemArray.size}")
-        Log.d(TAG, "onGetEatDealSuccess: $eatDealItemArray")
+        Log.d(TAG, "eatDealList Size: ${eatDealLocItemArray.size}")
+        Log.d(TAG, "onGetEatDealSuccess: $eatDealLocItemArray")
 
         for (i in start ..  end) {
-            when (eatDealItemArray[i].eatDealPickUpPossible) {
+            when (eatDealLocItemArray[i].eatDealPickUpPossible) {
                 1 -> pickUpText = String.format(getString(R.string.eat_deal_can_tack_out))
                 0 -> pickUpText = ""
             }
 
             val priceFormat = DecimalFormat("###,###,###,###")
-            val beforePriceFormat = priceFormat.format(eatDealItemArray[i].eatDealBeforePrice)
+            val beforePriceFormat = priceFormat.format(eatDealLocItemArray[i].eatDealBeforePrice)
             val beforePrice = String.format(getString(R.string.eat_deal_before_price, beforePriceFormat))
-            val afterPriceFormat = priceFormat.format(eatDealItemArray[i].eatDealAfterPrice)
-//            val afterPrice = String.format(getString(R.string.eat_deal_after_price, afterPriceFormat))
-            val discountRate = "${eatDealItemArray[i].eatDealDiscount}%"
+            val afterPriceFormat = priceFormat.format(eatDealLocItemArray[i].eatDealAfterPrice)
+            val discountRate = "${eatDealLocItemArray[i].eatDealDiscount}%"
 
-            eatDealItemObject = EatDealRecyclerData(eatDealId = eatDealItemArray[i].eatDealId, firstImageUrl = eatDealItemArray[i].firstImageUrl, eatDealDiscount = discountRate,
-                    eatDealBeforePrice = beforePrice, eatDealAfterPrice = afterPriceFormat, eatDealName = eatDealItemArray[i].eatDealName,
-                    eatDealOneLine = eatDealItemArray[i].eatDealOneLine, eatDealPickUpText = pickUpText)
+            eatDealLocItemObject = EatDealRecyclerData(eatDealId = eatDealLocItemArray[i].eatDealId, firstImageUrl = eatDealLocItemArray[i].firstImageUrl, eatDealDiscount = discountRate,
+                    eatDealBeforePrice = beforePrice, eatDealAfterPrice = afterPriceFormat, eatDealName = eatDealLocItemArray[i].eatDealName,
+                    eatDealOneLine = eatDealLocItemArray[i].eatDealOneLine, eatDealPickUpText = pickUpText)
 
-            eatDealItemList.add(eatDealItemObject)
+            eatDealLocItemList.add(eatDealLocItemObject)
         }
 
 
         setRecyclerAdapter()
     }
 
-    override fun onGetEatDealSuccess(response: EatDealResponse, eatDealList: ArrayList<EatDealResultData>) {
-        Log.d(TAG, "onGetEatDealSuccess: ${response.isSuccess}")
-        Log.d(TAG, "onGetEatDealSuccess: ${response.code}")
-        Log.d(TAG, "onGetEatDealSuccess: ${response.message}")
-
+    override fun onGetLocEatDealSuccess(response: EatDealResponse, eatDealList: ArrayList<EatDealResultData>) {
         eatDealList.forEach { item ->
-            eatDealItemArray.add(item)
+            eatDealLocItemArray.add(item)
         }
 
-        setData()
 
+        setData()
     }
 
-    override fun onGetEatDealFailure(message: String) {
-        showCustomToast("오류 : $message")
+    override fun onGetLocEatDealFailure(message: String) {
+
     }
 
 

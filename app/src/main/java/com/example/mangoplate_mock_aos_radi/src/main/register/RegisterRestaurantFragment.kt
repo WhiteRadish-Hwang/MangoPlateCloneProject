@@ -25,6 +25,8 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
     var filterNum: Int = 0
 
+    var registerIsFilterSelect: Boolean = false
+
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

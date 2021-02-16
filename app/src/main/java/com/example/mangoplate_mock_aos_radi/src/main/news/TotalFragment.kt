@@ -15,7 +15,11 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerIte
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 import kotlin.properties.Delegates
 
-class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total), NewsFragmentView{
+class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBinding::bind, R.layout.fragment_news_total){
+    companion object {
+        const val totalListKey = "totalListKey"
+    }
+
     val itemList = ArrayList<TotalRecyclerItems>()
 
     var total_reviewList = ArrayList<TotalReviewResultData>()
@@ -39,27 +43,15 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     var total_restaurantLikeStatus by Delegates.notNull<Int>()
     var total_reviewLikeStatus by Delegates.notNull<Int>()
 
-    lateinit var innerItem : TotalRecyclerInnerImageItems
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        NewsService(this).tryGetRestaurants(page = 0, limit = 10)
+        total_reviewList = arguments?.getSerializable(totalListKey) as ArrayList<TotalReviewResultData>
 
-
+        argViewBind()
     }
 
-    fun setRecyclerAdapter(){
-        binding.totalRecycler.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-            adapter = TotalRecyclerAdapter(context, itemList)
-        }
-    }
-
-    override fun onGetTotalReviewSuccess(response: NewsResponse, reviewList: ArrayList<TotalReviewResultData>) {
-        Log.d(ApplicationClass.TAG, "onGetTotalReviewSuccess: $reviewList")
-
-        reviewList.forEach {reviewResultData ->
+    fun argViewBind() {
+        total_reviewList.forEach {reviewResultData ->
             total_reviewId = reviewResultData.reviewId
             total_userId = reviewResultData.userId
             total_userName = reviewResultData.userName
@@ -98,11 +90,14 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
         }
 
         setRecyclerAdapter()
-
     }
 
-    override fun onGetTotalReviewFailure(message: String) {
-
+    fun setRecyclerAdapter(){
+        binding.totalRecycler.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = TotalRecyclerAdapter(context, itemList)
+        }
     }
 
 

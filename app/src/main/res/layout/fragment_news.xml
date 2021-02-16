@@ -71,46 +71,149 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/news_layout_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        </FrameLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/news_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabIndicatorColor="@color/cliked_color"
+                app:tabSelectedTextColor="@color/cliked_color"
+                app:tabTextColor="@color/uncliked_color">
 
-<!--        <androidx.viewpager2.widget.ViewPager2-->
-<!--            android:id="@+id/news_vp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />-->
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tab_name" />
 
-<!--        <com.google.android.material.tabs.TabLayout-->
-<!--            android:id="@+id/news_tab_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?actionBarSize"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:tabIndicatorColor="@color/cliked_color"-->
-<!--            app:tabSelectedTextColor="@color/cliked_color"-->
-<!--            app:tabTextColor="@color/uncliked_color">-->
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/following" />
 
-<!--            <com.google.android.material.tabs.TabItem-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/total_tab_name" />-->
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hollic_tab_name" />
+            </com.google.android.material.tabs.TabLayout>
 
-<!--            <com.google.android.material.tabs.TabItem-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/following" />-->
 
-<!--            <com.google.android.material.tabs.TabItem-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/hollic_tab_name" />-->
-<!--        </com.google.android.material.tabs.TabLayout>-->
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:padding="10dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/news_tab_layout">
+
+                <RelativeLayout
+                    android:id="@+id/new_layout_great"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/news_sort_select_text_unclicked_border">
+
+                    <ImageView
+                        android:id="@+id/new_img_great"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentLeft="true"
+                        app:srcCompat="@drawable/great_non" />
+
+                    <TextView
+                        android:id="@+id/new_text_great"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/new_img_great"
+                        android:text="@string/news_text_great"
+                        android:textColor="@color/uncliked_color" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/new_layout_good"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/new_layout_great"
+                    android:background="@drawable/news_sort_select_text_unclicked_border">
+
+                    <ImageView
+                        android:id="@+id/new_img_good"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentLeft="true"
+                        app:srcCompat="@drawable/good_non" />
+
+                    <TextView
+                        android:id="@+id/new_text_good"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/new_img_good"
+                        android:text="@string/news_text_good"
+                        android:textColor="@color/uncliked_color" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/new_layout_bad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/new_layout_good"
+                    android:background="@drawable/news_sort_select_text_unclicked_border">
+
+                    <ImageView
+                        android:id="@+id/new_img_bad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentLeft="true"
+                        app:srcCompat="@drawable/bad_non" />
+
+                    <TextView
+                        android:id="@+id/new_text_bad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/new_img_bad"
+                        android:text="@string/news_text_bad"
+                        android:textColor="@color/uncliked_color" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/news_vp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

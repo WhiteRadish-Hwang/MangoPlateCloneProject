@@ -107,6 +107,10 @@
     <string name="eat_deal_tab_name">EAT딜</string>
     <string name="mango_pick_story_tab_name">망고픽 스토리</string>
     <string name="top_list_tab_name">TOP 리스트</string>
+    <string name="eat_deal_can_tack_out">포장 &amp; 픽업 가능한 EAT딜입니다.</string>
+    <string name="eat_deal_before_price">&#8361; %s</string>
+    <string name="eat_deal_after_price">&#8361; %s</string>
+    <string name="eat_deal_text_total_view"><u>모든 EAT딜 보기</u></string>
 
 
     <string name="total_tab_name">전체</string>
