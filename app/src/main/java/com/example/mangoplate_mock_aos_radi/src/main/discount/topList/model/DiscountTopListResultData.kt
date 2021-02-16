@@ -4,7 +4,7 @@ data class DiscountTopListResultData (val topListId: Int,
                                       val topListImgUrl: String,
                                       val topListView: Int,
                                       val updatedAt: String,
-                                      val userBookMark: Int,
+                                      var userBookMark: Int,
                                       val topListName: String,
                                       val topListOneLine: String,
                                       val topListSortOnTop: Int)

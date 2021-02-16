@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
+import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountTopListBinding
 import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.EatDealTotalService
 import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.adapter.EatDealRecyclerAdapter
@@ -135,5 +136,13 @@ class TopListFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDis
 
     override fun onGetTopListFailure(message: String) {
         showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchTopListSuccess(response: BaseResponse) {
+
+    }
+
+    override fun onPatchTopListFailure(message: String) {
+
     }
 }

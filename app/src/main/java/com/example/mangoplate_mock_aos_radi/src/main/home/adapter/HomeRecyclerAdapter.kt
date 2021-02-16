@@ -24,7 +24,7 @@ import java.lang.Exception
 class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRecyclerItems>): RecyclerView.Adapter<HomeRecyclerAdapter.ItemViewHolder>(), HomeFragmentView {
     var isLikeAndVisitedDone: Boolean = false
     var adapterIsLike: Boolean = false
-    var adapterIsVisited: Boolean = false
+
 
     interface MyItemClickListener {
         fun onItemClick(position: Int)
@@ -60,6 +60,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
     override fun getItemCount(): Int = itemList.size
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        var adapterIsVisited: Boolean = false
         val items: HomeRecyclerItems = itemList[position]
 
         Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
@@ -81,45 +82,43 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
             }
         }
 
-        holder.wannaGo.setOnClickListener {
-            // 가고싶다 추가, 해제 서비스 호출
-            HomeService(this).tryPatchWannago(items.restaurantId)
+        if (!adapterIsVisited) {
+            holder.wannaGo.setOnClickListener {
+                // 가고싶다 추가, 해제 서비스 호출
+                HomeService(this).tryPatchWannago(items.restaurantId)
 
-            Thread {
-                Thread.sleep(300)
-                Log.d(TAG, "isLikeAndVisitedDone: $isLikeAndVisitedDone")
-                try {
-                    if (isLikeAndVisitedDone){
-                        checkLikeImgStatus(items)
-                        Log.d(TAG, "onBindViewHolder: isLike = ${items.isLike}")
-                        when (items.isLike) {
-                            1 -> {
-                                Handler(Looper.getMainLooper()).post {
-                                    Log.d(TAG, "onBindViewHolder: 1")
-                                    holder.wannaGo.setImageResource(R.drawable.wanngo_clicked)
-                                    notifyDataSetChanged()
+                Thread {
+                    Thread.sleep(300)
+                    try {
+                        if (isLikeAndVisitedDone) {
+                            checkLikeImgStatus(items)
+                            Log.d(TAG, "onBindViewHolder: isLike = ${items.isLike}")
+                            when (items.isLike) {
+                                1 -> {
+                                    Handler(Looper.getMainLooper()).post {
+                                        holder.wannaGo.setImageResource(R.drawable.wanngo_clicked)
+                                        notifyDataSetChanged()
+                                    }
                                 }
-                            }
-                            0 -> {
-                                Handler(Looper.getMainLooper()).post {
-                                    Log.d(TAG, "onBindViewHolder: 2")
-                                    holder.wannaGo.setImageResource(R.drawable.star_white)
-                                    notifyDataSetChanged()
+                                0 -> {
+                                    Handler(Looper.getMainLooper()).post {
+                                        holder.wannaGo.setImageResource(R.drawable.star_white)
+                                        notifyDataSetChanged()
+                                    }
                                 }
                             }
                         }
+                        if (isLikeAndVisitedDone) Thread.interrupted()
+
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Thread: Done > $isLikeAndVisitedDone")
+                        isLikeAndVisitedDone = false
                     }
-                    if (isLikeAndVisitedDone) throw Exception()
 
-                }catch (e: Exception){
-                    Log.d(TAG, "Thread: Done > $isLikeAndVisitedDone")
-                    isLikeAndVisitedDone = false
-                }
+                }.start()
 
-            }.start()
-
+            }
         }
-
 
         holder.title.text = "${items.idx}. ${items.title}"
         holder.location.text = items.areaName

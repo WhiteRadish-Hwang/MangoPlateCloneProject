@@ -1,9 +1,12 @@
 package com.example.mangoplate_mock_aos_radi.src.main.discount
 
+import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
 import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.model.DiscountTopListResponse
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface DiscountRetrofitInterface {
@@ -29,7 +32,10 @@ interface DiscountRetrofitInterface {
     ) : Call<EatDealResponse>
 
     @GET("/top-list")
-    fun getTopListDeal(@Query("page") page: Int,
-                        @Query("limit") limit: Int
+    fun getTopList(@Query("page") page: Int,
+                   @Query("limit") limit: Int
     ) : Call<DiscountTopListResponse>
+
+    @PATCH("/top-list/{topListId}")
+    fun patchTopList(@Path("topListId") topListId: Int) : Call<BaseResponse>
 }
