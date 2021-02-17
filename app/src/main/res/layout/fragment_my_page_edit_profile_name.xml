@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout6"
+        android:id="@+id/deal_details_tollbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/home_toolbar_underline"
@@ -45,7 +45,7 @@
         android:textColor="@color/uncliked_color"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout6" />
+        app:layout_constraintTop_toBottomOf="@+id/deal_details_tollbar_layout" />
 
     <EditText
         android:id="@+id/mp_edit_et_name"

@@ -6,10 +6,7 @@ import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.src.main.detail.DetailsRetrofitInterface
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResponse
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResultData
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewImgListResultData
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewReplyListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.review.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,6 +30,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
                             it.result.forEach { resultItem ->
                                 val resultObject = resultItem.asJsonObject
 
+                                val restaurantId = resultObject.get("restaurantId").asInt
                                 val reviewId = resultObject.get("reviewId").asInt
                                 val userId = resultObject.get("userId").asInt
                                 val userName = resultObject.get("userName").asString
@@ -50,7 +48,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
                                 val restaurantLikeStatus = resultObject.get("restaurantLikeStatus").asInt
                                 val reviewLikeStatus = resultObject.get("reviewLikeStatus").asInt
 
-                                val reviewDetailsListItem = ReviewDetailsResultData(reviewId = reviewId, userId = userId, userName = userName, isHolic = isHolic, userProfileImgUrl = userProfileImgUrl,
+                                val reviewDetailsListItem = ReviewDetailsResultData(restaurantId = restaurantId, reviewId = reviewId, userId = userId, userName = userName, isHolic = isHolic, userProfileImgUrl = userProfileImgUrl,
                                         userReviewCount = userReviewCount, userFollowerCount = userFollowerCount, reviewExpression = reviewExpression, reviewContents = reviewContents,
                                         restaurantName = restaurantName, restaurantLocation = restaurantLocation, reviewLikeCount = reviewLikeCount, reviewReplyCount = reviewReplyCount,
                                         updatedAt = updatedAt, restaurantLikeStatus = restaurantLikeStatus, reviewLikeStatus = reviewLikeStatus)
@@ -166,6 +164,34 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
                 view.onPatchReviewLikeFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+
+    fun tryPostReviewReply(reviewId: Int, params: ReviewReplyResultData) {
+        val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
+        reviewRetrofitInterface.postReviewReply(reviewId, params).enqueue(object : Callback<ReviewReplyResponse> {
+            override fun onResponse(call: Call<ReviewReplyResponse>, response: Response<ReviewReplyResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
+
+
+
+                            view.onPostReviewReplySuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+
+            override fun onFailure(call: Call<ReviewReplyResponse>, t: Throwable) {
+                Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
+                view.onPostReviewReplyFailure(t.message ?: "통신 오류")
             }
         })
     }

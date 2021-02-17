@@ -23,4 +23,8 @@ interface ReviewDetailsFragmentView {
     fun onPatchReviewLikeSuccess(response: BaseResponse)
 
     fun onPatchReviewLikeFailure(message: String)
+
+    fun onPostReviewReplySuccess(response: BaseResponse)
+
+    fun onPostReviewReplyFailure(message: String)
 }

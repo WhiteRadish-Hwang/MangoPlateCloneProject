@@ -7,7 +7,7 @@
     android:background="@color/more_light_gray"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:id="@+id/relativeLayout6"
+        android:id="@+id/deal_details_tollbar_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/white"
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/register_btn_add_apply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/deal_details_tollbar_layout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

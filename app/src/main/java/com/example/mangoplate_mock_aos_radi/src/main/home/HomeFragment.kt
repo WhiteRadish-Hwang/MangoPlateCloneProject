@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.LOC_LIST
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
@@ -312,6 +313,26 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
 
         val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter
+
+        binding.homeVp.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.homeVpIndicator1.setImageResource(R.drawable.vp_indicator_circle)
+                binding.homeVpIndicator2.setImageResource(R.drawable.vp_indicator_circle)
+                binding.homeVpIndicator3.setImageResource(R.drawable.vp_indicator_circle)
+                binding.homeVpIndicator4.setImageResource(R.drawable.vp_indicator_circle)
+                binding.homeVpIndicator5.setImageResource(R.drawable.vp_indicator_circle)
+
+                when (position) {
+                    0 -> binding.homeVpIndicator1.setImageResource(R.drawable.vp_indicator_circle_clicked)
+                    1 -> binding.homeVpIndicator2.setImageResource(R.drawable.vp_indicator_circle_clicked)
+                    2 -> binding.homeVpIndicator3.setImageResource(R.drawable.vp_indicator_circle_clicked)
+                    3 -> binding.homeVpIndicator4.setImageResource(R.drawable.vp_indicator_circle_clicked)
+                    4 -> binding.homeVpIndicator5.setImageResource(R.drawable.vp_indicator_circle_clicked)
+                }
+
+            }
+        })
 
         isCalled = true
 

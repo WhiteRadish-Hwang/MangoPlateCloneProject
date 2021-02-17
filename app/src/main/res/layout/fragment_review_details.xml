@@ -389,6 +389,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/white"
+                android:maxLength="500"
                 android:ems="10"
                 android:hint="@를 입력해 보세요"
                 android:inputType="textPersonName"

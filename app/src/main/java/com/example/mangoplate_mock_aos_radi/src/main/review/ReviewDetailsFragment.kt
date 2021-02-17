@@ -27,6 +27,7 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     }
 
     //리뷰상세
+    var reviewDetailsRestaurantId by Delegates.notNull<Int>()
     var reviewId by Delegates.notNull<Int>()
     var userId by Delegates.notNull<Int>()
     lateinit var userName: String
@@ -74,8 +75,8 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         executeReviewDetailsService(reviewIdArg)
 
         binding.reviewLayoutBottomWannaGo.setOnClickListener {
-//            showLoadingDialog(context!!)
-//            ReviewService(this).tryPatchReviewWannago()
+            showLoadingDialog(context!!)
+            ReviewService(this).tryPatchReviewWannago(reviewDetailsRestaurantId)
         }
 
         binding.reviewLayoutBottomLike.setOnClickListener {
@@ -213,6 +214,7 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         Log.d(TAG, "onGetReviewDetailsSuccess: $replyList")
 
         reviewList.forEach { reviewItem ->
+            reviewDetailsRestaurantId = reviewItem.restaurantId
             reviewId = reviewItem.reviewId
             userId = reviewItem.userId
             userName = reviewItem.userName
@@ -301,6 +303,14 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     override fun onPatchReviewLikeFailure(message: String) {
         dismissLoadingDialog()
         showCustomToast("오류 : $message")
+    }
+
+    override fun onPostReviewReplySuccess(response: BaseResponse) {
+
+    }
+
+    override fun onPostReviewReplyFailure(message: String) {
+
     }
 
 
