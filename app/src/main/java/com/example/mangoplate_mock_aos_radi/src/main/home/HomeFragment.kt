@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragme
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.search.HomeSearchFragment
+import com.google.android.material.appbar.AppBarLayout
+import kotlin.math.abs
 import kotlin.properties.Delegates
 
 

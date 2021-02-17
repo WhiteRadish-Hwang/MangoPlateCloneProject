@@ -8,26 +8,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/details_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details_layout_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/home_toolbar_underline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/details_text_res_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/details_img_back_arrow"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/details_img_back_arrow"
             android:layout_width="50dp"
             android:layout_height="30dp"
+            android:layout_marginStart="5dp"
             android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/arrow_down"
-            tools:ignore="VectorDrawableCompat"
-            app:tint="@color/cliked_color" />
+            app:tint="@color/cliked_color"
+            tools:ignore="VectorDrawableCompat" />
 
-    </androidx.appcompat.widget.Toolbar>
+        <ImageView
+            android:id="@+id/details_img_camera"
+            android:layout_width="25dp"
+            android:layout_height="20sp"
+            android:layout_marginEnd="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/details_img_shared"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/details_img_shared"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/shared"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/details_toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?actionBarSize"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:background="@drawable/home_toolbar_underline"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/details_img_back_arrow"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:srcCompat="@drawable/arrow_down"-->
+<!--            tools:ignore="VectorDrawableCompat"-->
+<!--            app:tint="@color/cliked_color" />-->
+
+<!--    </androidx.appcompat.widget.Toolbar>-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -35,10 +93,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/details_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/details_layout_toolbar">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+            android:id="@+id/details_layout_app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -50,8 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                >
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/details_recycler"
@@ -75,17 +132,17 @@
                         android:id="@+id/details_layout_user_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="15dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/details_text_restaurant_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/blackForText"
                             android:text="userName"
+                            android:textColor="@color/blackForText"
                             android:textSize="20sp" />
 
                         <LinearLayout
@@ -152,10 +209,10 @@
                         android:id="@+id/details_text_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/details_img_star_info"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/details_img_star_info"
                         android:gravity="center"
                         android:text="4.3"
                         android:textColor="@color/cliked_color"
@@ -165,9 +222,9 @@
                         android:id="@+id/details_img_star_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
                         android:layout_alignBaseline="@+id/details_text_star"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
                         android:src="@drawable/details_grade_info" />
                 </RelativeLayout>
             </LinearLayout>
@@ -176,16 +233,16 @@
                 android:id="@+id/details_layout_footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
                 android:background="@drawable/home_toolbar_underline"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 app:layout_collapseMode="pin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+                app:layout_constraintTop_toBottomOf="@+id/details_layout_app_bar">
 
 
                 <RelativeLayout
@@ -199,8 +256,8 @@
                         android:id="@+id/details_img_bottom_wanna_go"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
                         app:srcCompat="@drawable/wanna_go" />
 
                     <TextView
@@ -210,8 +267,8 @@
                         android:layout_below="@+id/details_img_bottom_wanna_go"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/cliked_color"
                         android:text="@string/wanna_go"
+                        android:textColor="@color/cliked_color"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
@@ -226,9 +283,9 @@
                         android:id="@+id/details_img_bottom_visited"
                         android:layout_width="27dp"
                         android:layout_height="27dp"
-                        android:scaleType="centerCrop"
-                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/details_visited" />
 
                     <TextView
@@ -238,8 +295,8 @@
                         android:layout_below="@+id/details_img_bottom_visited"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/cliked_color"
                         android:text="@string/visited"
+                        android:textColor="@color/cliked_color"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
@@ -254,9 +311,9 @@
                         android:id="@+id/details_img_bottom_comment"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:scaleType="centerCrop"
-                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/details_review" />
 
                     <TextView
@@ -266,8 +323,8 @@
                         android:layout_below="@+id/details_img_bottom_comment"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/cliked_color"
                         android:text="@string/write_review"
+                        android:textColor="@color/cliked_color"
                         android:textSize="12sp" />
                 </RelativeLayout>
 
@@ -282,9 +339,9 @@
                         android:id="@+id/details_img_bottom_my_list"
                         android:layout_width="27dp"
                         android:layout_height="27dp"
-                        android:scaleType="centerCrop"
-                        android:layout_marginBottom="10dp"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        android:scaleType="centerCrop"
                         app:srcCompat="@drawable/details_my_list" />
 
                     <TextView
@@ -294,8 +351,8 @@
                         android:layout_below="@+id/details_img_bottom_my_list"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="5dp"
-                        android:textColor="@color/cliked_color"
                         android:text="@string/my_list"
+                        android:textColor="@color/cliked_color"
                         android:textSize="12sp" />
                 </RelativeLayout>
             </LinearLayout>

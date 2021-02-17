@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/menu_home_toolbar_search"
-        android:icon="@drawable/camera"
-        app:showAsAction="always"
+        android:icon="@drawable/camera3"
+        app:showAsAction="collapseActionView"
         android:enabled="true"
         android:checkable="true"
         android:title="카메라" />

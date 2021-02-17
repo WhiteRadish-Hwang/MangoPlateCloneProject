@@ -1,6 +1,7 @@
 package com.example.mangoplate_mock_aos_radi.src.main.detail
 
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentHomeDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.keywordItemKey
@@ -31,6 +31,8 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResp
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.visited.VisitedFragment
 import com.example.mangoplate_mock_aos_radi.src.main.visited.VisitedFragment.Companion.visitedRestaurantIdKey
+import com.google.android.material.appbar.AppBarLayout
+import kotlin.math.abs
 import kotlin.properties.Delegates
 
 class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHomeDetailsBinding::bind, R.layout.fragment_home_details), HomeDetailsFragmentView {
@@ -92,21 +94,21 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
             (activity as MainActivity).onBackPressed()
         }
         
-        binding.detailsToolbar.inflateMenu(R.menu.menu_details_toolbar)
-        binding.detailsToolbar.setOnMenuItemClickListener {
-            when (it.itemId){
-                R.id.menu_home_toolbar_search -> {
-                    showCustomToast("Clicked Camara Item")
-                    true
-                }
-                R.id.menu_home_toolbar_map -> {
-                    showCustomToast("Clicked Share Item")
-                    true
-                }
-
-                else -> false
-            }
-        }
+//        binding.detailsToolbar.inflateMenu(R.menu.menu_details_toolbar)
+//        binding.detailsToolbar.setOnMenuItemClickListener {
+//            when (it.itemId){
+//                R.id.menu_home_toolbar_search -> {
+//                    showCustomToast("Clicked Camara Item")
+//                    true
+//                }
+//                R.id.menu_home_toolbar_map -> {
+//                    showCustomToast("Clicked Share Item")
+//                    true
+//                }
+//
+//                else -> false
+//            }
+//        }
 
         binding.detailsLayoutBottomWannaGo.setOnClickListener {
             showLoadingDialog(context!!)
@@ -120,6 +122,25 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
                 }
             })
         }
+
+
+
+        // 앱바 이벤트 리스너
+        binding.detailsLayoutAppBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) { // 접혔을때
+                binding.detailsImgBackArrow.setColorFilter(Color.parseColor("#ffffff"))
+                binding.detailsLayoutToolbar.setBackgroundResource(R.color.cliked_color)
+                binding.detailsImgCamera.setImageResource(R.drawable.camera_collapse)
+                binding.detailsImgShared.setColorFilter(Color.parseColor("#ffffff")) //clicked_color
+                binding.detailsTextResName.visibility = View.VISIBLE
+            } else {// 펴졌을때
+                binding.detailsImgBackArrow.setColorFilter(Color.parseColor("#ff8104")) //clicked_color
+                binding.detailsLayoutToolbar.setBackgroundResource(R.drawable.home_toolbar_underline)
+                binding.detailsImgCamera.setImageResource(R.drawable.camera)
+                binding.detailsImgShared.setColorFilter(Color.parseColor("#ff8104"))
+                binding.detailsTextResName.visibility = View.GONE
+            }
+        })
 
 
     }
@@ -155,6 +176,8 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
     }
 
     fun viewHoldingData() {
+        binding.detailsTextResName.text = restaurantName
+
         binding.detailsTextRestaurantName.text = restaurantName
         binding.detailsTextViewCount.text = restaurantView.toString()
         binding.detailsTextWannaGoCount.text = likeCount.toString()
