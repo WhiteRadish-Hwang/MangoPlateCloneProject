@@ -35,6 +35,7 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     var total_reviewList = ArrayList<TotalReviewResultData>()
     lateinit var total_reviewObject : TotalRecyclerItems
 
+    var total_restaurantId by Delegates.notNull<Int>()
     var total_reviewId by Delegates.notNull<Int>()
     var total_userId by Delegates.notNull<Int>()
     lateinit var total_userName: String
@@ -62,6 +63,7 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
 
     fun argViewBind() {
         total_reviewList.forEach {reviewResultData ->
+            total_restaurantId = reviewResultData.restaurantId
             total_reviewId = reviewResultData.reviewId
             total_userId = reviewResultData.userId
             total_userName = reviewResultData.userName
@@ -90,7 +92,7 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             val ul_restaurantName = String.format(getString(R.string.review_restaurant_name_val, total_restaurantName))
             val ul_restaurantLoc = String.format(getString(R.string.review_restaurant_loc_val, total_restaurantLocation))
 
-            total_reviewObject = TotalRecyclerItems(reviewId = total_reviewId, reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
+            total_reviewObject = TotalRecyclerItems(restaurantId = total_restaurantId, reviewId = total_reviewId, reviewImgList = total_reviewImgList, userProfileImgUrl = total_userProfileImgUrl, userName = total_userName, isHolic = total_isHolic,
                     userReviewCount = total_userReviewCount, userFollowerCount = total_userFollowerCount, reviewExpression = total_reviewExpression, reviewReplyCount = replyCountText,
                     reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = total_updatedAt,
                     reviewContents = total_reviewContents, restaurantLikeStatus = total_restaurantLikeStatus, reviewLikeStatus = total_reviewLikeStatus,

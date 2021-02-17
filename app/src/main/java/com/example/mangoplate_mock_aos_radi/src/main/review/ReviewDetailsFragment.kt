@@ -7,23 +7,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentReviewDetailsBinding
+import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
+import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
+import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.review.adapter.ReviewReplyAdapter
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResponse
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewDetailsResultData
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewImgListResultData
-import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewReplyListResultData
+import com.example.mangoplate_mock_aos_radi.src.main.review.model.*
 import kotlin.properties.Delegates
 
 class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(FragmentReviewDetailsBinding::bind, R.layout.fragment_review_details), ReviewDetailsFragmentView {
     companion object {
         const val reviewIdKey = "reviewIdKey"
         const val reviewrestaurantIdKey = "reviewrestaurantIdKey"
+
+        var commentUserList = ArrayList<Int>()
     }
 
     //리뷰상세
@@ -59,13 +63,15 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     lateinit var replyUserProfileImgUrl: String
     lateinit var replyContents: String
     lateinit var replyUpdatedAt: String
-    var commentUserList = ArrayList<String>()
 
     var reviewReplyArrayList = ArrayList<ReviewReplyListResultData>()
+    lateinit var reviewReplyAdapter: ReviewReplyAdapter
+    lateinit var replyItemObject: ReviewReplyResultData
 
     //상태 변수
     var isBottomLike: Boolean = false
     var isBottomWannaGo: Boolean = false
+    var isReplyModifying: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,6 +80,10 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         reviewIdArg = arguments?.getInt(reviewIdKey) as Int
         executeReviewDetailsService(reviewIdArg)
 
+        binding.reviewImgArrow.setOnClickListener {
+            (activity as MainActivity).onBackPressedAndReplace(NewsFragment())
+        }
+
         binding.reviewLayoutBottomWannaGo.setOnClickListener {
             showLoadingDialog(context!!)
             ReviewService(this).tryPatchReviewWannago(reviewDetailsRestaurantId)
@@ -81,9 +91,36 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
 
         binding.reviewLayoutBottomLike.setOnClickListener {
             showLoadingDialog(context!!)
-            ReviewService(this).tryPatchReviewLike(reviewId)
+            ReviewService(this).tryPatchReviewLike(reviewIdArg)
         }
 
+        binding.reviewImgReplyApply.setOnClickListener {
+            val editTextString = binding.reviewEtReply.text.toString()
+            if (editTextString.isNullOrBlank()) {
+                showCustomToast("메세지를 입력하세요")
+            }
+            else if (!isReplyModifying) {
+                replyItemObject = ReviewReplyResultData(commentUserId = commentUserList, replyContents = editTextString)
+                showLoadingDialog(context!!)
+                ReviewService(this).tryPostReviewReply(reviewIdArg, replyItemObject)
+                binding.reviewEtReply.setText("")
+            }
+        }
+
+
+
+
+
+    }
+
+    private fun executeReplyModifyService(reviewId: Int, replyId: Int, body: ReviewReplyResultData) {
+        showLoadingDialog(context!!)
+        ReviewService(this).tryPatchReplyModify(reviewId, replyId, body)
+    }
+
+    private fun executeReplyDeleteService(reviewId: Int, replyId: Int) {
+        showLoadingDialog(context!!)
+        ReviewService(this).tryPatchReplyDelete(reviewId, replyId)
     }
 
     private fun executeReviewDetailsService(reviewId: Int) {
@@ -165,19 +202,60 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
     }
 
     private fun setReplyRecycler(recyclerView: RecyclerView, itemList: ArrayList<ReviewReplyListResultData>) {
-        val itemsAdapter = ReviewReplyAdapter(context, itemList)
+        reviewReplyAdapter = ReviewReplyAdapter(context, itemList)
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             // 이너 m이미지 아이템 클릭 리스너
-            itemsAdapter.let {
+            reviewReplyAdapter.let {
                 it.setMyReplyItemClickListener(object : ReviewReplyAdapter.MyReplyItemClickListener {
                     override fun onItemClick(position: Int) {
+                        if (reviewReplyArrayList[position].replyUserId == user_id?.toInt()) {
+                            val replySettingFragment = ReviewReplyBottomFragment {
+                                when (it) {
+                                    0 -> {
+                                        isReplyModifying = true
+                                        // 선택 댓글 수정
+                                        if (isReplyModifying) {
+                                            binding.reviewEtReply.setText(reviewReplyArrayList[position].replyContents)
+
+                                            binding.reviewImgReplyApply.setOnClickListener {
+                                                if (binding.reviewEtReply.text.isNullOrBlank()) {
+                                                    showCustomToast("메세지를 입력하세요")
+                                                } else {
+                                                    val editString = binding.reviewEtReply.text.toString()
+                                                    replyItemObject = ReviewReplyResultData(commentUserId = commentUserList, replyContents = editString)
+                                                    binding.reviewEtReply.setText("")
+
+                                                    executeReplyModifyService(reviewIdArg, reviewReplyArrayList[position].replyId, replyItemObject)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    1 -> {
+                                        // 선택 댓글 삭제
+                                        executeReplyDeleteService(reviewIdArg, reviewReplyArrayList[position].replyId)
+                                    }
+                                }
+                            }
+                            replySettingFragment.show((activity as MainActivity).supportFragmentManager, "replyOption")
+                        } else {
+                            val replySettingFragment = ReviewReplyBottomFragment {
+                                when (it) {
+                                    0 -> {
+                                        Log.d(TAG, "onItemClick: 신고됨")
+                                        showCustomToast("신고되었습니다")
+                                    }
+                                }
+                            }
+                            replySettingFragment.show((activity as MainActivity).supportFragmentManager, "notMyReplyOption")
+
+                        }// end else
 
                     }
                 })
             } // end listener
-            recyclerView.adapter = itemsAdapter
+            recyclerView.adapter = reviewReplyAdapter
         }
 
     }
@@ -305,12 +383,59 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         showCustomToast("오류 : $message")
     }
 
-    override fun onPostReviewReplySuccess(response: BaseResponse) {
+    override fun onPostReviewReplySuccess(response: BaseResponse, replyId: Int) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPostReviewReplySuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPostReviewReplySuccess: ${response.code}")
+        Log.d(TAG, "onPostReviewReplySuccess: ${response.message}")
+        Log.d(TAG, "onPostReviewReplySuccess: $replyId")
+
+        if (response.isSuccess) {
+            executeReviewDetailsService(reviewId)
+            reviewReplyAdapter.notifyDataSetChanged()
+        }
+
 
     }
 
     override fun onPostReviewReplyFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
 
+    override fun onPatchReplyDeleteSuccess(response: BaseResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPatchReplyDeleteSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchReplyDeleteSuccess: ${response.code}")
+        Log.d(TAG, "onPatchReplyDeleteSuccess: ${response.message}")
+
+        if (response.isSuccess) {
+            executeReviewDetailsService(reviewId)
+            reviewReplyAdapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun onPatchReplyDeleteFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+    override fun onPatchReplyModifySuccess(response: BaseResponse) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPatchReplyModifySuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPatchReplyModifySuccess: ${response.code}")
+        Log.d(TAG, "onPatchReplyModifySuccess: ${response.message}")
+
+        if (response.isSuccess) {
+            executeReviewDetailsService(reviewId)
+            reviewReplyAdapter.notifyDataSetChanged()
+        }
+        isReplyModifying = false
+    }
+
+    override fun onPatchReplyModifyFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
     }
 
 

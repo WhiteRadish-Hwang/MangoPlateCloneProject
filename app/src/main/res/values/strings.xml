@@ -169,6 +169,11 @@
     <string name="deal_text_how_to_use_info">※ 사용 방법</string>
     <string name="deal_text_refund_policy_info">※ 환불 규정</string>
     <string name="deal_text_question">문의</string>
+
+    <string name="reply_btn_text_sue">댓글 신고</string>
+    <string name="reply_btn_text_modify">댓글 수정</string>
+    <string name="reply_btn_text_delete">댓글 삭제</string>
+    <string name="reply_btn_text_cancel">취소</string>
     
     <string name="holic_text_explain_first_line">홀릭이란? 망고플레이트가 선정한 공식 우수 리뷰어, 홀릭!</string>
     <string name="holic_text_explain_second_line">홀릭은 누구보다 먹는 즐거움을 잘 알고 실천하며 리뷰를 통해 자신의 경험을 누구보다 활발히 공유하는 사용자입니다.</string>

@@ -24,7 +24,15 @@ interface ReviewDetailsFragmentView {
 
     fun onPatchReviewLikeFailure(message: String)
 
-    fun onPostReviewReplySuccess(response: BaseResponse)
+    fun onPostReviewReplySuccess(response: BaseResponse, replyId: Int)
 
     fun onPostReviewReplyFailure(message: String)
+
+    fun onPatchReplyDeleteSuccess(response: BaseResponse)
+
+    fun onPatchReplyDeleteFailure(message: String)
+
+    fun onPatchReplyModifySuccess(response: BaseResponse)
+
+    fun onPatchReplyModifyFailure(message: String)
 }

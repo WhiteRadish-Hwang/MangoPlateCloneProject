@@ -24,4 +24,12 @@ interface ReviewRetrofitInterface {
     @POST("/reviews/{reviewId}/replies")
     fun postReviewReply(@Path("reviewId") reviewId: Int,
                         @Body params: ReviewReplyResultData) : Call<ReviewReplyResponse>
+
+    @PATCH("/reviews/{reviewId}/replies/{replyId}/status")
+    fun patchReplyDelete(@Path("reviewId") reviewId: Int, @Path("replyId") replyId: Int) : Call<BaseResponse>
+
+    @PATCH("/reviews/{reviewId}/replies/{replyId}")
+    fun patchReplyModify(@Path("reviewId") reviewId: Int,
+                         @Path("replyId") replyId: Int,
+                         @Body params: ReviewReplyResultData) : Call<BaseResponse>
 }

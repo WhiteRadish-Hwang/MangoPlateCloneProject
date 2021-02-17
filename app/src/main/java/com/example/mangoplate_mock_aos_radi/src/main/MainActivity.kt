@@ -4,20 +4,14 @@ import android.animation.Animator
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.View
 import android.view.ViewAnimationUtils
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
@@ -32,10 +26,6 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.util.jar.Manifest
-import kotlin.concurrent.timer
-import kotlin.concurrent.timerTask
-import kotlin.math.log
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -220,6 +210,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     fun addFragment(fragment: Fragment) {
+        Log.d(TAG, "addFragment: $fragment")
         val fmbt = supportFragmentManager.beginTransaction()
         backStack = true
         fragmentBack = fragment
@@ -227,6 +218,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         if (isOpen){
             fmbt.add(R.id.main_layout_frame, fragment).addToBackStack("fragment").commit()
         } else {
+            Log.d(TAG, "addFragment: $fragment")
             isOpen = false
             fmbt.setCustomAnimations(R.anim.enter_fragment, 0, 0, R.anim.exit_fragment)
             fmbt.add(R.id.main_layout_sub_frame, fragment).addToBackStack("fragment").commit()
@@ -251,5 +243,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             super.onBackPressed()
         }
     }
-
+    fun onBackPressedAndReplace(fragment: Fragment?) {
+        if (backStack) { //상세정보창 프래그먼트를 킨 상태면 뒤로가기했을 때 해당 프래그먼트를 삭제해줌
+            fragmentBack?.let { supportFragmentManager.popBackStack() }
+            backStack = false
+            fragment?.let { replaceFragment(fragment) }
+        } else {
+            super.onBackPressed()
+        }
+    }
 }

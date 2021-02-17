@@ -117,7 +117,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
         })
     }
 
-
+    // 리뷰 가고싶다 추가, 해제
     fun tryPatchReviewWannago(restaurantId: Int) {
         val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
         reviewRetrofitInterface.patchReviewWannago(restaurantId).enqueue(object : Callback<BaseResponse> {
@@ -143,6 +143,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
         })
     }
 
+    // 리뷰 좋아요 추가, 해제
     fun tryPatchReviewLike(reviewId: Int) {
         val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
         reviewRetrofitInterface.patchReviewLike(reviewId).enqueue(object : Callback<BaseResponse> {
@@ -168,7 +169,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
         })
     }
 
-
+    // 댓글 작성
     fun tryPostReviewReply(reviewId: Int, params: ReviewReplyResultData) {
         val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
         reviewRetrofitInterface.postReviewReply(reviewId, params).enqueue(object : Callback<ReviewReplyResponse> {
@@ -177,10 +178,11 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
                     200 -> {
                         response.body()?.let {
                             Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
+                            val replyObject = it.result.asJsonObject
+                            val replyId = replyObject.get("replyId").asInt
 
 
-
-                            view.onPostReviewReplySuccess(response = response.body()!!)
+                            view.onPostReviewReplySuccess(response = response.body()!!, replyId = replyId)
 
                         }
                     }
@@ -196,7 +198,54 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
         })
     }
 
+    // 댓글 삭제
+    fun tryPatchReplyDelete(reviewId: Int, replyId: Int) {
+        val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
+        reviewRetrofitInterface.patchReplyDelete(reviewId, replyId).enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
 
+                            view.onPatchReplyDeleteSuccess(response = response.body()!!)
 
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
+                view.onPatchReplyDeleteFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+    // 댓글 수정
+    fun tryPatchReplyModify(reviewId: Int, replyId: Int, body: ReviewReplyResultData) {
+        val reviewRetrofitInterface = ApplicationClass.sRetrofit.create(ReviewRetrofitInterface::class.java)
+        reviewRetrofitInterface.patchReplyModify(reviewId, replyId, body).enqueue(object : Callback<BaseResponse> {
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
+
+                            view.onPatchReplyModifySuccess(response = response.body()!!)
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                Log.d(ApplicationClass.TAG, "onFailure: ${t.message}")
+                view.onPatchReplyModifyFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
 
 }

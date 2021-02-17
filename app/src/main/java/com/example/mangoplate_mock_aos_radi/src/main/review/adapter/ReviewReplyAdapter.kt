@@ -2,6 +2,7 @@ package com.example.mangoplate_mock_aos_radi.src.main.review.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewDetailsFragment.Companion.commentUserList
 import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewReplyListResultData
 
 class ReviewReplyAdapter(val context: Context?, val itemList: ArrayList<ReviewReplyListResultData>): RecyclerView.Adapter<ReviewReplyAdapter.ReplyItemViewHolder>() {
@@ -36,7 +39,7 @@ class ReviewReplyAdapter(val context: Context?, val itemList: ArrayList<ReviewRe
         val replyTextReplyContent: TextView = itemView.findViewById(R.id.reply_text_reply_content)
         val replyTextUpdateAt: TextView = itemView.findViewById(R.id.reply_text_update_at)
         val replyTextReplyAdd: TextView = itemView.findViewById(R.id.reply_text_reply_add)
-        val replyTextReplyTag: TextView = itemView.findViewWithTag(R.id.reply_text_reply_tag)
+        val replyTextReplyTag: TextView? = itemView.findViewWithTag(R.id.reply_text_reply_tag)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyItemViewHolder {
@@ -50,14 +53,15 @@ class ReviewReplyAdapter(val context: Context?, val itemList: ArrayList<ReviewRe
         val items = itemList[position]
         var recommentedUsers = ""
 
+        Log.d(TAG, "onBindViewHolder: ${items.commentUserList}")
         if (!items.commentUserList.isNullOrEmpty()) {
             items.commentUserList.forEach {commnetedUser ->
                  recommentedUsers += "@$commnetedUser "
             }
-            holder.replyTextReplyTag.visibility = View.VISIBLE
-            holder.replyTextReplyTag.text = recommentedUsers
+            holder.replyTextReplyTag?.visibility = View.VISIBLE
+            holder.replyTextReplyTag?.text = recommentedUsers
         } else {
-            holder.replyTextReplyTag.visibility = View.GONE
+            holder.replyTextReplyTag?.visibility = View.GONE
         }
         items.commentUserList
 
@@ -74,9 +78,9 @@ class ReviewReplyAdapter(val context: Context?, val itemList: ArrayList<ReviewRe
 
         holder.replyTextUpdateAt.text = items.updatedAt
 
-        holder.replyTextReplyAdd.setOnClickListener {
-
-        }
+//        holder.replyTextReplyAdd.setOnClickListener {
+//            commentUserList.add(items.replyUserId)
+//        }
 
     }
 

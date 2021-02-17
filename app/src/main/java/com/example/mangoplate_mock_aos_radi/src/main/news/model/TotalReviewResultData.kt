@@ -2,7 +2,8 @@ package com.example.mangoplate_mock_aos_radi.src.main.news.model
 
 import java.io.Serializable
 
-data class TotalReviewResultData (val reviewId: Int,
+data class TotalReviewResultData (val restaurantId: Int,
+                                  val reviewId: Int,
                                   val userId: Int,
                                   val userName: String,
                                   val isHolic: Int,

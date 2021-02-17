@@ -1,6 +1,7 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news.model
 
-data class TotalRecyclerItems (var reviewId: Int,
+data class TotalRecyclerItems (val restaurantId: Int,
+                               var reviewId: Int,
                                var reviewImgList: ArrayList<String>,
                                var userProfileImgUrl: String,
                                var userName: String,

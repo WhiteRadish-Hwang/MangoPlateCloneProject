@@ -7,10 +7,14 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.model.TopListResultDat
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.NewsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 
-interface NewsFragmentView {
+interface NewsStatusFragmentView {
 
-    fun onGetTotalReviewSuccess(response: NewsResponse, reviewList: ArrayList<TotalReviewResultData>)
+    fun onPatchTotalReviewWannaGoSuccess(response: BaseResponse)
 
-    fun onGetTotalReviewFailure(message: String)
+    fun onPatchTotalReviewWannaGoFailure(message: String)
+
+    fun onPatchTotalReviewLikeSuccess(response: BaseResponse)
+
+    fun onPatchTotalReviewLikeFailure(message: String)
 
 }

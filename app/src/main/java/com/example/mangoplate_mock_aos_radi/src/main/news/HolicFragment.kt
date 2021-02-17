@@ -26,6 +26,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
     var holic_reviewList = ArrayList<TotalReviewResultData>()
     lateinit var holic_reviewObject : TotalRecyclerItems
 
+    var holic_restaurantId by Delegates.notNull<Int>()
     var holic_reviewId by Delegates.notNull<Int>()
     var holic_userId by Delegates.notNull<Int>()
     lateinit var holic_userName: String
@@ -68,6 +69,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
 
     fun argViewBind() {
         holic_reviewList.forEach { reviewResultData ->
+            holic_restaurantId = reviewResultData.restaurantId
             holic_reviewId = reviewResultData.reviewId
             holic_userId = reviewResultData.userId
             holic_userName = reviewResultData.userName
@@ -96,7 +98,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
             val ul_restaurantName = String.format(getString(R.string.review_restaurant_name_val, holic_restaurantName))
             val ul_restaurantLoc = String.format(getString(R.string.review_restaurant_loc_val, holic_restaurantLocation))
 
-            holic_reviewObject = TotalRecyclerItems(reviewId = holic_reviewId, reviewImgList = holic_reviewImgList, userProfileImgUrl = holic_userProfileImgUrl, userName = holic_userName, isHolic = holic_isHolic,
+            holic_reviewObject = TotalRecyclerItems(restaurantId = holic_restaurantId, reviewId = holic_reviewId, reviewImgList = holic_reviewImgList, userProfileImgUrl = holic_userProfileImgUrl, userName = holic_userName, isHolic = holic_isHolic,
                     userReviewCount = holic_userReviewCount, userFollowerCount = holic_userFollowerCount, reviewExpression = holic_reviewExpression, reviewReplyCount = replyCountText,
                     reviewLikeCount = likeCountText, restaurantName = ul_restaurantName, restaurantLocation = ul_restaurantLoc, updatedAt = holic_updatedAt,
                     reviewContents = holic_reviewContents, restaurantLikeStatus = holic_restaurantLikeStatus, reviewLikeStatus = holic_reviewLikeStatus,
