@@ -61,8 +61,6 @@ class NewsGangbukFragment : BaseFragment<FragmentLocSelectGangbukBinding>(Fragme
         }
 
         for (item in items) itemList.add(item)
-
-        for (item in items) itemList.add(item)
         Log.d(ApplicationClass.TAG, "itemList: $itemList")
     }
 }

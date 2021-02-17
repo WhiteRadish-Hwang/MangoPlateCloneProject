@@ -29,7 +29,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalRecyclerIte
 import com.example.mangoplate_mock_aos_radi.src.main.news.model.TotalReviewResultData
 import java.lang.Exception
 
-class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalRecyclerItems>): RecyclerView.Adapter<TotalRecyclerAdapter.TotalViewHolder>(), NewsStatusFragmentView {
+class TotalRecyclerAdapter(val context: Context?, var itemList: ArrayList<TotalRecyclerItems>): RecyclerView.Adapter<TotalRecyclerAdapter.TotalViewHolder>(), NewsStatusFragmentView {
     interface MyReviewItemClickListener {
         fun onItemClick(position: Int)
     }
@@ -196,6 +196,12 @@ class TotalRecyclerAdapter(val context: Context?, val itemList: ArrayList<TotalR
                 }
             }.start()
         }
+    }
+
+    fun clearItemList (paramList: ArrayList<TotalRecyclerItems>) {
+        itemList.clear()
+        itemList = paramList
+        notifyDataSetChanged()
     }
 
     fun checkWannaGoStatus(items: TotalRecyclerItems) {

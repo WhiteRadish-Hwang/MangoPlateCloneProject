@@ -20,9 +20,9 @@ class NewsService (val view: NewsFragmentView) {
 
     fun tryGetRestaurants(page: Int,
                           limit: Int,
-                          locationfilter1: Int = 1,
-                          locationfilter2: Int = 2,
-                          locationfilter3: Int = 3,
+                          locationfilter_sungbuk: Int = 1,
+                          locationfilter_suyu: Int = 2,
+                          locationfilter_nowon: Int = 3,
                           expressionfilter_delicious: Int = 2,
                           expressionfilter_good: Int = 1,
                           expressionfilter_bad: Int = -1
@@ -31,7 +31,7 @@ class NewsService (val view: NewsFragmentView) {
 
         val newsRetrofitInterface = ApplicationClass.sRetrofit.create(NewsRetrofitInterface::class.java)
 
-        newsRetrofitInterface.getTotalReviews(page, limit, locationfilter1, locationfilter2, locationfilter3, expressionfilter_delicious, expressionfilter_good, expressionfilter_bad)
+        newsRetrofitInterface.getTotalReviews(page, limit, locationfilter_sungbuk, locationfilter_suyu, locationfilter_nowon, expressionfilter_delicious, expressionfilter_good, expressionfilter_bad)
             .enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                 when (response.code()) {

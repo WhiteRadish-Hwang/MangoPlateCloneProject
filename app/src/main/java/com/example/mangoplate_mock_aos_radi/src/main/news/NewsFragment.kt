@@ -11,11 +11,9 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.NEWS_LOC_LIST
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
-import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.config.SharedPreferenced
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.HolicFragment.Companion.holicListKey
 import com.example.mangoplate_mock_aos_radi.src.main.news.TotalFragment.Companion.totalListKey
 import com.example.mangoplate_mock_aos_radi.src.main.news.location.NewsGangbukFragment.Companion.newsLocList
@@ -35,6 +33,10 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
     var newsLocationFilter_suYu: Int = 0
     var newsLocationFilter_noWon: Int = 0
 
+    var expression_great: Int = 0
+    var expression_good: Int = 0
+    var expression_bad: Int = 0
+
     var totalArgList = ArrayList<TotalReviewResultData>()
     var holicArgList = ArrayList<TotalReviewResultData>()
 
@@ -44,11 +46,31 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
         SharedPreferenced.getArrayStringItem(ApplicationClass.NEWS_EXPRESSION_LIST)?.let { expressionList = it }
         Log.d(TAG, "expressionList: $expressionList")
 
+        for (expression in expressionList) {
+            when (expression) {
+                "great" -> {
+                    expression_great = 2
+                }
+                "good" -> {
+                    expression_good = 1
+                }
+                "bad" -> {
+                    expression_bad = -1
+                }
+            }
+        }
+        if (expressionList.isEmpty()) {
+            expression_great = 2
+            expression_good = 0
+            expression_bad = 0
+        }
+
+
         // 지역 변수 받기
         SharedPreferenced.getArrayStringItem(NEWS_LOC_LIST).let { newsLocList = it!! }
         Log.d(TAG, "newsLocList: ${newsLocList}")
 
-        for (loc in GangbukFragment.locList) {
+        for (loc in newsLocList) {
             when (loc) {
                 "성북구" -> {
                     newsLocationFilter_sungBuk = 1
@@ -66,9 +88,12 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                 }
             }
         }
+        Log.d(TAG, "newsLocationFilter_sungBuk: $newsLocationFilter_sungBuk")
+        Log.d(TAG, "newsLocationFilter_suYu: $newsLocationFilter_suYu")
+        Log.d(TAG, "newsLocationFilter_noWon: $newsLocationFilter_noWon")
+        Log.d(TAG, "isEmpty: ${newsLocList.isEmpty()}")
 
-
-        if (GangbukFragment.locList.isEmpty()) {
+        if (newsLocList.isEmpty()) {
             newsLocationFilter_sungBuk = 1
             newsLocationFilter_suYu = 2
             newsLocationFilter_noWon = 3
@@ -106,9 +131,10 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
 
     private fun executeService() {
         // News API 호출
-        // expression의 아래 설정값에 따라 해당 위치에서 API 재호출하는 코드 만들어야함...!!
         showLoadingDialog(context!!)
-        NewsService(this).tryGetRestaurants(page = 0, limit = 10)
+        NewsService(this).tryGetRestaurants(page = 0, limit = 100,
+                locationfilter_sungbuk = newsLocationFilter_sungBuk, locationfilter_suyu = newsLocationFilter_suYu, locationfilter_nowon = newsLocationFilter_noWon,
+                expressionfilter_delicious = expression_great, expressionfilter_good = expression_good, expressionfilter_bad = expression_bad)
     }
 
     fun frameViewBind() {
@@ -171,6 +197,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
                     binding.newImgGreat.setImageResource(R.drawable.great)
                     binding.newLayoutGreat.setBackgroundResource(R.drawable.news_sort_select_text_border)
+                    expression_great = 2
+                    executeService()
                 }
                 false -> {
                     if (expressionCount <= 1) {
@@ -183,6 +211,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                         binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.uncliked_color))
                         binding.newImgGreat.setImageResource(R.drawable.great_non)
                         binding.newLayoutGreat.setBackgroundResource(R.drawable.news_sort_select_text_unclicked_border)
+                        expression_great = 0
+                        executeService()
                     }
                 }
             }
@@ -201,6 +231,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
                     binding.newImgGood.setImageResource(R.drawable.good)
                     binding.newLayoutGood.setBackgroundResource(R.drawable.news_sort_select_text_border)
+                    expression_good = 1
+                    executeService()
                 }
                 false -> {
                     if (expressionCount <= 1) {
@@ -213,6 +245,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                         binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.uncliked_color))
                         binding.newImgGood.setImageResource(R.drawable.good_non)
                         binding.newLayoutGood.setBackgroundResource(R.drawable.news_sort_select_text_unclicked_border)
+                        expression_good = 0
+                        executeService()
                     }
                 }
             }
@@ -231,6 +265,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
                     binding.newImgBad.setImageResource(R.drawable.bad)
                     binding.newLayoutBad.setBackgroundResource(R.drawable.news_sort_select_text_border)
+                    expression_bad = -1
+                    executeService()
                 }
                 false -> {
                     ApplicationClass.isBad = !ApplicationClass.isBad
@@ -243,6 +279,8 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                         binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.uncliked_color))
                         binding.newImgBad.setImageResource(R.drawable.bad_non)
                         binding.newLayoutBad.setBackgroundResource(R.drawable.news_sort_select_text_unclicked_border)
+                        expression_bad = -1
+                        executeService()
                     }
                 }
             }
@@ -278,12 +316,15 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
 
         totalArgList = reviewList
 
+        holicArgList.clear()
+
         for (i in 0 until reviewList.size) {
             if (reviewList[i].isHolic == 1) {
                 holicArgList.add(reviewList[i])
             }
         }
-
+        Log.d(TAG, "reviewList size: ${reviewList.size}")
+        Log.d(TAG, "holicArgList: $holicArgList")
         // 탭 레이아웃 어댑터 장착
         binding.newsVp.adapter = NewsTabPagerAdapter(this)
 

@@ -1,9 +1,11 @@
 package com.example.mangoplate_mock_aos_radi.src.main.news
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mangoplate_mock_aos_radi.R
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentNewsHolicBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
@@ -20,9 +22,9 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
     lateinit var holicRecyclerAdapter: TotalRecyclerAdapter
     lateinit var holicLayoutManager: LinearLayoutManager
 
-    val itemList = ArrayList<TotalRecyclerItems>()
     var isExpanable: Boolean = false
 
+    val holicItemList = ArrayList<TotalRecyclerItems>()
     var holic_reviewList = ArrayList<TotalReviewResultData>()
     lateinit var holic_reviewObject : TotalRecyclerItems
 
@@ -48,8 +50,8 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        holicItemList.clear()
         holic_reviewList = arguments?.getSerializable(holicListKey) as ArrayList<TotalReviewResultData>
-
         // 홀릭 Expanable
         binding.holicLayoutExpanable.setOnClickListener {
             isExpanable = !isExpanable
@@ -104,13 +106,14 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
                     reviewContents = holic_reviewContents, restaurantLikeStatus = holic_restaurantLikeStatus, reviewLikeStatus = holic_reviewLikeStatus,
                     expression_delicious = expression_delicious, expression_good = expression_good, expression_bad = expression_bad)
 
-            itemList.add(holic_reviewObject)
+            holicItemList.add(holic_reviewObject)
         }
 
         setRecyclerAdapter()
     }
     fun setRecyclerAdapter(){
-        holicRecyclerAdapter = TotalRecyclerAdapter(context, itemList)
+        holicRecyclerAdapter = TotalRecyclerAdapter(context, holicItemList)
+        Log.d(TAG, "holicItemList: $holicItemList")
         binding.hollicRecycler.apply {
             holicLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             layoutManager = holicLayoutManager
@@ -144,7 +147,7 @@ class HolicFragment : BaseFragment<FragmentNewsHolicBinding>(FragmentNewsHolicBi
                     override fun onItemClick(position: Int) {
                         (activity as MainActivity).addFragment(ReviewDetailsFragment().apply {
                             arguments = Bundle().apply {
-                                putInt(ReviewDetailsFragment.reviewIdKey, itemList[position].reviewId)
+                                putInt(ReviewDetailsFragment.reviewIdKey, holicItemList[position].reviewId)
                             }
                         })
                     }
