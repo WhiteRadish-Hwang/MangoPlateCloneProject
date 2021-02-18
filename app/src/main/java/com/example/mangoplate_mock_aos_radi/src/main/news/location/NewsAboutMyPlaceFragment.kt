@@ -13,8 +13,4 @@ import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.model.TopL
 
 class NewsAboutMyPlaceFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
 }

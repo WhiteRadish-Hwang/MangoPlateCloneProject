@@ -1,12 +1,19 @@
 package com.example.mangoplate_mock_aos_radi.src.main.home
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Paint
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +22,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.LOC_LIST
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.myLatitude
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.myLongitude
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.restaurantListSize
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.sortPivotSelect
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.topListSize
@@ -35,7 +44,7 @@ import kotlin.math.abs
 import kotlin.properties.Delegates
 
 
-class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView{
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind, R.layout.fragment_home), HomeFragmentView{
     val itemList = ArrayList<HomeRecyclerItems>()
     lateinit var homeRecyclerAdapter: HomeRecyclerAdapter
     lateinit var gridLayoutManager: GridLayoutManager
@@ -46,6 +55,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     var isCalled = false
     var isLoading = false
     var isSuccessful: Boolean = false
+    var isClear: Boolean = false
 
     //topList 변수 선언
     var topArrayList = ArrayList<TopListResultData>()
@@ -93,6 +103,34 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
             locationFilter_noWon = 3
         }
 
+        // 현재 위치 가져오기
+        val Im = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val isGPSEnabled: Boolean = Im.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnabled: Boolean = Im.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+        } else {
+            when {
+                isNetworkEnabled -> {
+                    val location = Im.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    myLongitude = location?.longitude!!
+                    myLatitude = location.latitude
+//                    showCustomToast("NET 현재위치를 불러옴 $myLatitude, $myLongitude")
+                }
+                isGPSEnabled -> {
+                    val location = Im.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    myLongitude = location?.longitude!!
+                    myLatitude = location.latitude
+//                    showCustomToast("GPS 현재위치를 불러옴 $myLatitude, $myLongitude")
+                }
+                else -> {
+
+                }
+            }
+        }
+
         // 홈서비스 실행
         excuteHomeService()
     }
@@ -100,6 +138,8 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         // 메인 리사이클러뷰 정렬기준 선택
         setSortPivotSelect()
@@ -143,19 +183,19 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                 when (it) {
                     0 -> {
                         sortPivotSelect = "평점순"
-                        clearFilter(restaurantArrayList, it + 1)
+                        clearFilter(restaurantArrayList, 4)
                     }
                     1 -> {
                         sortPivotSelect = "추천순"
-                        clearFilter(restaurantArrayList, it + 1)
+                        clearFilter(restaurantArrayList, 2)
                     }
                     2 -> {
                         sortPivotSelect = "리뷰순"
-                        clearFilter(restaurantArrayList, it + 1)
+                        clearFilter(restaurantArrayList, 3)
                     }
                     3 -> {
                         sortPivotSelect = "거리순"
-                        clearFilter(restaurantArrayList, it + 1)
+                        clearFilter(restaurantArrayList, 1)
                     }
                 }
                 Log.d(TAG, "onViewCreated: $sortPivotSelect")
@@ -169,10 +209,11 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = locationFilter_sungBuk, locationfilter2 = locationFilter_suYu, locationfilter3 = locationFilter_noWon,
-                distance = 1000, sort = 1, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                distance = 1000, sort = 4, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
     }
 
     fun<T> clearFilter(itemList: ArrayList<T>, sort: Int) {
+        isClear = true
         topArrayList.clear()
         itemList.clear()
         pageNum = 0
@@ -180,7 +221,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         itemIndex = 1
         homeRecyclerAdapter.clearItemList()
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = 1, locationfilter2 = 2, locationfilter3 = 3,
-                distance = 10, sort = sort, userLatitude = 37.6511723f, userLongitude = 127.0481563f)
+                distance = 10, sort = sort, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
     }
 
     fun setSortPivotSelect(){
@@ -251,13 +292,13 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
                     // 무한스크롤 리스너
                     binding.homeMainRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            super.onScrolled(recyclerView, dx, dy);
+                            super.onScrolled(recyclerView, dx, dy)
 
                             val layoutManager = gridLayoutManager
                             val totalItemCount: Int = layoutManager.itemCount
-                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ()
 
-                            if (lastVisible >= totalItemCount - 3 && isCalled) {
+                            if (lastVisible >= totalItemCount - 3 && isCalled && !isClear) {
                                 isCalled = false
                                 Log.d(TAG, "isLoading: $isLoading")
                                 if (!isLoading) {
@@ -338,7 +379,7 @@ class HomeFragment() : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bi
         })
 
         isCalled = true
-
+        isClear = false
         setDataAndRecyclerAdapter()
     }
 

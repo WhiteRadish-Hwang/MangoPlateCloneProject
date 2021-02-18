@@ -128,7 +128,7 @@
                     android:layout_below="@+id/total_img_expression"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:textColor="@color/cliked_color"
+                    android:textColor="@color/cliked_color_less"
                     android:textSize="13sp"
                     android:text="TextView" />
             </RelativeLayout>
@@ -156,7 +156,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="5dp"
                     android:textColor="@color/cliked_color"
-                    android:text="@" />
+                    android:text="\u0040" />
                 <TextView
                     android:id="@+id/total_text_restaurant_name"
                     android:layout_width="wrap_content"

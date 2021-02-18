@@ -13,11 +13,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.model.FollowingRecycle
 class FollowingFragment : BaseFragment<FragmentNewsFollowingBinding>(FragmentNewsFollowingBinding::bind, R.layout.fragment_news_following){
     val itemList = ArrayList<FollowingRecyclerItems>()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-//    fun setRecyclerAdapter(){
+    //    fun setRecyclerAdapter(){
 //        initData()
 //        binding.followingRecycler.apply {
 //            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

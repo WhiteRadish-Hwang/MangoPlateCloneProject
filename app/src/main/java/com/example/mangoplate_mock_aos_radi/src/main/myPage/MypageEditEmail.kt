@@ -16,10 +16,4 @@ import com.example.mangoplate_mock_aos_radi.databinding.FragmentMyPageEditProfil
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
 
 class MypageEditEmail: BaseFragment<FragmentMyPageEditProfileEmailBinding>(FragmentMyPageEditProfileEmailBinding::bind, R.layout.fragment_my_page_edit_profile_email) {
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
-    }
 }

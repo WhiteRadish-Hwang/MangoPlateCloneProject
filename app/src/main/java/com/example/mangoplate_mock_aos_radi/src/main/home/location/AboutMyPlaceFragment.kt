@@ -1,3 +1,5 @@
+@file:Suppress("Annotator")
+
 package com.example.mangoplate_mock_aos_radi.src.main.home.location
 
 import android.os.Bundle
@@ -12,9 +14,5 @@ import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.adapter.To
 import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.model.TopListRecyclerItems
 
 class AboutMyPlaceFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDiscountTopListBinding::bind, R.layout.fragment_discount_top_list){
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
 }

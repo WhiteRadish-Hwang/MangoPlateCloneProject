@@ -20,7 +20,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.news.location.NewsGangbukFr
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-class NewsLocationSelectFragment(): BottomSheetDialogFragment() {
+class NewsLocationSelectFragment : BottomSheetDialogFragment() {
     var _binding: FragmentLocSelectBinding? = null
     val binding get() = _binding!!
 

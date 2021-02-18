@@ -56,11 +56,11 @@ class TopListFragment : BaseFragment<FragmentDiscountTopListBinding>(FragmentDis
             // 무한스크롤 리스너
             binding.topListRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy);
+                    super.onScrolled(recyclerView, dx, dy)
 
                     val layoutManager = topListLayoutManager
                     val totalItemCount: Int = layoutManager.itemCount
-                    val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+                    val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ()
 
                     if (lastVisible >= totalItemCount - 4 && isCanScroll) {
                         topListPage++

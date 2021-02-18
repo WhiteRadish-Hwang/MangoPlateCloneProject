@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#889dfe</color>
     <color name="colorAccent">#889dfe</color>
     <color name="blackForText">#4a4a4a</color>
-    <color name="cliked_color">#ff8104</color>
+    <color name="cliked_color">#ff7101</color>
+    <color name="cliked_color_less">#ff8104</color>
     <color name="uncliked_color">#d6d4d6</color>
     <color name="icon_color">#666666</color>
     <color name="orange">#FF7F00</color>

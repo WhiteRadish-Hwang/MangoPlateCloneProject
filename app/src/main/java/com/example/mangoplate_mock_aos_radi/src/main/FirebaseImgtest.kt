@@ -53,7 +53,7 @@ class FirebaseImgtest: BaseFragment<FragmentFirebaseTestBinding>(FragmentFirebas
             Log.d(TAG, "token: $token")
 
             // Log and toast
-            val msg = token.toString();
+            val msg = token.toString()
             Log.d(TAG, "msg: $msg")
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         })

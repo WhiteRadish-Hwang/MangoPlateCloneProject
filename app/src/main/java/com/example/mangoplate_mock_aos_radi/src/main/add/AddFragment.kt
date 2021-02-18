@@ -1,3 +1,5 @@
+@file:Suppress("Annotator")
+
 package com.example.mangoplate_mock_aos_radi.src.main.add
 
 import android.animation.Animator

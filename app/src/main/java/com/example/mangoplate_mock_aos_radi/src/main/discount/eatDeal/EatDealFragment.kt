@@ -67,7 +67,7 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
 
     fun setRecyclerAdapter(){
 
-        Handler().post() {
+        Handler().post {
 
 
             if (this::eatDealRecyclerAdapter.isInitialized) {
@@ -81,25 +81,6 @@ class EatDealFragment : BaseFragment<FragmentDiscountEatDealBinding>(FragmentDis
 
                     // 무한스크롤 리스너
                     binding.eatDealRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            super.onScrolled(recyclerView, dx, dy);
-
-//                            val layoutManager = eatDealLayoutManager
-//                            val totalItemCount: Int = layoutManager.itemCount
-//                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
-//
-//                            if (lastVisible >= totalItemCount - 2 && isCanScroll) {
-//                                eatDealPage++
-//                                executeService()
-//                                isCanScroll = false
-//                            }
-//
-//                            if (lastVisible >= totalItemCount - 1) {
-//                                binding.eatDealTextTotalView.visibility = View.VISIBLE
-//                            } else{
-//                                binding.eatDealTextTotalView.visibility = View.GONE
-//                            }
-                        }
                     })
 
                     // 메인 리사이클러 아이템클릭 리스터

@@ -64,7 +64,7 @@ class EatDealTotalFragment : BaseFragment<FragmentDiscountEatDealTotalBinding>(F
 
     fun setRecyclerAdapter(){
 
-        Handler().post() {
+        Handler().post {
 
 
             if (this::eatDealRecyclerAdapter.isInitialized) {
@@ -79,11 +79,11 @@ class EatDealTotalFragment : BaseFragment<FragmentDiscountEatDealTotalBinding>(F
                     // 무한스크롤 리스너
                     binding.eatDealTotalRecycler.addOnScrollListener(object: RecyclerView.OnScrollListener() {
                         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                            super.onScrolled(recyclerView, dx, dy);
+                            super.onScrolled(recyclerView, dx, dy)
 
                             val layoutManager = eatDealLayoutManager
                             val totalItemCount: Int = layoutManager.itemCount
-                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ();
+                            val lastVisible: Int = layoutManager.findLastCompletelyVisibleItemPosition ()
 
                             if (lastVisible >= totalItemCount - 2 && isCanScroll) {
                                 totalEatDealPage++

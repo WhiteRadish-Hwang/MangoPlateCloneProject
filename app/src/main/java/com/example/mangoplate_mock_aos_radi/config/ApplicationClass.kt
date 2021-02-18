@@ -66,6 +66,10 @@ class ApplicationClass : Application() {
         var isGetMyInfo: Boolean = false
         var isGetNewsReviewItem: Boolean = false
 
+        //현재 위치
+        var myLongitude: Double? = null
+        var myLatitude: Double? = null
+
         //news filter 변수
         var isGreat: Boolean = false
         var isGood: Boolean = false
@@ -88,8 +92,8 @@ class ApplicationClass : Application() {
 
         KakaoSdk.init(this, "e09a9818400185704ff8efecda465d5a")
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(this)
 
         sSharedPreferences = applicationContext.getSharedPreferences(MANGO_PLATE_APP, MODE_PRIVATE)
         // 레트로핏 인스턴스 생성

@@ -76,8 +76,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
     var restaurantPriceArg: String? = ""
     var restaurantLocationArg: String? = ""
 
-    var getLongitude by Delegates.notNull<Double>()
-    var getLatitude by Delegates.notNull<Double>()
+
 
     @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,38 +88,11 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         val mapViewContainer = binding.fDetailsMapContainer as ViewGroup
         mapViewContainer.addView(mapView)
 
-        // 현재 위치 가져오기
-        val Im = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val isGPSEnabled: Boolean = Im.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        val isNetworkEnabled: Boolean = Im.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
-        } else {
-            when {
-                isNetworkEnabled -> {
-                    val location = Im.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                    getLongitude = location?.longitude!!
-                    getLatitude = location.latitude
-                    showCustomToast("NET 현재위치를 불러옴 $getLatitude, $getLongitude")
-                }
-                isGPSEnabled -> {
-                    val location = Im.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                    getLatitude = location?.longitude!!
-                    getLatitude = location.latitude
-                    showCustomToast("GPS 현재위치를 불러옴 $getLatitude, $getLongitude")
-                }
-                else -> {
-
-                }
-            }
-
-        }
         restaurantLatitudeArg = arguments?.getString(restaurantLatitudeKey)
         restaurantLongiudeArg = arguments?.getString(restaurantLongitudeKey)
 
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(restaurantLatitudeArg!!.toDouble(), restaurantLongiudeArg!!.toDouble()), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(restaurantLatitudeArg!!.toDouble(), restaurantLongiudeArg!!.toDouble()), true)
 
         val marker = MapPOIItem()
         val mapPoint = MapPoint.mapPointWithGeoCoord(restaurantLatitudeArg!!.toDouble(), restaurantLongiudeArg!!.toDouble())
@@ -131,7 +103,7 @@ class HomeDetailsFrameFragment : BaseFragment<FragmentHomeDetailsFrameBinding>(F
         marker.markerType = MapPOIItem.MarkerType.BluePin
         // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
         marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin
-        mapView.addPOIItem(marker);
+        mapView.addPOIItem(marker)
 
         // 키워드
         val keywordItemListArgument = arguments?.getStringArrayList(keywordItemKey)

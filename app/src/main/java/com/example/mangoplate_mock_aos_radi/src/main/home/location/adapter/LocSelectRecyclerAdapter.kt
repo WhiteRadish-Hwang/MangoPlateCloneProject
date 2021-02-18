@@ -72,14 +72,14 @@ class LocSelectRecyclerAdapter(val context: Context?, var itemList: ArrayList<Lo
                 true -> {
                     holder.locSelectImgCheck.visibility = View.VISIBLE
                     holder.locSelectTextSearchWord.setBackgroundResource(R.drawable.loc_select_text_border)
-                    holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context!!,R.color.cliked_color))
+                    holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context,R.color.cliked_color))
                     if (items.isHomeLoc) locList.add(items.location)
                     else newsLocList.add(items.location)
                 }
                 false -> {
                     holder.locSelectImgCheck.visibility = View.INVISIBLE
                     holder.locSelectTextSearchWord.setBackgroundResource(R.drawable.loc_select_text_border_unclicked)
-                    holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context!!,R.color.uncliked_color))
+                    holder.locSelectTextSearchWord.setTextColor(ContextCompat.getColor(context,R.color.uncliked_color))
                     if (items.isHomeLoc) locList.remove(items.location)
                     else newsLocList.remove(items.location)
                 }

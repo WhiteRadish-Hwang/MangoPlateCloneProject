@@ -18,16 +18,19 @@
         android:usesCleartextTraffic="true">
 
 
-        <activity android:name="com.example.mangoplate_mock_aos_radi.src.main.MainActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
-        <activity android:name=".src.login.LoginActivity">
+        <activity android:name=".src.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name="com.example.mangoplate_mock_aos_radi.src.main.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+
+        <activity android:name=".src.login.LoginActivity">
         </activity>
 
         <!--페이스북SDK-->

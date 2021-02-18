@@ -143,21 +143,21 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
             Log.d(TAG, "ex: $ex")
             when (ex) {
                 "great" -> {
-                    binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgGreat.setImageResource(R.drawable.great)
                     binding.newLayoutGreat.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     ApplicationClass.isGreat = true
                     expressionCount += 1
                 }
                 "good" -> {
-                    binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgGood.setImageResource(R.drawable.good)
                     binding.newLayoutGood.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     ApplicationClass.isGood = true
                     expressionCount += 1
                 }
                 "bad" -> {
-                    binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgBad.setImageResource(R.drawable.bad)
                     binding.newLayoutBad.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     ApplicationClass.isBad = true
@@ -167,7 +167,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
         }
         // 리스트가 비어있으면 맛있다 필터 하나만 설정
         if (expressionList.isEmpty()){
-            binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+            binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
             binding.newImgGreat.setImageResource(R.drawable.great)
             binding.newLayoutGreat.setBackgroundResource(R.drawable.news_sort_select_text_border)
             expressionList.add("great")
@@ -194,7 +194,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     expressionCount += 1
                     ApplicationClass.fGreat = 1
                     expressionList.add("great")
-                    binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextGreat.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgGreat.setImageResource(R.drawable.great)
                     binding.newLayoutGreat.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     expression_great = 2
@@ -228,7 +228,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     expressionCount += 1
                     ApplicationClass.fGood = 1
                     expressionList.add("good")
-                    binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextGood.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgGood.setImageResource(R.drawable.good)
                     binding.newLayoutGood.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     expression_good = 1
@@ -262,7 +262,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding>(FragmentNewsBinding::bind
                     expressionCount += 1
                     ApplicationClass.fBad = 1
                     expressionList.add("bad")
-                    binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color))
+                    binding.newTextBad.setTextColor(ContextCompat.getColor(context!!, R.color.cliked_color_less))
                     binding.newImgBad.setImageResource(R.drawable.bad)
                     binding.newLayoutBad.setBackgroundResource(R.drawable.news_sort_select_text_border)
                     expression_bad = -1

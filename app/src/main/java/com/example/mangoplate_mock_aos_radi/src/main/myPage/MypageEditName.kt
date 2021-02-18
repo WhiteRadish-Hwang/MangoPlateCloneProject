@@ -44,7 +44,7 @@ class MypageEditName: BaseFragment<FragmentMyPageEditProfileNameBinding>(Fragmen
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 Log.d(TAG, "onTextChanged: ${s?.length!!}")
-                if (s?.length!! < 2) {
+                if (s.length < 2) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         binding.mpEditEtName.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.red)
                         binding.mpEditBtnApply.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.uncliked_color)

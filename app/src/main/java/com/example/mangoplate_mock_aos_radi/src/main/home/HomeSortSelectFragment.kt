@@ -111,8 +111,7 @@ class HomeSortSelectFragment(val itemClick: (Int) -> Unit): BottomSheetDialogFra
 
     fun inputCheckData(position: Int) {
         for (i in 0 until checkList.size) {
-            if (i == position) checkList[i] = true
-            else checkList[i] = false
+            checkList[i] = i == position
         }
     }
 }
