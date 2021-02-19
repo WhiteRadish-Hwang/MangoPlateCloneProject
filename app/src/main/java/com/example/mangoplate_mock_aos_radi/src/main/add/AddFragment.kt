@@ -2,20 +2,14 @@
 
 package com.example.mangoplate_mock_aos_radi.src.main.add
 
-import android.animation.Animator
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
-import android.view.ViewAnimationUtils
 import android.view.animation.AnimationUtils
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentAddBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.MainActivity.Companion.isFgInAddOpen
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity.Companion.isOpen
 import com.example.mangoplate_mock_aos_radi.src.main.register.RegisterRestaurantFragment
 import kotlin.concurrent.timer

@@ -33,6 +33,10 @@ class ApplicationClass : Application() {
         // Token Header 키 값
         var X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
+        const val IAMPORT_KEY = "IAMPORT_KEY"
+        const val IAMPROT_SECRET_KEY = "IAMPROT_SECRET_KEY"
+
+
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
 
@@ -49,6 +53,7 @@ class ApplicationClass : Application() {
         const val NEWS_LOC_LIST = "newsLocListKey"
         const val NEWS_EXPRESSION_LIST = "newsExpressionKey"
 
+        var deviceToken: String = ""
 
         var sortPivotSelect = "평점순"
 
@@ -67,8 +72,8 @@ class ApplicationClass : Application() {
         var isGetNewsReviewItem: Boolean = false
 
         //현재 위치
-        var myLongitude: Double? = null
-        var myLatitude: Double? = null
+        var myLongitude: Double? = 127.058678
+        var myLatitude: Double? = 37.652368
 
         //news filter 변수
         var isGreat: Boolean = false

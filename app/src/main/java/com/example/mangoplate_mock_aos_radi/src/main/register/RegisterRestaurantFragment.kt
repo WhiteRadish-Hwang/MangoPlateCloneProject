@@ -35,6 +35,10 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
             (activity as MainActivity).onBackPressed()
         }
 
+        binding.registerLayoutLoc.setOnClickListener {
+            (activity as MainActivity).addFragment(RegisterLocFragment())
+        }
+
         binding.registerTextRestaurantName.setOnClickListener {
             if (!isFillResLoc) {
                 binding.registerTextRestaurantName.setTextSize(Dimension.SP, 12f)
@@ -81,7 +85,6 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 isFillResName = s?.length!! > 0
-                Log.d(TAG, "isFillResName: $isFillResName")
                 isCheckCanRegister()
             }
 
@@ -97,7 +100,6 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 isFillResLoc = s?.length!! > 0
-                Log.d(TAG, "isFillResLoc: $isFillResLoc")
                 isCheckCanRegister()
             }
 
@@ -150,6 +152,8 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
     }
 
+
+
     fun executeRegisterService() {
         val restaurantName: String = binding.registerEtRestaurantName.text.toString()
         val restaurantLatitude: String = "37.588237"
@@ -180,9 +184,7 @@ class RegisterRestaurantFragment: BaseFragment<FragmentRegisterRestaurantBinding
 
     override fun onPostRegisterInfoSuccess(response: RegisterResponse) {
         dismissLoadingDialog()
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.isSuccess}")
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.code}")
-        Log.d(TAG, "onPostEditUserInfoSuccess: ${response.message}")
+
         Log.d(TAG, "onPostEditUserInfoSuccess: ${response.restaurantId}")
 
         showCustomToast("식당 등록 성공")

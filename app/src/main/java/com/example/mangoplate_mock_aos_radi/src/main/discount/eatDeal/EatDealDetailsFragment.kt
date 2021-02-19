@@ -1,5 +1,6 @@
 package com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
@@ -17,11 +18,10 @@ import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealDetailsBinding
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentDiscountEatDealDetailsImgSlideSrcBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsImagesItems
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsInfoItems
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.HomeImageSlideFragment
+import com.example.mangoplate_mock_aos_radi.src.payment.PaymentWebActivity
 import com.google.android.material.appbar.AppBarLayout
 import java.text.DecimalFormat
 import kotlin.math.abs
@@ -30,6 +30,10 @@ import kotlin.properties.Delegates
 class EatDealDetailsFragment: BaseFragment<FragmentDiscountEatDealDetailsBinding>(FragmentDiscountEatDealDetailsBinding::bind, R.layout.fragment_discount_eat_deal_details), EatDealDetailsFragmentView {
     companion object {
         const val eatDealDetailsDealIdKey = "eatDealDetailsDealIdKey"
+        const val DEAL_NAME = "DEAL_NAME"
+        const val BUYER_NAME = "BUYER_NAME"
+        const val MERCHANT_UID = "MERCHANT_UID"
+        const val AMOUNT = "AMOUNT"
     }
 
     var eatDealDetailsDealId by Delegates.notNull<Int>()
@@ -49,6 +53,12 @@ class EatDealDetailsFragment: BaseFragment<FragmentDiscountEatDealDetailsBinding
         }
         binding.dealDetailsImgArrowOrange.setOnClickListener {
             (activity as MainActivity).onBackPressed()
+        }
+
+        binding.dealDetailsBtnAddApply.setOnClickListener {
+            val body: PostPaymentsRequest = PostPaymentsRequest(eatDealId = eatDealDetailsDealId)
+            EatDealDetailsService(this).tryPostPayments(body)
+
         }
 
         
@@ -168,4 +178,27 @@ class EatDealDetailsFragment: BaseFragment<FragmentDiscountEatDealDetailsBinding
         dismissLoadingDialog()
         showCustomToast("오류 : $message")
     }
+
+    override fun onPostPaymentsSuccess(response: PaymentsResponse, merchant_uid: Int, buyerName: String) {
+        dismissLoadingDialog()
+        Log.d(TAG, "onPostPaymentsSuccess: ${response.isSuccess}")
+        Log.d(TAG, "onPostPaymentsSuccess: ${response.code}")
+        Log.d(TAG, "onPostPaymentsSuccess: ${response.message}")
+        Log.d(TAG, "onPostPaymentsSuccess: ${response.merchant_uid}")
+        Log.d(TAG, "onPostPaymentsSuccess: ${response.buyerName}")
+
+        val intent = Intent(context, PaymentWebActivity::class.java)
+        intent.putExtra(MERCHANT_UID, merchant_uid)
+        intent.putExtra(BUYER_NAME, buyerName)
+        intent.putExtra(AMOUNT, eatDealInfoArrayList[0].eatDealAfterPrice)
+        intent.putExtra(DEAL_NAME, eatDealInfoArrayList[0].eatDealName)
+        startActivity(intent)
+    }
+
+    override fun onPostPaymentsFailure(message: String) {
+        dismissLoadingDialog()
+        showCustomToast("오류 : $message")
+    }
+
+
 }

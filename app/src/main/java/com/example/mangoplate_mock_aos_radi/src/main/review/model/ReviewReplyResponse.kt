@@ -5,5 +5,5 @@ import com.google.gson.JsonArray
 import com.google.gson.annotations.SerializedName
 
 class ReviewReplyResponse (
-        @SerializedName("result") val result: JsonArray
+        @SerializedName("replyId") val replyId: Int
 ): BaseResponse()

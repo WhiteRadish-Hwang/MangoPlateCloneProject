@@ -43,10 +43,11 @@
                     android:id="@+id/review_text_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:text="userName"
-                    android:textColor="@color/black"
+                    android:textColor="@color/dimgrey"
                     android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:id="@+id/review_layout_count"
@@ -67,6 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="review" />
 
                     <ImageView
@@ -83,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="follower" />
                 </LinearLayout>
 
@@ -98,8 +101,8 @@
 
                 <ImageView
                     android:id="@+id/review_img_expression"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@drawable/discount" />
 
@@ -111,7 +114,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:textColor="@color/cliked_color"
-                    android:textSize="13sp"
+                    android:textSize="10dp"
                     android:text="TextView" />
             </RelativeLayout>
 
@@ -135,6 +138,7 @@
                 android:maxLines="5"
                 android:ellipsize="end"
                 android:textColor="@color/blackForText"
+                android:textSize="14sp"
                 android:text="TextView" />
 
             <androidx.recyclerview.widget.RecyclerView

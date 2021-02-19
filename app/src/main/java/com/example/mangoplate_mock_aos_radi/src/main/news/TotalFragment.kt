@@ -54,6 +54,9 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
     var total_restaurantLikeStatus by Delegates.notNull<Int>()
     var total_reviewLikeStatus by Delegates.notNull<Int>()
 
+    lateinit var likeCountText: String
+    lateinit var replyCountText: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         total_reviewList = arguments?.getSerializable(totalListKey) as ArrayList<TotalReviewResultData>
@@ -82,8 +85,8 @@ class TotalFragment : BaseFragment<FragmentNewsTotalBinding>(FragmentNewsTotalBi
             total_reviewLikeStatus = reviewResultData.reviewLikeStatus
             total_reviewImgList = reviewResultData.reviewImgList
 
-            val likeCountText = String.format(getString(R.string.review_like_count, total_reviewLikeCount))
-            val replyCountText = String.format(getString(R.string.review_reply_count, total_reviewReplyCount))
+            likeCountText = String.format(getString(R.string.review_like_count, total_reviewLikeCount))
+            replyCountText = String.format(getString(R.string.review_reply_count, total_reviewReplyCount))
 
             val expression_delicious = getString(R.string.news_text_great)
             val expression_good = getString(R.string.news_text_good)

@@ -84,7 +84,6 @@ class VisitedFragment:BaseFragment<FragmentVisitedBinding>(FragmentVisitedBindin
         Log.d(TAG, "onGetVisitedSuccess: ${response.isSuccess}")
         Log.d(TAG, "onGetVisitedSuccess: ${response.code}")
         Log.d(TAG, "onGetVisitedSuccess: ${response.message}")
-        showCustomToast("visited Called")
 
         when (response.code) {
             1000 -> {
@@ -120,6 +119,7 @@ class VisitedFragment:BaseFragment<FragmentVisitedBinding>(FragmentVisitedBindin
             1000 -> {
                 showCustomToast("가봤어요 등록 완료!")
                 Log.d(TAG, "onViewCreated: 가봤어요 추후 페이지 전환 예정")
+                (activity as MainActivity).onBackPressed()
                 (activity as MainActivity).replaceFragmentInSubFrame(HomeDetailsFragment().apply {
                     arguments = Bundle().apply {
                         putInt(homeDetailsKey, visitedRestaurantId)

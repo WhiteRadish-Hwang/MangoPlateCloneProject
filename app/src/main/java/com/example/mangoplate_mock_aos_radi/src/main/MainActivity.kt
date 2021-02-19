@@ -31,6 +31,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.myPage.MyPageFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlin.properties.Delegates
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -38,20 +39,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         var backStack = true
         var fragmentBack: Fragment? = null
         var isOpen: Boolean = false
-        var isFgInAddOpen: Boolean = false
     }
 
-
-
-//    private val homeFragment by lazy { HomeFragment() }
-//    private val discountFragment by lazy { DiscountFragment() }
-//    private val addFragment by lazy { AddFragment() }
-//    private val newsFragment by lazy { NewsFragment() }
-//    private val myPageFragment by lazy { MyPageFragment() }
-//
-//    private val fragments: List<Fragment> = listOf( homeFragment, discountFragment, addFragment, newsFragment, myPageFragment)
-//
-//    private val pagerAdapter: MainViewPagerAdapter by lazy { MainViewPagerAdapter(this, fragments) }
+    var getLongitude by Delegates.notNull<Double>()
+    var getLatitude by Delegates.notNull<Double>()
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
@@ -59,10 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onCreate(savedInstanceState)
 
         // 앨범에 접근허용 메세지 띄움, 최초 1회만 띄움움
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
-
-
-
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
 
         isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
         isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
@@ -123,44 +111,44 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
         binding.mainBtmNav.setOnNavigationItemSelectedListener(
-            BottomNavigationView.OnNavigationItemSelectedListener { item ->
+                BottomNavigationView.OnNavigationItemSelectedListener { item ->
 //                var page = 0
-                when (item.itemId) {
-                    R.id.menu_main_bottom_nav_home -> {
+                    when (item.itemId) {
+                        R.id.menu_main_bottom_nav_home -> {
 //                        page = R.id.menu_main_bottom_nav_home
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frame, HomeFragment())
-                            .commitAllowingStateLoss()
-                        return@OnNavigationItemSelectedListener true
-                    }
-                    R.id.menu_main_bottom_nav_discount -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frame, DiscountFragment())
-                            .commitAllowingStateLoss()
-                        return@OnNavigationItemSelectedListener true
-                    }
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.main_frame, HomeFragment())
+                                    .commitAllowingStateLoss()
+                            return@OnNavigationItemSelectedListener true
+                        }
+                        R.id.menu_main_bottom_nav_discount -> {
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.main_frame, DiscountFragment())
+                                    .commitAllowingStateLoss()
+                            return@OnNavigationItemSelectedListener true
+                        }
 //                    R.id.menu_main_bottom_nav_add -> {
 //                        supportFragmentManager.beginTransaction()
 //                            .replace(R.id.main_frame, AddFragment())
 //                            .commitAllowingStateLoss()
 //                        return@OnNavigationItemSelectedListener true
 //                    }
-                    R.id.menu_main_bottom_nav_news -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frame, NewsFragment())
-                            .commitAllowingStateLoss()
-                        return@OnNavigationItemSelectedListener true
+                        R.id.menu_main_bottom_nav_news -> {
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.main_frame, NewsFragment())
+                                    .commitAllowingStateLoss()
+                            return@OnNavigationItemSelectedListener true
+                        }
+                        R.id.menu_main_bottom_nav_my_page -> {
+                            supportFragmentManager.beginTransaction()
+                                    .replace(R.id.main_frame, MyPageFragment())
+                                    .commitAllowingStateLoss()
+                            return@OnNavigationItemSelectedListener true
+                        }
                     }
-                    R.id.menu_main_bottom_nav_my_page -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frame, MyPageFragment())
-                            .commitAllowingStateLoss()
-                        return@OnNavigationItemSelectedListener true
-                    }
-                }
 
-                false
-            })
+                    false
+                })
 
 //        binding.mainBtmNav.run{
 //            setOnNavigationItemSelectedListener { item ->

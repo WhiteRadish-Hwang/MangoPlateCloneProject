@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.FB_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_ID
@@ -12,6 +13,7 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KA
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.KAKAO_LOGIN
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.deviceToken
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isFacebookLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isKakaoLogin
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isLogin
@@ -29,6 +31,9 @@ import com.facebook.AccessToken
 import com.facebook.AccessToken.getCurrentAccessToken
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
@@ -46,29 +51,27 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
         super.onCreate(savedInstanceState)
         val intent = Intent(this, MainActivity::class.java)
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            deviceToken = task.result.toString()
+
+//            Log.d(TAG, "token: $deviceToken")
+
+            // Log and toast
+            val msg = deviceToken
+//            Log.d(TAG, "msg: $msg")
+        })
+
+//        FirebaseMessagingService.NOTIFICATION_SERVICE
+
 //        val keyHash = Utility.getKeyHash(this)
         isKakaoLogin = SharedPreferenced.getSettingItem(KAKAO_LOGIN)?.toBoolean() ?: false
         isFacebookLogin = SharedPreferenced.getSettingItem(FB_LOGIN)?.toBoolean() ?: false
-
-//        //자동로그인
-//        if (isKakaoLogin){
-//            user_id = SharedPreferenced.getSettingItem(KAKAO_ID)
-//            profileImageUrl = SharedPreferenced.getSettingItem(KAKAO_IMG)
-//            startActivity(intent)
-//        } else if (isFacebookLogin) {
-//            user_id = SharedPreferenced.getSettingItem(FB_ID)
-//            startActivity(intent)
-//        }
-
-        //페이스북 로그인
-        val accessTokenTracker = object : AccessTokenTracker() {
-            override fun onCurrentAccessTokenChanged(oldAccessToken: AccessToken?, currentAccessToken: AccessToken?) {
-                // Set the access token using
-                // currentAccessToken when it's loaded or set.
-            }
-        }
-        // If the access token is available already assign it.
-        // If the access token is available already assign it.
 
 //        binding.loginBtnFacebook.setReadPermissions("user_status")
         binding.loginBtnFacebook.setOnClickListener{
@@ -86,11 +89,8 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
 
                         override fun onCompleted(`object`: JSONObject?, response: GraphResponse?) {
                             val name = `object`?.getString("name")
-//                            user_name = name
                             val id = `object`?.getString("id")
                             val url = URL("https://graph.facebook.com/$id/picture")
-//                            val profile = Profile.getCurrentProfile()
-//                            val img = profile.getProfilePictureUri(200, 200).toString()
                             profileImageUrl = url.toString()
                         }
 
@@ -99,7 +99,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                     request.executeAsync()
 
                     val currentAccessToken = getCurrentAccessToken().token.toString()
-                    val postFbRequest = PostFacebookLoginRequest(facebookToken = currentAccessToken)
+                    val postFbRequest = PostFacebookLoginRequest(facebookToken = currentAccessToken, deviceToken = deviceToken)
                     Log.d(TAG, "onCreate: currentAccessToken: $currentAccessToken, postFbRequest: $postFbRequest")
                     LoginService(this@LoginActivity).tryPostFacebookLogin(postFbRequest)
 
@@ -120,7 +120,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoTalk $token $error")
                     val kakaoToken: String = token?.accessToken.toString()
-                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken)
+                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken, deviceToken = deviceToken)
                     showLoadingDialog(this)
                     Log.d(TAG, "onCreate: kakaoToken: $kakaoToken, postRequest: $postRequest")
                     LoginService(this).tryPostKakaoLogin(postRequest)
@@ -130,7 +130,7 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
                 LoginClient.instance.loginWithKakaoAccount(this) { token, error ->
                     Log.i(TAG, "loginWithKakaoAccount $token $error")
                     val kakaoToken: String = token?.accessToken.toString()
-                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken)
+                    val postRequest = PostKakaoLoginRequest(kakaoToken = kakaoToken, deviceToken = deviceToken)
                     showLoadingDialog(this)
                     Log.d(TAG, "onCreate: kakaoToken: $kakaoToken, postRequest: $postRequest")
                     LoginService(this).tryPostKakaoLogin(postRequest)
@@ -150,9 +150,6 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     private fun updateKakaoLogin() {
         UserApiClient.instance.me { user, error ->
             user?.let {
-                Log.d(TAG, "updateKakaoLoginUi: id = ${user.id}")
-                Log.d(TAG, "updateKakaoLoginUi: name = ${user.kakaoAccount?.profile?.nickname}")
-                Log.d(TAG, "updateKakaoLoginUi: thumbnailImageUrl = ${user.kakaoAccount?.profile?.thumbnailImageUrl.toString()}")
                 isKakaoLogin = true
                 SharedPreferenced.putSettingItem(KAKAO_LOGIN, isKakaoLogin.toString())
 
@@ -171,10 +168,6 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     override fun onPostKakaoLoginSuccess(response: KakaoLoginResponse) {
         dismissLoadingDialog()
         Log.d(TAG, "onPostKakaoLoginSuccess: jwt = ${response.jwt}")
-        Log.d(TAG, "onPostFacebookLoginSuccess: userId = ${response.userId}")
-        Log.d(TAG, "onPostKakaoLoginSuccess: isSuccess = ${response.isSuccess}")
-        Log.d(TAG, "onPostKakaoLoginSuccess: code = ${response.code}")
-        Log.d(TAG, "onPostKakaoLoginSuccess: message = ${response.message}")
         X_ACCESS_TOKEN = response.jwt
         user_id = response.userId.toString()
 
@@ -192,10 +185,6 @@ class LoginActivity :BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::in
     override fun onPostFacebookLoginSuccess(response: FacebookLoginResponse) {
 //        dismissLoadingDialog()
         Log.d(TAG, "onPostFacebookLoginSuccess: jwt = ${response.jwt}")
-        Log.d(TAG, "onPostFacebookLoginSuccess: userId = ${response.userId}")
-        Log.d(TAG, "onPostFacebookLoginSuccess: isSuccess = ${response.isSuccess}")
-        Log.d(TAG, "onPostFacebookLoginSuccess: code = ${response.code}")
-        Log.d(TAG, "onPostFacebookLoginSuccess: message = ${response.message}")
         X_ACCESS_TOKEN = response.jwt
         user_id = response.userId.toString()
         isFacebookLogin = true

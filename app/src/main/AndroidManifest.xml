@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mangoplate_mock_aos_radi">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
 
     <application
         android:allowBackup="true"
@@ -17,7 +20,13 @@
         android:theme="@style/Theme.MangoPlate"
         android:usesCleartextTraffic="true">
 
-
+        <service android:name="com.example.mangoplate_mock_aos_radi.src.main.FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        
         <activity android:name=".src.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,6 +60,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".src.payment.PaymentWebActivity"/>
 
         <!--카카오 지도-->
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="e09a9818400185704ff8efecda465d5a"/>

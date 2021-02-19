@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/home_recycler_main_img"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="160dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

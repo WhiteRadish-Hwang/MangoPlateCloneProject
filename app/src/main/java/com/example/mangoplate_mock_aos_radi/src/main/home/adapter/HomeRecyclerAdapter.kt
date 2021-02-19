@@ -63,7 +63,7 @@ class HomeRecyclerAdapter(val context: Context?, var itemList: ArrayList<HomeRec
         var adapterIsVisited: Boolean = false
         val items: HomeRecyclerItems = itemList[position]
 
-        Glide.with(holder.foodImg).load(items.image).placeholder(R.drawable.home_vp_img1).into(holder.foodImg)
+        Glide.with(holder.foodImg).load(items.image).into(holder.foodImg)
 //        holder.foodImg.setImageResource(R.drawable.home_vp_img3)
 
         if (items.isVisited == 1) { // 가봤어요 1일 때 체크표시

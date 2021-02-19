@@ -108,9 +108,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
                             android:text="userName"
-                            android:textColor="@color/black"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/dimgrey"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
 
                         <ImageView
                             android:id="@+id/review_img_user_holic"
@@ -142,6 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="2dp"
+                            android:textSize="13sp"
                             android:text="review" />
 
                         <ImageView
@@ -158,6 +159,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginLeft="2dp"
+                            android:textSize="13sp"
                             android:text="follower" />
                     </LinearLayout>
 
@@ -173,8 +175,8 @@
 
                     <ImageView
                         android:id="@+id/review_img_expression"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_centerHorizontal="true"
                         app:srcCompat="@drawable/discount" />
 
@@ -187,7 +189,7 @@
                         android:gravity="center"
                         android:text="TextView"
                         android:textColor="@color/cliked_color"
-                        android:textSize="13sp" />
+                        android:textSize="10dp"/>
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -214,6 +216,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_marginRight="5dp"
                         android:text="\u0040"
+                        android:textSize="14sp"
                         android:textColor="@color/cliked_color" />
 
                     <TextView
@@ -222,6 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/review_text_at_sign"
                         android:text="TextView"
+                        android:textSize="14sp"
                         android:textColor="@color/cliked_color"
                         android:textStyle="bold" />
 
@@ -233,6 +237,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/review_text_restaurant_name"
                         android:text="-"
+                        android:textSize="14sp"
                         android:textColor="@color/cliked_color" />
 
                     <TextView
@@ -241,6 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/review_text_dash"
                         android:text="TextView"
+                        android:textSize="14sp"
                         android:textColor="@color/cliked_color"
                         android:textStyle="bold" />
                 </RelativeLayout>
@@ -253,6 +259,7 @@
                     android:maxLines="5"
                     android:paddingTop="10dp"
                     android:paddingBottom="5dp"
+                    android:textSize="14sp"
                     android:text="TextView"
                     android:textColor="@color/blackForText" />
 

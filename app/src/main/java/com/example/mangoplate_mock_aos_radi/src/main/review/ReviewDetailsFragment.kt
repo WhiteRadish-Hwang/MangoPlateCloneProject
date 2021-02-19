@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
-import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.profileImageUrl
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.user_id
@@ -15,7 +14,6 @@ import com.example.mangoplate_mock_aos_radi.config.BaseFragment
 import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.databinding.FragmentReviewDetailsBinding
 import com.example.mangoplate_mock_aos_radi.src.main.MainActivity
-import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.NewsFragment
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
 import com.example.mangoplate_mock_aos_radi.src.main.review.adapter.ReviewReplyAdapter
@@ -100,7 +98,8 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
                 showCustomToast("메세지를 입력하세요")
             }
             else if (!isReplyModifying) {
-                replyItemObject = ReviewReplyResultData(commentUserId = commentUserList, replyContents = editTextString)
+                Log.d(TAG, "onViewCreated: ${commentUserList.size}")
+                replyItemObject = ReviewReplyResultData(commentUserList = commentUserList, replyContents = editTextString)
                 showLoadingDialog(context!!)
                 ReviewService(this).tryPostReviewReply(reviewIdArg, replyItemObject)
                 binding.reviewEtReply.setText("")
@@ -143,9 +142,13 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         when (isBottomLike) {
             true -> {
                 binding.reviewImgBottomLike.setImageResource(R.drawable.review_like_click)
+                val likeCountText = String.format(getString(R.string.review_like_count, reviewLikeCount))
+                binding.reviewTextLikeCount.text = likeCountText
             }
             false -> {
                 binding.reviewImgBottomLike.setImageResource(R.drawable.magno_like)
+                val likeCountText = String.format(getString(R.string.review_like_count, reviewLikeCount))
+                binding.reviewTextLikeCount.text = likeCountText
             }
         }
     }
@@ -224,7 +227,8 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
                                                     showCustomToast("메세지를 입력하세요")
                                                 } else {
                                                     val editString = binding.reviewEtReply.text.toString()
-                                                    replyItemObject = ReviewReplyResultData(commentUserId = commentUserList, replyContents = editString)
+                                                    Log.d(TAG, "onViewCreated: ${commentUserList.size}")
+                                                    replyItemObject = ReviewReplyResultData(commentUserList = commentUserList, replyContents = editString)
                                                     binding.reviewEtReply.setText("")
 
                                                     executeReplyModifyService(reviewIdArg, reviewReplyArrayList[position].replyId, replyItemObject)
@@ -371,8 +375,14 @@ class ReviewDetailsFragment: BaseFragment<FragmentReviewDetailsBinding>(Fragment
         Log.d(TAG, "onPatchReviewWannaGoSuccess: ${response.message}")
 
         when (response.code) {
-            1000 -> isBottomLike = true
-            1001 -> isBottomLike = false
+            1000 -> {
+                reviewLikeCount += 1
+                isBottomLike = true
+            }
+            1001 -> {
+                reviewLikeCount -= 1
+                isBottomLike = false
+            }
         }
 
         reviewLayoutBottomLikeViewBind()

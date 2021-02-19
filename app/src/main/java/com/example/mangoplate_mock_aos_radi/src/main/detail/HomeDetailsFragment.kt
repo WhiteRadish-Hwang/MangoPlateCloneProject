@@ -26,6 +26,7 @@ import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFrag
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewResultArrayListKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.HomeDetailsFrameFragment.Companion.reviewTitleItemKey
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
+import com.example.mangoplate_mock_aos_radi.src.main.home.HomeFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.HomeRecyclerItems
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.PatchWannagoResponse
 import com.example.mangoplate_mock_aos_radi.src.main.news.adapter.TotalRecyclerInnerImageAdapter
@@ -92,6 +93,7 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
 
         binding.detailsImgBackArrow.setOnClickListener {
             (activity as MainActivity).onBackPressed()
+            (activity as MainActivity).replaceFragment(HomeFragment())
         }
         
 //        binding.detailsToolbar.inflateMenu(R.menu.menu_details_toolbar)
@@ -183,9 +185,11 @@ class HomeDetailsFragment: BaseFragment<FragmentHomeDetailsBinding>(FragmentHome
         binding.detailsTextWannaGoCount.text = likeCount.toString()
         binding.detailsTextReviewCount.text = reviewCount.toString()
         if (userLike == 1){
-            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go_clicked)
+            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.wanna_go)
+            binding.detailsImgBottomWannaGo.setColorFilter(Color.parseColor("#ff7101"))
         } else {
-            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.details_wanna_go)
+            binding.detailsImgBottomWannaGo.setImageResource(R.drawable.wanna_go)
+            binding.detailsImgBottomWannaGo.colorFilter = null
         }
 
         Log.d(TAG, "userVisited: $userVisited")

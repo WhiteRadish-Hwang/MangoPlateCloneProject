@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mangoplate_mock_aos_radi.R
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
-import com.example.mangoplate_mock_aos_radi.src.main.review.ReviewDetailsFragment.Companion.commentUserList
 import com.example.mangoplate_mock_aos_radi.src.main.review.model.ReviewReplyListResultData
 
 class ReviewReplyAdapter(val context: Context?, val itemList: ArrayList<ReviewReplyListResultData>): RecyclerView.Adapter<ReviewReplyAdapter.ReplyItemViewHolder>() {

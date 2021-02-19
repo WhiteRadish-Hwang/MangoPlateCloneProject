@@ -176,6 +176,7 @@ class TotalRecyclerAdapter(val context: Context?, var itemList: ArrayList<TotalR
                             1 -> {
                                 Handler(Looper.getMainLooper()).post {
                                     holder.totalImgBottomLike.setImageResource(R.drawable.review_like_click)
+//                                    holder.totalTextLikeCount.text = items.reviewLikeCount
                                     notifyDataSetChanged()
 
                                 }
@@ -183,6 +184,7 @@ class TotalRecyclerAdapter(val context: Context?, var itemList: ArrayList<TotalR
                             0 -> {
                                 Handler(Looper.getMainLooper()).post {
                                     holder.totalImgBottomLike.setImageResource(R.drawable.magno_like)
+//                                    holder.totalTextLikeCount.text = items.reviewLikeCount
                                     notifyDataSetChanged()
                                 }
                             }
@@ -219,9 +221,11 @@ class TotalRecyclerAdapter(val context: Context?, var itemList: ArrayList<TotalR
         when {
             isTotalItemLike -> { // 서비스가 끝나고 좋아요 성공 시
                 items.reviewLikeStatus = 1
+//                items.reviewLikeCount = (items.reviewLikeCount.toInt() + 1).toString()
             }
             else -> { // 서비스가 끝나고 좋아요 해제 시
                 items.reviewLikeStatus = 0
+//                items.reviewLikeCount = (items.reviewLikeCount.toInt() - 1).toString()
             }
         }
     }

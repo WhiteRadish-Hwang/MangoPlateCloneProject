@@ -2,6 +2,7 @@ package com.example.mangoplate_mock_aos_radi.src.main.review
 
 import android.util.Log
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
+import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.src.main.detail.DetailsRetrofitInterface
 import com.example.mangoplate_mock_aos_radi.src.main.detail.model.*
@@ -178,8 +179,7 @@ class ReviewService (val view: ReviewDetailsFragmentView) {
                     200 -> {
                         response.body()?.let {
                             Log.d(ApplicationClass.TAG, "onResponse: ${response.body()}")
-                            val replyObject = it.result.asJsonObject
-                            val replyId = replyObject.get("replyId").asInt
+                            val replyId = it.replyId
 
 
                             view.onPostReviewReplySuccess(response = response.body()!!, replyId = replyId)

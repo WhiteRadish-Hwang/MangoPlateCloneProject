@@ -3,12 +3,11 @@ package com.example.mangoplate_mock_aos_radi.src.main.discount
 import com.example.mangoplate_mock_aos_radi.config.BaseResponse
 import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsResponse
 import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.PaymentsResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.PostPaymentsRequest
 import com.example.mangoplate_mock_aos_radi.src.main.discount.topList.model.DiscountTopListResponse
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface DiscountRetrofitInterface {
 
@@ -42,4 +41,7 @@ interface DiscountRetrofitInterface {
 
     @GET("/eat-deals/{eatDealId}")
     fun getEatDealDetails(@Path ("eatDealId") eatDealId: Int) : Call<EatDealDetailsResponse>
+
+    @POST("/payments")
+    fun postPayments(@Body params: PostPaymentsRequest) : Call<PaymentsResponse>
 }

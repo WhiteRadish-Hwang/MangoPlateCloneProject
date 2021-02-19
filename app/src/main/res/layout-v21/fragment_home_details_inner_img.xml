@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/inImg_img_arrow_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             app:srcCompat="@drawable/rightsheet_arrow_left"
@@ -38,12 +38,12 @@
             android:layout_toRightOf="@id/inImg_img_arrow_left"
             android:text="식당 이름"
             android:textColor="@color/white"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/inimg_img_total_image_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             app:srcCompat="@drawable/inimg_top_right_img" />
@@ -247,8 +247,8 @@
 
         <ImageView
             android:id="@+id/inimg_img_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -256,8 +256,8 @@
 
         <ImageView
             android:id="@+id/inimg_img_shared"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginStart="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/inimg_img_like"

@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,8 +38,6 @@ import com.example.mangoplate_mock_aos_radi.src.main.home.location.GangbukFragme
 import com.example.mangoplate_mock_aos_radi.src.main.home.location.LocationSelectFragment
 import com.example.mangoplate_mock_aos_radi.src.main.home.model.*
 import com.example.mangoplate_mock_aos_radi.src.main.home.search.HomeSearchFragment
-import com.google.android.material.appbar.AppBarLayout
-import kotlin.math.abs
 import kotlin.properties.Delegates
 
 
@@ -59,9 +56,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     //topList 변수 선언
     var topArrayList = ArrayList<TopListResultData>()
-    var topListId by Delegates.notNull<Int>()
-    lateinit var topListImgUrl: String
-    lateinit var topListName: String
     //restaurant 변수 선언
     var restaurantArrayList = ArrayList<RestaurantResultData>()
     var reviewCount by Delegates.notNull<Int>()
@@ -69,6 +63,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
     var locationFilter_sungBuk: Int = 0
     var locationFilter_suYu: Int = 0
     var locationFilter_noWon: Int = 0
+
+    var getLongitude by Delegates.notNull<Double>()
+    var getLatitude by Delegates.notNull<Double>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,42 +91,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             }
         }
 
-//        locList.clear()
-//        SharedPreferenced.putArrayStringItem(LOC_LIST, locList)
-
         if (locList.isEmpty()) {
             locationFilter_sungBuk = 1
             locationFilter_suYu = 2
             locationFilter_noWon = 3
         }
 
-        // 현재 위치 가져오기
-        val Im = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val isGPSEnabled: Boolean = Im.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        val isNetworkEnabled: Boolean = Im.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
-        } else {
-            when {
-                isNetworkEnabled -> {
-                    val location = Im.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                    myLongitude = location?.longitude!!
-                    myLatitude = location.latitude
-//                    showCustomToast("NET 현재위치를 불러옴 $myLatitude, $myLongitude")
-                }
-                isGPSEnabled -> {
-                    val location = Im.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                    myLongitude = location?.longitude!!
-                    myLatitude = location.latitude
-//                    showCustomToast("GPS 현재위치를 불러옴 $myLatitude, $myLongitude")
-                }
-                else -> {
-
-                }
-            }
-        }
+//        // 현재 위치 가져오기
+//        val Im = (activity as MainActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        val isGPSEnabled: Boolean = Im.isProviderEnabled(LocationManager.GPS_PROVIDER)
+//        val isNetworkEnabled: Boolean = Im.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+//
+//        Log.d(TAG, "onCreate1: ${Build.VERSION.SDK_INT}")
+//        Log.d(TAG, "onCreate1: ${ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)}")
+//        Log.d(TAG, "onCreate1: ${PackageManager.PERMISSION_GRANTED}")
+//        if (Build.VERSION.SDK_INT >= 23 &&
+//                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+//        } else {
+//            when {
+//                isGPSEnabled -> {
+//                    val location = Im.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//                    getLatitude = location?.longitude!!
+//                    getLatitude = location.latitude
+//                    showCustomToast("GPS 현재위치를 불러옴 $getLatitude, $getLongitude")
+//                }
+//                isNetworkEnabled -> {
+//                    val location = Im.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+//                    getLongitude = location?.longitude!!
+//                    getLatitude = location.latitude
+//                    showCustomToast("NET 현재위치를 불러옴 $getLatitude, $getLongitude")
+//                }
+//
+//                else -> {
+//
+//                }
+//            }
+//
+//        }
 
         // 홈서비스 실행
         excuteHomeService()
@@ -167,7 +166,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
             locSelectFragment.show((activity as MainActivity).supportFragmentManager, "LocSel")
         }
 
-        Log.d(TAG, "locList: $locList")
         val totalLocTitle  = String.format(getString(R.string.toolbar_tv_loc_changed_text_ex))
         when (locList.size) {
             0 -> binding.homeToolbarTvLocChangedText.text = totalLocTitle
@@ -208,8 +206,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     private fun excuteHomeService(){
         Log.d(TAG, "excuteHomeService: $pageNum, $limit")
+        Log.d(TAG, "excuteHomeService: $locationFilter_sungBuk")
+        Log.d(TAG, "excuteHomeService: $locationFilter_suYu")
+        Log.d(TAG, "excuteHomeService: $locationFilter_noWon")
+        Log.d(TAG, "excuteHomeService: $myLatitude")
+        Log.d(TAG, "excuteHomeService: $myLongitude")
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = locationFilter_sungBuk, locationfilter2 = locationFilter_suYu, locationfilter3 = locationFilter_noWon,
-                distance = 1000, sort = 4, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
+                distance = 10000, sort = 4, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
     }
 
     fun<T> clearFilter(itemList: ArrayList<T>, sort: Int) {
@@ -221,7 +224,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         itemIndex = 1
         homeRecyclerAdapter.clearItemList()
         HomeService(this).tryGetRestaurants(page = pageNum*limit, limit = limit, locationfilter1 = 1, locationfilter2 = 2, locationfilter3 = 3,
-                distance = 10, sort = sort, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
+                distance = 10000, sort = sort, userLatitude = myLatitude!!.toFloat(), userLongitude = myLongitude!!.toFloat())
     }
 
     fun setSortPivotSelect(){
@@ -250,6 +253,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         override fun createFragment(position: Int): Fragment {
             return when(position) {
                 0 -> HomeImageSlideFragment(topArrayList[position].topListImgUrl, topArrayList[position].topListName)
+                1 -> HomeImageSlideFragment(topArrayList[position].topListImgUrl, topArrayList[position].topListName)
+                2 -> HomeImageSlideFragment(topArrayList[position].topListImgUrl, topArrayList[position].topListName)
+                3 -> HomeImageSlideFragment(topArrayList[position].topListImgUrl, topArrayList[position].topListName)
                 else -> HomeImageSlideFragment(topArrayList[topListSize-1].topListImgUrl, topArrayList[topListSize-1].topListName)
             }
         }
@@ -261,8 +267,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
         val start = (pageNum * limit)
         var end = start + limit - 1
         if (end > restaurantListSize) end = restaurantListSize -1
-        Log.d(TAG, "setDataAndRecyclerAdapter: pageNum = $pageNum, limit = $limit")
-        Log.d(TAG, "setDataAndRecyclerAdapter: start = $start end = $end")
 
         for (i in start .. end) {
             val item = HomeRecyclerItems(idx = itemIndex++,
@@ -277,7 +281,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
                     isLike = restaurantArrayList[i].isLike,
                     isVisited = restaurantArrayList[i].visited)
             itemList.add(item)
-            Log.d(TAG, "initDataEnd: $item")
         }
 
         Handler().postDelayed({
@@ -300,9 +303,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
                             if (lastVisible >= totalItemCount - 3 && isCalled && !isClear) {
                                 isCalled = false
-                                Log.d(TAG, "isLoading: $isLoading")
                                 if (!isLoading) {
-                                    Log.d(TAG, "excuteHomeService: called")
                                     pageNum++
                                     excuteHomeService()
                                 }
@@ -337,8 +338,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
     override fun onGetRestaurantSuccess(response: RestaurantsResponse, topList: ArrayList<TopListResultData>, restaurantList: ArrayList<RestaurantResultData>) {
 //        dismissLoadingDialog()
-        Log.d(TAG, "onGetRestaurantSuccess: $topList")
-        Log.d(TAG, "onGetRestaurantSuccess: $restaurantList")
         topListSize = topList.size
         isSuccessful = response.isSuccess
 
@@ -348,12 +347,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::bind
 
         for (idx in 0 until restaurantList.size){
             restaurantArrayList.add(restaurantList[idx])
-            Log.d(TAG, "restaurantArrayList: ${restaurantArrayList[idx]} \n")
         }
 
         restaurantListSize = restaurantArrayList.size
-        Log.d(TAG, "restaurantListSize: $restaurantListSize")
-
 
         val pagerAdapter = ImageSlidePagerAdapter(this)
         binding.homeVp.adapter = pagerAdapter

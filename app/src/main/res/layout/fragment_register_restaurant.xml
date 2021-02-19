@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/deal_details_tollbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="?actionBarSize"
         android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/register_img_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
@@ -138,15 +138,14 @@
                         android:textColor="@color/cliked_color"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toTopOf="@+id/register_et_restaurant_loc"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/register_layout_loc"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <EditText
                         android:id="@+id/register_et_restaurant_loc"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:layout_marginEnd="165dp"
                         android:backgroundTint="@color/white"
                         android:ems="10"
                         android:inputType="textPersonName"
@@ -155,8 +154,27 @@
                         android:textCursorDrawable="@drawable/search_cursor_custom"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/register_layout_loc"
                         app:layout_constraintStart_toStartOf="parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/register_layout_loc"
+                        android:layout_width="60dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/register_loc_border"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            app:srcCompat="@drawable/register_loc" />
+                    </RelativeLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 

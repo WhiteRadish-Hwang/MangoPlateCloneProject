@@ -4,7 +4,7 @@
 
     <string name="login_skip">건너뛰기</string>
 
-    <string name="main_bottom_nav_home_title">맞집찾기</string>
+    <string name="main_bottom_nav_home_title">맛집찾기</string>
     <string name="main_bottom_nav_discount_title">할인</string>
     <string name="main_bottom_nav_news_title">소식</string>
     <string name="main_bottom_nav_my_page_title">내정보</string>
@@ -131,7 +131,7 @@
     <string name="wanna_go">가고싶다</string>
     <string name="my_list">마이리스트</string>
     <string name="book_mark">북마크</string>
-    <string name="registered_restaurant">내가 등록한 식당</string>
+    <string name="registered_restaurant">식당 등록하기</string>
 
     <string name="setting">설정</string>
     <string name="apply">적용</string>
@@ -154,6 +154,7 @@
     <string name="cafe">카페</string>
     <string name="bar">주점</string>
     <string name="add">추가하기</string>
+    <string name="buy">구매하기</string>
     <string name="complete">완료</string>
     <string name="more_view">더 보기</string>
     <string name="more_view_non">접기</string>

@@ -47,12 +47,12 @@
                     <TextView
                         android:id="@+id/total_text_user_name"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="5dp"
                         android:text="userName"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
+                        android:textColor="@color/dimgrey"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/total_img_user_holic"
@@ -85,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="review" />
 
                     <ImageView
@@ -101,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="follower" />
                 </LinearLayout>
 
@@ -116,8 +118,8 @@
 
                 <ImageView
                     android:id="@+id/total_img_expression"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@drawable/discount" />
 
@@ -129,7 +131,7 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:textColor="@color/cliked_color_less"
-                    android:textSize="13sp"
+                    android:textSize="10dp"
                     android:text="TextView" />
             </RelativeLayout>
 
@@ -156,6 +158,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="5dp"
                     android:textColor="@color/cliked_color"
+                    android:textSize="14dp"
                     android:text="\u0040" />
                 <TextView
                     android:id="@+id/total_text_restaurant_name"
@@ -164,6 +167,7 @@
                     android:layout_toRightOf="@id/total_text_at_sign"
                     android:textColor="@color/cliked_color"
                     android:textStyle="bold"
+                    android:textSize="14dp"
                     android:text="TextView" />
                 <TextView
                     android:id="@+id/total_text_dash"
@@ -173,6 +177,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:textColor="@color/cliked_color"
+                    android:textSize="14dp"
                     android:text="-" />
                 <TextView
                     android:id="@+id/total_text_restaurant_loc"
@@ -181,6 +186,7 @@
                     android:layout_toRightOf="@id/total_text_dash"
                     android:textStyle="bold"
                     android:textColor="@color/cliked_color"
+                    android:textSize="14dp"
                     android:text="TextView" />
             </RelativeLayout>
 
@@ -193,6 +199,7 @@
                 android:maxLines="5"
                 android:ellipsize="end"
                 android:textColor="@color/blackForText"
+                android:textSize="14sp"
                 android:text="TextView" />
 
             <androidx.recyclerview.widget.RecyclerView

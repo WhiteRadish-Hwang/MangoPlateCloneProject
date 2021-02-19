@@ -27,7 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -174,7 +174,6 @@
                     android:gravity="center_vertical"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="17sp"
                     android:text="TextView" />
 
                 <RelativeLayout
@@ -189,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
+                        android:textSize="13sp"
                         android:text="TextView" />
                     <TextView
                         android:id="@+id/visited_text_dash_in_content"
@@ -196,6 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/visited_text_restaurant_area_in_content"
                         android:layout_centerVertical="true"
+                        android:textSize="13sp"
                         android:text=" - " />
                     <TextView
                         android:id="@+id/visited_text_restaurant_filter_in_content"
@@ -203,6 +204,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/visited_text_dash_in_content"
+                        android:textSize="13sp"
                         android:text="TextView" />
                 </RelativeLayout>
 
@@ -218,8 +220,8 @@
 
                     <ImageView
                         android:id="@+id/visited_img_user_view_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/mango_view_point" />
 
@@ -229,12 +231,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="review" />
 
                     <ImageView
                         android:id="@+id/visited_img_user_review_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="7dp"
                         app:srcCompat="@drawable/mango_review_count" />
@@ -245,6 +248,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
+                        android:textSize="13sp"
                         android:text="follower" />
                 </LinearLayout>
 

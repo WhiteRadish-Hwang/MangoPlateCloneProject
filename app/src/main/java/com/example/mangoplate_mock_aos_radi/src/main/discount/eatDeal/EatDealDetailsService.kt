@@ -5,9 +5,7 @@ import com.example.mangoplate_mock_aos_radi.config.ApplicationClass
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.TAG
 import com.example.mangoplate_mock_aos_radi.config.ApplicationClass.Companion.isGetNewsReviewItem
 import com.example.mangoplate_mock_aos_radi.src.main.discount.DiscountRetrofitInterface
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsImagesItems
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsInfoItems
-import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.EatDealDetailsResponse
+import com.example.mangoplate_mock_aos_radi.src.main.discount.eatDeal.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -86,5 +84,32 @@ class EatDealDetailsService (val view: EatDealDetailsFragmentView) {
             })
     }
 
+    fun tryPostPayments(body: PostPaymentsRequest){
+
+        val discountRetrofitInterface = ApplicationClass.sRetrofit.create(DiscountRetrofitInterface::class.java)
+
+        discountRetrofitInterface.postPayments(body).enqueue(object : Callback<PaymentsResponse> {
+            override fun onResponse(call: Call<PaymentsResponse>, response: Response<PaymentsResponse>) {
+                when (response.code()) {
+                    200 -> {
+                        response.body()?.let {
+                            val merchantUid = it.merchant_uid
+                            val buyerName = it.buyerName
+
+                            view.onPostPaymentsSuccess(response.body()!!, merchant_uid = merchantUid, buyerName = buyerName)
+                        }
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<PaymentsResponse>, t: Throwable) {
+                Log.d(TAG, "onFailure: ${t.message}")
+                view.onPostPaymentsFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
 
 }
