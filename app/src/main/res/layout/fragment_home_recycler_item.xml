@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/home_recycler_main_img"
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="160dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"

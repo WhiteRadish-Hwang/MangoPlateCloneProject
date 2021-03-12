@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mango Plate</string>
+    <string name="app_name">MangoPlate</string>
     <string name="facebook_app_id">419298462518109</string> <string name="fb_login_protocol_scheme">fb419298462518109</string>
 
     <string name="login_skip">건너뛰기</string>
