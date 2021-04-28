@@ -11,22 +11,13 @@
 ## 🛠 개발 환경
 >AWS EC2에서 Node를 통해 서버를 구동하고 AWS RDS를 사용.
 
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fvelog.io%2F%40dogakday%2FKotlin-%25EC%25BD%2594%25ED%258B%2580%25EB%25A6%25B0%25EC%259D%2580-%25EB%25AC%25B4%25EC%2597%2587%25EC%259D%25B8%25EA%25B0%2580&psig=AOvVaw1yhpTvpSAJmZHtulH-9bfx&ust=1619679413985000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKD0pZOuoPACFQAAAAAdAAAAABAD" width="250" height="100"><img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2Fandroid-news%2Fandroid-mvp-for-beginners-25889c500443&psig=AOvVaw3rpbblmOE48NHnni31OqHw&ust=1619679460677000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKC0n6quoPACFQAAAAAdAAAAABAD" width="200" height="100">
+<img src="https://user-images.githubusercontent.com/68462396/116362322-e34e5d80-a83c-11eb-8da7-eee51a48900d.png" width="250" height="100"><img src="https://user-images.githubusercontent.com/68462396/116362315-e21d3080-a83c-11eb-8dea-dd1e9f9c0555.png" width="200" height="100">
 
 
 ---
 
 ```text
-소프트스퀘어드 노드 템플릿은 Node, Express Framwork, MVC (Route, Controller)으로 구성되어있고,
-데이터베이스 모듈(= 라이브러리)는 mysql2 을 사용하여 DB와 통신하고있다. 설정파일은 /config/database.js 에 있다.
 
-그리고 winston 이라는 모듈와 winston-daily-rotate-file 이라는 모듈 사용하여 Logger (=/config/winston.js) 를 구축해놓았다.
-Firebase나 토큰이나 누군가에게 공개해선 안되는 키값들은 /config/secret.js 라는 곳에 모아놓고있다.
-
-jwt 는 /config/jwtMiddleware.js 에서 검증을 jwtMiddleware 라는 자체모듈로 만들어서 사용하고있다. 이거는 route 파일에서 체이닝 방식으로 사용하고있다. (예제는 /app/routes/* 에 있는 파일을 참고하면 된다.)
-
-express 는 /config/express.js 에 설정 값들이 모여있다. 
-기본 설정들은 해놓았는데 필요한 설정이 있다면 이 파일로 가서 추가/수정/삭제를 하면 된다.
 ```
 
 ---
@@ -46,47 +37,48 @@ express 는 /config/express.js 에 설정 값들이 모여있다.
 ### 로그인
 
 <img src=https://user-images.githubusercontent.com/68462396/116361026-7c7c7480-a83b-11eb-9744-f028dcae2b43.jpg width="260" height="500">
----
+
 
 ### 음식점 찾기
 
 <img src=https://user-images.githubusercontent.com/68462396/116361598-1c3a0280-a83c-11eb-8971-914ed8c151f1.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116361605-1d6b2f80-a83c-11eb-980b-3a93b82c5e13.jpg width="260" height="500">
 
----
+
 
 ### 음식점 상세조회
 
 
-<img src=image/n3.jpg width="260" height="500"> <img src=image/n2.jpg width="260" height="500"> <img src=image/n1.jpg width="260" height="500"> <img src=image/17.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116361770-4986b080-a83c-11eb-9dc4-0b07bd4653fd.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116361759-48558380-a83c-11eb-941b-499907a9af87.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116361766-48ee1a00-a83c-11eb-88c7-30841d2e07d2.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116361767-4986b080-a83c-11eb-8798-237dfdf6ddda.jpg width="260" height="500">
 
----
+
 ### 소식
 
-<img src=image/1.jpg width="260" height="500"> <img src=image/3.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116361873-6d49f680-a83c-11eb-9ffe-0b0f0f613ae1.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116361877-6de28d00-a83c-11eb-9ea9-bda27af5fdcd.jpg width="260" height="500">
 
 ---
 
 ### EAT DEAL
 
-<img src=image/18.jpg width="260" height="500"> <img src=image/19.jpg width="260" height="500"> <img src=image/t1.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116362023-94082d00-a83c-11eb-82df-b179a7967701.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116362027-95395a00-a83c-11eb-84af-1e12c9b3c7b9.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116362029-95395a00-a83c-11eb-9d3e-ab1eebb48b9d.jpg width="260" height="500">
 
 ---
 
 ### 식당 등록
 
-<img src=image/14.jpg width="260" height="500"> <img src=image/15.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116362096-a7b39380-a83c-11eb-8ad3-6f5c08a1e3f4.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116362101-a8e4c080-a83c-11eb-8ab0-f8c473da645d.jpg width="260" height="500">
 
 ---
 
 ### TOP List
 
-<img src=image/16.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116362146-b5691900-a83c-11eb-9bc7-f16dc5f026cf.jpg width="260" height="500">
 
 ---
 
 ### 내 정보
 
-<img src=image/2.jpg width="260" height="500"> <img src=image/img.png width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116362159-ba2dcd00-a83c-11eb-82ad-a0035de2951f.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116362158-ba2dcd00-a83c-11eb-9a2d-19ef5c159a89.png width="260" height="500">
 
 ---
 
