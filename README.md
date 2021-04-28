@@ -38,7 +38,7 @@ express 는 /config/express.js 에 설정 값들이 모여있다.
 
 
 ## :movie_camera: 시연 영상
-> https://www.youtube.com/watch?v=17xm5eXG_XQ&feature=youtu.be
+> https://www.youtube.com/watch?v=DVkmQm3k7Lw
 ---
 # :iphone: 실행 화면
 
