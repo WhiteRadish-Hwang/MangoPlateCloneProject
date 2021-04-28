@@ -11,12 +11,7 @@
 ## 🛠 개발 환경
 >AWS EC2에서 Node를 통해 서버를 구동하고 AWS RDS를 사용.
 
-<img src="https://firebasestorage.googleapis.com/v0/b/mangoplate-a1a46.appspot.com/o/nginx.png?alt=media&token=838f77d3-a729-4a81-b1ad-8befaf55d429" width="250" height="100"> <img src="https://miro.medium.com/max/960/0*uXXbbKGKNQUQonbC.png" width="230" height="100">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1200px-Amazon_Web_Services_Logo.svg.png" width="200" height="100"><img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbnveOL%2FbtqKylNzdtm%2FN9aaEvOxd7Hm0N0KJYg6l0%2Fimg.png" width="170" height="100"><img src="https://media.vlpt.us/images/ayoung0073/post/e736dc61-9be5-4f91-b751-4a1f64bc4a97/rds.png" width="170" height="100"><img src="https://media.vlpt.us/images/leejh3224/post/eeea9dd5-d99a-4b7b-9024-d4866d48ca70/mysql.png" width="200" height="100">
-
-
-<img src="https://firebasestorage.googleapis.com/v0/b/mangoplate-a1a46.appspot.com/o/android%2010.png?alt=media&token=b46b3b81-a75e-4718-ba0c-f4c2e021f67c" width="130" height="100"><img src="https://firebasestorage.googleapis.com/v0/b/mangoplate-a1a46.appspot.com/o/1_oNM0JVqivoi3lVPF6ygp9Q.png?alt=media&token=016ecf7d-c87b-41ac-aff2-74f7b129417e" width="200" height="100">
+<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fvelog.io%2F%40dogakday%2FKotlin-%25EC%25BD%2594%25ED%258B%2580%25EB%25A6%25B0%25EC%259D%2580-%25EB%25AC%25B4%25EC%2597%2587%25EC%259D%25B8%25EA%25B0%2580&psig=AOvVaw1yhpTvpSAJmZHtulH-9bfx&ust=1619679413985000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKD0pZOuoPACFQAAAAAdAAAAABAD" width="250" height="100"><img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2Fandroid-news%2Fandroid-mvp-for-beginners-25889c500443&psig=AOvVaw3rpbblmOE48NHnni31OqHw&ust=1619679460677000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKC0n6quoPACFQAAAAAdAAAAABAD" width="200" height="100">
 
 
 ---
@@ -40,16 +35,6 @@ express 는 /config/express.js 에 설정 값들이 모여있다.
 ```
 2021-02-03 ~ 2021-02-17
 ```
-
----
-## :computer: ERD 설계도
-> AQueryTool 이용
-
-<img src="https://firebasestorage.googleapis.com/v0/b/mangoplate-a1a46.appspot.com/o/%EB%A7%9D%EA%B3%A0%ED%94%8C%EB%A0%88%EC%9D%B4%ED%8A%B8_20210316_31_45.png?alt=media&token=8c48c75a-74a0-4113-92d6-fcfa10e22be9">
-
-## :memo: API Sheet
-
->https://docs.google.com/spreadsheets/d/17y8Ly1hpqzqV-CuqsH1wEuEXZfPlo-qTFa1UVrqtv7Y/edit?usp=sharing
 
 
 ## :movie_camera: 시연 영상
