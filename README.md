@@ -45,13 +45,12 @@ express 는 /config/express.js 에 설정 값들이 모여있다.
 
 ### 로그인
 
-<img src=image/5.jpg width="260" height="500">  
-
+<img src=https://user-images.githubusercontent.com/68462396/116361026-7c7c7480-a83b-11eb-9744-f028dcae2b43.jpg width="260" height="500">
 ---
 
 ### 음식점 찾기
 
-<img src=image/6.jpg width="260" height="500"> <img src=image/7.jpg width="260" height="500">
+<img src=https://user-images.githubusercontent.com/68462396/116361598-1c3a0280-a83c-11eb-8971-914ed8c151f1.jpg width="260" height="500"> <img src=https://user-images.githubusercontent.com/68462396/116361605-1d6b2f80-a83c-11eb-980b-3a93b82c5e13.jpg width="260" height="500">
 
 ---
 
