@@ -15,6 +15,7 @@ class DetailsService (val view: HomeDetailsFragmentView) {
     fun tryGetRestaurants(restaurantId: Int){
         val homeRetrofitInterface = ApplicationClass.sRetrofit.create(DetailsRetrofitInterface::class.java)
         homeRetrofitInterface.getDetails(restaurantId = restaurantId).enqueue(object : Callback<DetailsResponse> {
+
             override fun onResponse(call: Call<DetailsResponse>, response: Response<DetailsResponse>) {
                 when (response.code()) {
                     200 -> {
